@@ -1,6 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:goldex/theme/theme_cubit.dart';
+import '../../app_localizations.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -16,7 +19,11 @@ class HomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text("Home")
+              InkWell(
+                  onTap: (){
+                    context.read<ThemeCubit>().toggleTheme();
+                  },
+                  child: Text(context.translate('toggleTheme')))
             ],
           ),
         ),
