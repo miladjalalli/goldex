@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:goldex/presentation/home/home_screen.dart';
+import 'package:goldex/presentation/splash/splash_screen.dart';
 import 'package:goldex/theme/theme.dart';
 import 'package:goldex/theme/theme_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
             themeMode: themeMode == AppThemeMode.light
                 ? ThemeMode.light
                 : ThemeMode.dark,
-            home: HomeScreen(),
+            home: SplashScreen(),
           );
         },
       ),
