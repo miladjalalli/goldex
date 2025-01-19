@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:goldex/theme/theme.dart';
 import '../../widget/custom_button.dart';
+import '../../widget/dotter_painter.dart';
 import '../sign_up/cubit/sing_up_cubit.dart';
 import '../sign_up/sign-up_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
-
-  final points = generatePoints(size: Size(400, 800), count: 100); // Generate 100 points
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +19,7 @@ class LoginScreen extends StatelessWidget {
           // Background with dots
           Positioned.fill(
             child: CustomPaint(
-              painter: DottedBackgroundPainter(points),
+              painter: DottedBackgroundPainter(),
             ),
           ),
           // Login content
@@ -209,89 +208,6 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-class DottedBackgroundPainter extends CustomPainter {
-  final List<Offset> points;
 
-  DottedBackgroundPainter(this.points);
 
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..shader = LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          Colors.white.withOpacity(0.6),
-          Colors.white.withOpacity(0.0),
-        ],
-      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height / 2));
-
-    for (final point in points) {
-      canvas.drawCircle(point, 2.0, paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
-
-class DottedBackground extends StatefulWidget {
-  const DottedBackground({super.key});
-
-  @override
-  _DottedBackgroundState createState() => _DottedBackgroundState();
-}
-
-List<Offset> generatePoints({
-  required Size size,
-  required int count,
-}) {
-  final random = Random(42);
-  final List<Offset> points = [];
-
-  for (int i = 0; i < count; i++) {
-    final x = random.nextDouble() * size.width;
-    final y = random.nextDouble() * size.height / 2;
-    points.add(Offset(x, y));
-  }
-
-  return points;
-}
-
-class _DottedBackgroundState extends State<DottedBackground> {
-  late List<Offset> points;
-
-  @override
-  void initState() {
-    super.initState();
-    points = generateRandomPoints();
-  }
-
-  List<Offset> generateRandomPoints() {
-    final random = Random();
-    final step = 20.0;
-    final List<Offset> points = [];
-    final double width = 400;
-    final double height = 400;
-
-    for (double x = 0; x < width; x += step) {
-      for (double y = 0; y < height / 2; y += step) {
-        if (random.nextBool()) {
-          points.add(
-            Offset(x + random.nextDouble() * step, y + random.nextDouble() * step),
-          );
-        }
-      }
-    }
-    return points;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: DottedBackgroundPainter(points),
-      child: Container(),
-    );
-  }
-}
 

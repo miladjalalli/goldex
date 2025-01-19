@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../theme/theme.dart';
 import '../../widget/custom_button.dart';
-import '../login/login_screen.dart';
+import '../../widget/dotter_painter.dart';
 import 'cubit/sing_up_cubit.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -14,8 +13,6 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-
-  final points = generatePoints(size: Size(400, 800), count: 100); // Generate 100 points
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +28,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               // Background with dots
               Positioned.fill(
                 child: CustomPaint(
-                  painter: DottedBackgroundPainter(points),
+                  painter: DottedBackgroundPainter(),
                 ),
               ),
               // Login content
