@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:goldex/theme/theme.dart';
 
 class CustomBottomBar extends StatefulWidget {
@@ -37,16 +38,16 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildIcon(Icons.person, 0, screenWidth),
-          _buildIcon(Icons.group, 1, screenWidth),
-          _buildIcon(Icons.account_balance_wallet, 2, screenWidth),
-          _buildIcon(Icons.home, 3, screenWidth),
+          _buildIcon('assets/icons/profile.svg', 0, screenWidth),
+          _buildIcon('assets/icons/service.svg', 1, screenWidth),
+          _buildIcon('assets/icons/wallet.svg', 2, screenWidth),
+          _buildIcon('assets/icons/transaction.svg', 3, screenWidth),
         ],
       ),
     );
   }
 
-  Widget _buildIcon(IconData icon, int index, double screenWidth) {
+  Widget _buildIcon(String icon, int index, double screenWidth) {
     bool isSelected = _selectedIndex == index;
 
     return GestureDetector(
@@ -72,10 +73,12 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
           ],
         ),
         child: Center(
-          child: Icon(
+          child: SvgPicture.asset(
             icon,
+            fit: BoxFit.cover,
             color: isSelected ? Colors.black : Colors.grey,
-            size: screenWidth * 0.08,
+            width: screenWidth * 0.08,
+            height: screenWidth * 0.08,
           ),
         ),
       ),

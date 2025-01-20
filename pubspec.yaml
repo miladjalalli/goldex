@@ -35,6 +35,7 @@ dependencies:
   cached_network_image:
   equatable:
   google_fonts:
+  flutter_svg:
   dio:
 
 dev_dependencies:
@@ -54,5 +55,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/modal/
+    - assets/icons/
     - l10n/
 

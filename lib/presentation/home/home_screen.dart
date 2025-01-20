@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../widget/custom_bottom_bar.dart';
-import '../../widget/details_dialog.dart';
+import '../../widget/modal_dialog.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -117,9 +117,9 @@ void showDetailsModule(BuildContext context) {
   showModalBottomSheet(
     context: context,
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      borderRadius: BorderRadius.vertical(top: Radius.circular(60)),
     ),
     isScrollControlled: true,
-    builder: (context) => DetailsDialog(),
+    builder: (context) => ModalDialog(),
   );
 }
