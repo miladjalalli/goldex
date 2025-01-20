@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:goldex/presentation/home/home_screen.dart';
 import 'package:goldex/theme/theme.dart';
 import '../../widget/custom_button.dart';
 import '../../widget/dotter_painter.dart';
@@ -159,7 +160,12 @@ class LoginScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                              MaterialPageRoute(builder: (context) => HomeScreen()),
+                            );
+                          },
                         )
                       ],
                     ),

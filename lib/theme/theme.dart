@@ -33,3 +33,4 @@ const Color colorDarkYellow = Color(0xffFDC50f);
 const Color colorLightBlue = Color(0xff019ffd);
 const Color colorLightGrey = Color(0xffF2F2F2);
 const Color colorDarkGrey = Color(0xff303030);
+const Color colorDarkGreyNavigation = Color(0xff181818);
