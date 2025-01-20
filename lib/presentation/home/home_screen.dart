@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../widget/custom_bottom_bar.dart';
+import '../../widget/details_dialog.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -25,9 +26,9 @@ class HomeScreen extends StatelessWidget {
                 Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(8.0), // فاصله داخلی برای تنظیم بهتر تصویر
+                      padding: const EdgeInsets.all(8.0),
                       child: Image.asset(
-                        'assets/images/person.png', // تصویر شما
+                        'assets/images/person.png',
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -67,19 +68,19 @@ class HomeScreen extends StatelessWidget {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    shape: BoxShape.circle, // شکل دایره‌ای
+                    shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.white.withOpacity(0.2), // سایه سفید
-                        blurRadius: 100, // محوشدگی سایه
-                        spreadRadius: 20, // گسترش سایه
+                        color: Colors.white.withOpacity(0.2),
+                        blurRadius: 100,
+                        spreadRadius: 20,
                       ),
                     ],
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0), // فاصله داخلی برای تنظیم بهتر تصویر
+                    padding: const EdgeInsets.all(8.0),
                     child: Image.asset(
-                      'assets/images/bank.png', // تصویر شما
+                      'assets/images/bank.png',
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -89,19 +90,36 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: CustomBottomBar(),
+      floatingActionButton: CustomBottomBar(
+        onItemSelected: (int index) {
+          switch (index) {
+            case 0:
+              //print("Profile clicked");
+              break;
+            case 1:
+              //print("Group clicked");
+              break;
+            case 2:
+              //print("Wallet clicked");
+              break;
+            case 3:
+              showDetailsModule(context);
+              break;
+          }
+        },
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
 
-// void showLoanDetailsModule(BuildContext context, Map<String, dynamic> loanData) {
-//   showModalBottomSheet(
-//     context: context,
-//     shape: RoundedRectangleBorder(
-//       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-//     ),
-//     isScrollControlled: true,
-//     builder: (context) => LoanDetailsDialog(loanData: loanData),
-//   );
-// }
+void showDetailsModule(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    isScrollControlled: true,
+    builder: (context) => DetailsDialog(),
+  );
+}
