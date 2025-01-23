@@ -4,19 +4,19 @@ import 'package:goldex/theme/theme.dart';
 import '../../widget/custom_bottom_bar.dart';
 import '../../widget/custom_button.dart';
 
-class BuyScreen extends StatefulWidget {
-  const BuyScreen({super.key});
+class SellScreen extends StatefulWidget {
+  const SellScreen({super.key});
 
   @override
-  _BuyScreenState createState() => _BuyScreenState();
+  _SellScreenState createState() => _SellScreenState();
 }
 
-class _BuyScreenState extends State<BuyScreen> {
-  String suffix1 = 'USD';
-  String suffix2 = 'Gram';
+class _SellScreenState extends State<SellScreen> {
+  String suffix1 = 'Gram';
+  String suffix2 = 'USD';
 
-  TextEditingController controller1 = TextEditingController(text: '250');
-  TextEditingController controller2 = TextEditingController(text: '4.2');
+  TextEditingController controller1 = TextEditingController(text: '4.2');
+  TextEditingController controller2 = TextEditingController(text: '250');
 
   void swapSuffix() {
     setState(() {
@@ -261,7 +261,7 @@ class _BuyScreenState extends State<BuyScreen> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(10, 5, 0, 5),
                         child: Text(
-                          'I want to Spend',
+                          'I want to Sell',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
@@ -303,7 +303,7 @@ class _BuyScreenState extends State<BuyScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'I will Receive',
+                              'I will Earn',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,

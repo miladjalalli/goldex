@@ -565,9 +565,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   DropdownButtonFormField(
                     items: [
-                      DropdownMenuItem(child: Text("Passport"), value: "Passport"),
-                      DropdownMenuItem(child: Text("ID Card"), value: "ID Card"),
-                      DropdownMenuItem(child: Text("Driver License"), value: "Driver License"),
+                      DropdownMenuItem(value: "Passport", child: Text("Passport")),
+                      DropdownMenuItem(value: "ID Card", child: Text("ID Card")),
+                      DropdownMenuItem(value: "Driver License", child: Text("Driver License")),
                     ],
                     onChanged: (value) {},
                     decoration: InputDecoration(

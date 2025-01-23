@@ -42,4 +42,8 @@ const Color colorLightGreyModal = Color(0xff484848);
 const Color colorLightGreyModal1 = Color(0xffE7E7E7);
 const Color colorLightGreyModal2 = Color(0xffCCCCCC);
 const Color colorLightGreyModal3 = Color(0xffB3B3B3);
+const Color colorLightGreyModal4 = Color(0xffD9D9D9);
+const Color colorLightGreyModal5 = Color(0xff707070);
+const Color colorLightGreyModal6 = Color(0xff565656);
+const Color colorLightGreyModal7 = Color(0xff959595);
 

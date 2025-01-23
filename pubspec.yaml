@@ -40,6 +40,7 @@ dependencies:
   fl_chart:
   smooth_page_indicator:
   carousel_slider:
+  flutter_verification_code: ^1.1.7
 
 dev_dependencies:
   flutter_test:

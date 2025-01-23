@@ -2,8 +2,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:goldex/presentation/sell/sell_screen.dart';
 import 'package:goldex/theme/theme.dart';
 import '../presentation/buy/buy_screen.dart';
+import '../presentation/transfer/transfer_screen.dart';
 
 class DraggableModalDialog extends StatefulWidget {
   const DraggableModalDialog({super.key});
@@ -83,14 +85,20 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
                       'assets/images/modal/sell.png',
                       'Sell Gold',
                       () {
-                        // Perform Sell Gold action
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SellScreen()),
+                        );
                       },
                     ),
                     actionButton(
                       'assets/images/modal/transfer.png',
                       'Transfer',
                       () {
-                        // Perform Transfer action
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => TransferScreen()),
+                        );
                       },
                     ),
                   ],
