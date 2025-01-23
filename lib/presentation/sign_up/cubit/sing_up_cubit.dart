@@ -1,11 +1,12 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 
 part 'sing_up_state.dart';
 
-class SingUpCubit extends Cubit<SingUpState> {
+class SingUpCubit extends Cubit<SingUpState>  {
   SingUpCubit() : super(SingUpInitial());
 
   int currentIndex = 0;

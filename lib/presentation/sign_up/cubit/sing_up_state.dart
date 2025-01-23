@@ -1,6 +1,15 @@
 part of 'sing_up_cubit.dart';
 
 @immutable
-abstract class SingUpState {}
+abstract class SingUpState extends Equatable {
+  const SingUpState();
 
-class SingUpInitial extends SingUpState {}
+  @override
+  bool operator ==(Object other) => false;
+
+  @override
+  List<Object> get props => [];
+}
+
+class SingUpInitial extends SingUpState {
+}

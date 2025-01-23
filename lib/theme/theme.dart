@@ -25,14 +25,21 @@ const Color colorLightSalmon = Color(0xfff58457);
 const Color colorGreen = Color(0xff50C878);
 const Color colorLighter = Color(0xff31e2b4);
 const Color colorDarkGreen = Color(0xff149372);
-const Color colorTransparentDarkGrey = Color(0xd54b4b4b);
 const Color colorGrey = Color(0xff8D99AE);
 const Color colorWhite = Color(0xffffffff);
 const Color colorLightYellow = Color(0xfffae19e);
 const Color colorDarkYellow = Color(0xffFDC50f);
 const Color colorLightBlue = Color(0xff019ffd);
 const Color colorLightGrey = Color(0xffF2F2F2);
-const Color colorDarkGrey = Color(0xff303030);
+
+const Color colorGold = Color(0xffC6903B);
+
 const Color colorDarkGreyNavigation = Color(0xff181818);
-const Color colorLightGreyModal = Color(0xff484848);
 const Color colorLightGreyUnit = Color(0xff1E1E1E);
+const Color colorDarkGrey = Color(0xff303030);
+const Color colorTransparentDarkGrey = Color(0xd54b4b4b);
+const Color colorLightGreyModal = Color(0xff484848);
+const Color colorLightGreyModal1 = Color(0xffE7E7E7);
+const Color colorLightGreyModal2 = Color(0xffCCCCCC);
+const Color colorLightGreyModal3 = Color(0xffB3B3B3);
+
