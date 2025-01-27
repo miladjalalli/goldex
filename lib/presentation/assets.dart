@@ -9,8 +9,7 @@ class Asset {
   static const String bgBase = '$_img/bg-base.jpg';
   static const String bgLightReceive = '$_img/bg-light-receive.png';
   static const String mgBaseBottom = '$_img/mg-base-bottom.png';
-  static const String mgLightReceiveBottom =
-      '$_img/mg-light-receive-bottom.png';
+  static const String mgLightReceiveBottom = '$_img/mg-light-receive-bottom.png';
   static const String mgLightEmitBottom = '$_img/mg-light-emit-bottom.png';
   static const String fgBase = '$_img/fg-base.png';
   static const String fgLightReceive = '$_img/fg-light-receive.png';

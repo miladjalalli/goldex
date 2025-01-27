@@ -44,12 +44,7 @@ class _SellScreenState extends State<SellScreen> {
         ),
         backgroundColor: Colors.white,
         elevation: 0,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: Icon(Icons.headset_mic, color: Colors.green),
-          ),
-        ],
+
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

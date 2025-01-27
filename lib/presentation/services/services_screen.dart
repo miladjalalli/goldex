@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../theme/theme.dart';
+import '../gift-card/cubit/gift_card_cubit.dart';
+import '../gift-card/gift-card_screen.dart';
 import 'cubit/services_cubit.dart';
 
 double width = 0;
@@ -121,40 +123,67 @@ class _ServicesScreenState extends State<ServicesScreen> {
                     ),
                     child: Column(
                       children: [
-                        ListTile(
-                          leading: SvgPicture.asset('assets/icons/service/get-gold.svg', width: 17, height: 17),
-                          title: const Text(
-                            'Get your Gold',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
+                        ClipRRect(
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                // Handle 'Get your Gold' click
+                                print("Get your Gold clicked");
+                              },
+                              child: ListTile(
+                                leading: SvgPicture.asset('assets/icons/service/get-gold.svg', width: 17, height: 17),
+                                title: const Text(
+                                  'Get your Gold',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                          onTap: () {},
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 24, right: 24),
                           child: const Divider(height: 1, color: colorLightGreyModal4),
                         ),
-                        ListTile(
-                          leading: SvgPicture.asset(
-                            'assets/icons/service/gift.svg',
-                            width: 17,
-                            height: 17,
-                          ),
-                          title: const Text(
-                            'Gift Card',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
+                        ClipRRect(
+                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12)),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => BlocProvider(
+                                    create: (context) => GiftCardCubit(),
+                                    child: GiftCardScreen(),
+                                  )),
+                                );
+                              },
+                              child: ListTile(
+                                leading: SvgPicture.asset(
+                                  'assets/icons/service/gift.svg',
+                                  width: 17,
+                                  height: 17,
+                                ),
+                                title: const Text(
+                                  'Gift Card',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                          onTap: () {},
                         ),
                       ],
                     ),
                   ),
-                ),
+                )
               ],
             ),
           ),
