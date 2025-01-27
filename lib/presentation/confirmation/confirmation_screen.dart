@@ -159,7 +159,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.fromLTRB(54, 49, 54, 124),
+            padding: EdgeInsets.fromLTRB(54, 60, 54, 124),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -179,7 +179,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
             width: 320,
             padding: EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: Colors.grey[200],
+              color: colorLightGreyModal8,
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
@@ -231,7 +231,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
             child: CustomButton(
               text: "Share",
               isIconEnabled: true,
-              icon: Icons.share,
+              icon: 'assets/icons/share.svg',
               backgroundColor: Colors.white,
               textColor: colorLightGreyModal2,
               height: 50,
@@ -255,7 +255,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
             child: CustomButton(
               text: "Save to Gallery",
               isIconEnabled: true,
-              icon: Icons.download,
+              icon: 'assets/icons/download.svg',
               backgroundColor: colorGreen,
               textColor: Colors.white,
               height: 50,

@@ -32,6 +32,9 @@ const Color colorDarkYellow = Color(0xffFDC50f);
 const Color colorLightBlue = Color(0xff019ffd);
 const Color colorLightGrey = Color(0xffF2F2F2);
 
+const Color colorPending = Color(0xffE8BB41);
+const Color colorFailed = Color(0xffE13C22);
+
 const Color colorGold = Color(0xffC6903B);
 
 const Color colorDarkGreyNavigation = Color(0xff181818);
@@ -46,4 +49,6 @@ const Color colorLightGreyModal4 = Color(0xffD9D9D9);
 const Color colorLightGreyModal5 = Color(0xff707070);
 const Color colorLightGreyModal6 = Color(0xff565656);
 const Color colorLightGreyModal7 = Color(0xff959595);
+const Color colorLightGreyModal8 = Color(0xffE6E6E6);
+const Color colorLightGreyModal9 = Color(0xffF2F2F2);
 

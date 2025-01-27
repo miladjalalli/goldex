@@ -61,5 +61,6 @@ flutter:
     - assets/images/
     - assets/images/modal/
     - assets/icons/
+    - assets/icons/pay/
     - l10n/
 

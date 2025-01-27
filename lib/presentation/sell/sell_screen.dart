@@ -277,6 +277,10 @@ class _SellScreenState extends State<SellScreen> {
                             borderRadius: BorderRadius.circular(25),
                             borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
                           ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
+                          ),
                           contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                           // Increased horizontal padding
                           filled: true,
@@ -324,6 +328,10 @@ class _SellScreenState extends State<SellScreen> {
                         keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
+                          ),
+                          enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(25),
                             borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
                           ),

@@ -37,9 +37,23 @@ class _TransferScreenState extends State<TransferScreen> {
         ),
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 110.0),
-          child: Text('Start', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: colorLightGreyModal),),
+        title: Stack(
+          alignment: Alignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Send',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: colorLightGreyModal,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
       body: SingleChildScrollView(
@@ -146,10 +160,14 @@ class _TransferScreenState extends State<TransferScreen> {
                               RegExp(r'[0-9]'))
                         ],
                         decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
-                            borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
-                          ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                              borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                              borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
+                            ),
                           contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                           // Increased horizontal padding
                           filled: true,
@@ -183,6 +201,10 @@ class _TransferScreenState extends State<TransferScreen> {
                         keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
+                          ),
+                          enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(25),
                             borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
                           ),
