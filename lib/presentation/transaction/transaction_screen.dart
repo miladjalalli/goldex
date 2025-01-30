@@ -1,24 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:goldex/app_localizations.dart';
 import '../../widget/modal_dialog.dart';
 import '../assets.dart';
 
-class TransactionScreen extends StatelessWidget {
+class TransactionScreen extends StatefulWidget {
   const TransactionScreen({super.key});
+
+  @override
+  _TransactionScreenState createState() => _TransactionScreenState();
+}
+
+class _TransactionScreenState extends State<TransactionScreen> {
+  final DraggableScrollableController _draggableController = DraggableScrollableController();
+  Color appBarColor = Colors.black;
+
+  @override
+  void dispose() {
+    _draggableController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: appBarColor,
         elevation: 0,
-        toolbarHeight: 0, // No visible AppBar
+        toolbarHeight: 0,
       ),
       body: Stack(
         children: [
           Column(
             children: [
-              // Header Section
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
@@ -37,7 +51,7 @@ class TransactionScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Hey Scott',
+                              '${context.translate('hey')} Scott',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
@@ -45,7 +59,7 @@ class TransactionScreen extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'welcome back',
+                              context.translate('welcomeBack'),
                               style: TextStyle(
                                 color: Colors.grey,
                                 fontSize: 14,
@@ -91,7 +105,7 @@ class TransactionScreen extends StatelessWidget {
               ),
             ],
           ),
-          const DraggableModalDialog(),
+          DraggableModalDialog(draggableController: _draggableController),
         ],
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
+import 'package:goldex/app_localizations.dart';
 
 import '../../theme/theme.dart';
 import '../../widget/custom_button.dart';
@@ -13,7 +14,7 @@ class ConfirmationScreen extends StatefulWidget {
 
 class _ConfirmationScreenState extends State<ConfirmationScreen> {
   bool _onEditing = true;
-  String _code = '';
+  String _code = "";
   bool _isCodeConfirmed = false;
 
   @override
@@ -51,7 +52,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Confirm the Transaction',
+                      context.translate('confirmTransaction'),
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -68,7 +69,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Please Enter the Confirmation Code',
+                      context.translate('enterConfirmationCode'),
                       style: TextStyle(fontSize: 16, color: Colors.grey[700]),
                       textAlign: TextAlign.center,
                     ),
@@ -108,7 +109,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'Didn\'t Receive The Code?',
+                      context.translate('didntReceiveCode'),
                       style: TextStyle(color: Colors.black),
                       textAlign: TextAlign.center,
                     ),
@@ -121,7 +122,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                   children: [
                     TextButton(
                       onPressed: () {},
-                      child: Text('Resend', style: TextStyle(color: Colors.green)),
+                      child: Text(context.translate('resend'), style: TextStyle(color: Colors.green)),
                     ),
                   ],
                 ),
@@ -132,7 +133,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
         Padding(
           padding: const EdgeInsets.only(bottom: 32.0),
           child: CustomButton(
-            text: "Confirm",
+            text: context.translate('confirm'),
             backgroundColor: colorGreen,
             textColor: Colors.white,
             height: 50,
@@ -165,7 +166,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Confirm the Transaction',
+                  context.translate('confirmTransaction'),
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -195,7 +196,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Total gold Sell',
+                  context.translate('totalGoldSell'),
                   style: TextStyle(
                     fontSize: 12,
                     color: colorLightGreyModal6,
@@ -203,7 +204,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                 ),
                 SizedBox(height: 8),
                 Text(
-                  '10 gr',
+                  '10 ${context.translate('gram')}',
                   style: TextStyle(
                     fontSize: 24,
                     color: Colors.green,
@@ -212,17 +213,17 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                 ),
                 SizedBox(height: 20),
                 Text(
-                  'Transaction Details',
+                  context.translate('transactionDetails'),
                   style: TextStyle(
                     fontSize: 12,
                     color: colorLightGreyModal6,
                   ),
                 ),
                 SizedBox(height: 16),
-                _buildDetailRow('Total Money Received', '252.5 USD'),
-                _buildDetailRow('Transaction Code', '3214568'),
-                _buildDetailRow('Time', '07/07/2024 - 20:54'),
-                _buildDetailRow('Type', 'Buy Gold'),
+                _buildDetailRow(context.translate('totalMoneyReceived'), '252.5 ${context.translate('USD')}'),
+                _buildDetailRow(context.translate('transactionCode'), '3214568'),
+                _buildDetailRow(context.translate('time'), '07/07/2024 - 20:54'),
+                _buildDetailRow(context.translate('type'), context.translate('buyGold')),
               ],
             ),
           ),
@@ -230,7 +231,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
           Padding(
             padding: const EdgeInsets.only(bottom: 11.0),
             child: CustomButton(
-              text: "Share",
+              text: context.translate('share'),
               isIconEnabled: true,
               icon: Asset.share,
               backgroundColor: Colors.white,
@@ -254,7 +255,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
           Padding(
             padding: const EdgeInsets.only(bottom: 32.0),
             child: CustomButton(
-              text: "Save to Gallery",
+              text: context.translate('saveGallery'),
               isIconEnabled: true,
               icon: Asset.download,
               backgroundColor: colorGreen,

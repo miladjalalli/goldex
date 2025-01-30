@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:goldex/app_localizations.dart';
 import 'package:goldex/presentation/confirmation/confirmation_screen.dart';
 import 'package:goldex/theme/theme.dart';
 import '../../widget/custom_button.dart';
@@ -43,7 +44,7 @@ class _DepositScreenState extends State<DepositScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Deposit',
+                  context.translate('deposit'),
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -94,7 +95,6 @@ class _DepositScreenState extends State<DepositScreen> {
                             ),
                             width: double.infinity,
                             child: SingleChildScrollView(
-                              // Add SingleChildScrollView
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -104,7 +104,7 @@ class _DepositScreenState extends State<DepositScreen> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          'Current Balance',
+                                          context.translate('currentBalance'),
                                           style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.w400,
@@ -120,7 +120,7 @@ class _DepositScreenState extends State<DepositScreen> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          '1430.5 USD',
+                                          '1430.5 ${context.translate('USD')}',
                                           style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold,
@@ -140,7 +140,7 @@ class _DepositScreenState extends State<DepositScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Amount',
+                                  context.translate('amount'),
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400,
@@ -165,7 +165,7 @@ class _DepositScreenState extends State<DepositScreen> {
                               contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                               filled: true,
                               fillColor: Colors.white,
-                              hintText: 'USD',
+                              hintText: context.translate('USD'),
                               hintStyle: TextStyle(fontSize: 16, color: colorLightGreyModal2),
                               hintTextDirection: TextDirection.rtl,
                             ),
@@ -180,7 +180,7 @@ class _DepositScreenState extends State<DepositScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Payment Method',
+                                  context.translate('paymentMethod'),
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400,
@@ -236,13 +236,13 @@ class _DepositScreenState extends State<DepositScreen> {
                               children: [
                                 TextButton(
                                   onPressed: () {},
-                                  child: const Text(
-                                    'Cancel',
+                                  child: Text(
+                                    context.translate('cancel'),
                                     style: TextStyle(color: Colors.grey),
                                   ),
                                 ),
                                 CustomButton(
-                                  text: "Confirm",
+                                  text: context.translate('confirm'),
                                   backgroundColor: colorGreen,
                                   textColor: Colors.white,
                                   height: 50,

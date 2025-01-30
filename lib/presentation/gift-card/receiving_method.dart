@@ -2,9 +2,9 @@ import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:goldex/app_localizations.dart';
 import 'package:goldex/theme/theme.dart';
 import 'package:goldex/widget/custom_button.dart';
-import '../../widget/counter_widget.dart';
 import '../assets.dart';
 import 'cubit/gift_card_cubit.dart';
 
@@ -28,7 +28,7 @@ class _ReceivingMethodScreenState extends State<ReceivingMethodScreen> {
           appBar: AppBar(
             leading: TextButton(
               style: ButtonStyle(
-                padding: MaterialStateProperty.all(EdgeInsets.only(left: 20)),
+                padding: WidgetStateProperty.all(EdgeInsets.only(left: 20)),
               ),
               onPressed: () {
                 Navigator.pop(context);
@@ -40,7 +40,7 @@ class _ReceivingMethodScreenState extends State<ReceivingMethodScreen> {
             backgroundColor: Colors.white,
             elevation: 0,
             title: Text(
-              'Receiving Method',
+              context.translate('receivingMethod'),
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: colorLightGreyModal),
             ),
             centerTitle: true,
@@ -59,7 +59,7 @@ class _ReceivingMethodScreenState extends State<ReceivingMethodScreen> {
             child: Padding(
                 padding: EdgeInsets.fromLTRB(64,0,64,32),
                 child: CustomButton(
-                  text: "Continue",
+                  text: context.translate('continue'),
                   backgroundColor: colorGreen,
                   textColor: Colors.white,
                   height: 50,

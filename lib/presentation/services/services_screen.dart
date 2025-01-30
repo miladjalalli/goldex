@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:goldex/app_localizations.dart';
 
 import '../../theme/theme.dart';
 import '../assets.dart';
@@ -26,9 +27,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
     height = MediaQuery.of(context).size.height;
     ServicesCubit cubit = context.read<ServicesCubit>();
     return BlocConsumer<ServicesCubit, ServicesState>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
           backgroundColor: Colors.white,
@@ -121,7 +120,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                     padding: EdgeInsets.fromLTRB(15, 39, 0, 11),
                     child: Row(
                       children: [
-                        Text('Services', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: colorLightGreyModal)),
+                        Text(context.translate('services'), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: colorLightGreyModal)),
                       ],
                     )),
                 Padding(
@@ -138,13 +137,11 @@ class _ServicesScreenState extends State<ServicesScreen> {
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
-                              onTap: () {
-                                print("Get your Gold clicked");
-                              },
+                              onTap: () {},
                               child: ListTile(
                                 leading: SvgPicture.asset(Asset.getGold, width: 17, height: 17),
-                                title: const Text(
-                                  'Get your Gold',
+                                title: Text(
+                                  context.translate('getYourGold'),
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.black,
@@ -178,8 +175,8 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                   width: 17,
                                   height: 17,
                                 ),
-                                title: const Text(
-                                  'Gift Card',
+                                title: Text(
+                                  context.translate('giftCard'),
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.black,

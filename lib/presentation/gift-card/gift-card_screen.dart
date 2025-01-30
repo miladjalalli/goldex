@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:goldex/app_localizations.dart';
 import 'package:goldex/theme/theme.dart';
 import '../../widget/custom_button.dart';
 import '../assets.dart';
@@ -45,7 +46,7 @@ class _GiftCardScreenState extends State<GiftCardScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Gift Card',
+                  context.translate('giftCard'),
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -73,13 +74,13 @@ class _GiftCardScreenState extends State<GiftCardScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(23, 7, 23, 0),
-                  child: Text('Give gold to your friends and loved ones with a gift card, hassle-free.', style: TextStyle(fontSize: 16, color: Colors.black),
+                  child: Text(context.translate('giveGoldMessage'), style: TextStyle(fontSize: 16, color: Colors.black),
                       textAlign: TextAlign.center),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 34.0),
                   child: CustomButton(
-                    text: "I want to give gift",
+                    text: context.translate('iWantGiveGift'),
                     backgroundColor: colorGreen,
                     textColor: Colors.white,
                     height: 50,
@@ -106,7 +107,7 @@ class _GiftCardScreenState extends State<GiftCardScreen> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10.0),
                   child: CustomButton(
-                    text: "I’ve Got a Gift",
+                    text: context.translate('IveGotGift'),
                     backgroundColor: Colors.white,
                     textColor: colorGreen,
                     height: 50,

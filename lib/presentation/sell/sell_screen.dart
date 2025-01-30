@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:goldex/app_localizations.dart';
 import 'package:goldex/theme/theme.dart';
-import '../../widget/custom_bottom_bar.dart';
 import '../../widget/custom_button.dart';
 import '../assets.dart';
 
@@ -127,7 +127,7 @@ class _SellScreenState extends State<SellScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Balance:',
+                                  context.translate('balance'),
                                   style: TextStyle(color: Colors.white, fontSize: 17),
                                 ),
                                 Padding(
@@ -157,7 +157,7 @@ class _SellScreenState extends State<SellScreen> {
                                           width: 5,
                                         ),
                                         Text(
-                                          '123.4 gr',
+                                          '123.4 ${context.translate('gram')}',
                                           style: TextStyle(color: Colors.white, fontSize: 18),
                                         ),
                                       ],
@@ -181,7 +181,7 @@ class _SellScreenState extends State<SellScreen> {
                                             fontSize: 14,
                                           ),
                                           children: [
-                                            TextSpan(text: 'Deposit USD '),
+                                            TextSpan(text: context.translate('depositUSD')),
                                             TextSpan(
                                               text: '+',
                                               style: TextStyle(
@@ -217,13 +217,13 @@ class _SellScreenState extends State<SellScreen> {
                         fontSize: 18,
                       ),
                       children: [
-                        TextSpan(text: 'Live Gold Price '),
+                        TextSpan(text: context.translate('liveGoldPrice')),
                         TextSpan(
                           text: '68.21',
                           style: TextStyle(color: colorGold, fontSize: 34, fontWeight: FontWeight.bold),
                         ),
                         TextSpan(
-                          text: 'per Gram',
+                          text: context.translate('perGram'),
                           style: TextStyle(
                             fontSize: 11,
                             color: colorLightGreyModal3,
@@ -257,7 +257,7 @@ class _SellScreenState extends State<SellScreen> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(10, 5, 0, 5),
                         child: Text(
-                          'I want to Sell',
+                          context.translate('iWantToSell'),
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
@@ -303,7 +303,7 @@ class _SellScreenState extends State<SellScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'I will Earn',
+                              context.translate('iWillEarn'),
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,
@@ -332,7 +332,6 @@ class _SellScreenState extends State<SellScreen> {
                             borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
                           ),
                           contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                          // Increased horizontal padding
                           filled: true,
                           fillColor: Colors.white,
                           suffix: Padding(
@@ -358,13 +357,13 @@ class _SellScreenState extends State<SellScreen> {
                           children: [
                             TextButton(
                               onPressed: () {},
-                              child: const Text(
-                                'Cancel',
+                              child: Text(
+                                context.translate('cancel'),
                                 style: TextStyle(color: Colors.grey),
                               ),
                             ),
                             CustomButton(
-                              text: "Confirm",
+                              text: context.translate('confirm'),
                               backgroundColor: colorGreen,
                               textColor: Colors.white,
                               height: 50,

@@ -2,11 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goldex/theme/theme.dart';
-
 import '../presentation/assets.dart';
 
 class CounterWidget extends StatefulWidget {
-  final Function(int) onQuantityChanged; // تابع برای ارسال مقدار جدید
+  final Function(int) onQuantityChanged;
 
   const CounterWidget({super.key, required this.onQuantityChanged});
 
@@ -21,7 +20,7 @@ class _CounterWidgetState extends State<CounterWidget> {
     setState(() {
       quantity = newQuantity;
     });
-    widget.onQuantityChanged(quantity); // ارسال مقدار جدید به والد
+    widget.onQuantityChanged(quantity);
   }
 
   void increment() => updateQuantity(quantity + 1);

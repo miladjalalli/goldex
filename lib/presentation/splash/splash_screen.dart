@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:goldex/app_localizations.dart';
 import 'dart:async';
 import '../assets.dart';
 import '../login/login_screen.dart';
@@ -54,8 +55,8 @@ class _SplashScreenState extends State<SplashScreen> {
                   height: 150,
                 ),
                 const SizedBox(height: 20),
-                const Text(
-                  'Goldex',
+                Text(
+                  context.translate('appTitle'),
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,

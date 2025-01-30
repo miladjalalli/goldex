@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:goldex/app_localizations.dart';
 import 'package:goldex/presentation/confirmation/confirmation_screen.dart';
 import 'package:goldex/theme/theme.dart';
 import '../../widget/custom_button.dart';
@@ -43,7 +44,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Withdrawal',
+                  context.translate('withdrawal'),
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -104,7 +105,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          'Current Balance',
+                                          context.translate('currentBalance'),
                                           style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.w400,
@@ -120,7 +121,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          '1430.5 USD',
+                                          '1430.5 ${context.translate('USD')}',
                                           style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold,
@@ -140,7 +141,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Amount',
+                                  context.translate('amount'),
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400,
@@ -165,7 +166,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                               contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                               filled: true,
                               fillColor: Colors.white,
-                              hintText: 'USD',
+                              hintText: context.translate('USD'),
                               hintStyle: TextStyle(fontSize: 16, color: colorLightGreyModal2),
                               hintTextDirection: TextDirection.rtl,
                             ),
@@ -180,7 +181,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'to your account',
+                                  context.translate('toYourAccount'),
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400,
@@ -227,13 +228,13 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                               children: [
                                 TextButton(
                                   onPressed: () {},
-                                  child: const Text(
-                                    'Cancel',
+                                  child: Text(
+                                    context.translate('cancel'),
                                     style: TextStyle(color: Colors.grey),
                                   ),
                                 ),
                                 CustomButton(
-                                  text: "Confirm",
+                                  text: context.translate('confirm'),
                                   backgroundColor: colorGreen,
                                   textColor: Colors.white,
                                   height: 50,
@@ -262,7 +263,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(30, 41, 30, 0),
-                  child: Text('your request will be submitted and will be done by 2 work days.', style: TextStyle(fontSize: 16, color: Colors.black),
+                  child: Text(context.translate('yourRequestMessage'), style: TextStyle(fontSize: 16, color: Colors.black),
                     textAlign: TextAlign.center),
                 ),
               ],

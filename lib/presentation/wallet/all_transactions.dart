@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'package:goldex/app_localizations.dart';
 import '../../theme/theme.dart';
 import '../assets.dart';
 import 'cubit/wallet_cubit.dart';
@@ -36,7 +36,7 @@ class AllTransactionsScreen extends StatelessWidget {
         elevation: 0,
         title: Padding(
           padding: const EdgeInsets.only(left: 70.0),
-          child: Text('Transaction', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: colorLightGreyModal)),
+          child: Text(context.translate('transaction'), style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: colorLightGreyModal)),
         ),
       ),
       body: ListView.builder(

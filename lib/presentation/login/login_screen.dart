@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:goldex/app_localizations.dart';
 import 'package:goldex/presentation/home/home_screen.dart';
 import 'package:goldex/theme/theme.dart';
 import '../../widget/custom_button.dart';
@@ -18,13 +19,11 @@ class LoginScreen extends StatelessWidget {
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-          // Background with dots
           Positioned.fill(
             child: CustomPaint(
               painter: DottedBackgroundPainter(),
             ),
           ),
-          // Login content
           Align(
             alignment: Alignment.center,
             child: SingleChildScrollView(
@@ -41,8 +40,8 @@ class LoginScreen extends StatelessWidget {
                     padding: EdgeInsets.fromLTRB(61, 0, 61, 17),
                     child: Column(
                       children: [
-                        const Text(
-                          "Sign in to your Account",
+                        Text(
+                          context.translate('signInToYourAccount'),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white,
@@ -51,8 +50,8 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 12),
-                        const Text(
-                          "Enter your email and password to log in",
+                        Text(
+                          context.translate('enterYourEmailAndPasswordToLogIn'),
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.normal,
@@ -81,7 +80,7 @@ class LoginScreen extends StatelessWidget {
                         // Email field
                         TextField(
                           decoration: InputDecoration(
-                            hintText: "Email",
+                            hintText: context.translate('email'),
                             prefixIcon: Icon(Icons.email),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25),
@@ -99,11 +98,10 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 16),
-                        // Password field
                         TextField(
                           obscureText: true,
                           decoration: InputDecoration(
-                            hintText: "Password",
+                            hintText: context.translate('Password'),
                             prefixIcon: Icon(Icons.lock),
                             suffixIcon: Icon(Icons.visibility_off),
                             border: OutlineInputBorder(
@@ -130,15 +128,15 @@ class LoginScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Checkbox(value: false, onChanged: (val) {}),
-                                const Text("Remember me"),
+                                Text(context.translate('rememberMe')),
                               ],
                             ),
                             GestureDetector(
                               onTap: () {
                                 // Handle forgot password
                               },
-                              child: const Text(
-                                "Forgot Password?",
+                              child: Text(
+                                context.translate('forgotPassword'),
                                 style: TextStyle(
                                   color: Colors.green,
                                   fontWeight: FontWeight.bold,
@@ -149,7 +147,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 16),
                         CustomButton(
-                          text: "Log In",
+                          text: context.translate('logIn'),
                           backgroundColor: colorGreen,
                           textColor: Colors.white,
                           height: 50,
@@ -172,8 +170,8 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  const Text(
-                    "Don't have an account?",
+                  Text(
+                    context.translate('dontHaveAnAccount'),
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.white,
@@ -181,7 +179,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   CustomButton(
-                    text: "Sign Up",
+                    text: context.translate('signUp'),
                     backgroundColor: Colors.transparent,
                     textColor: Colors.white,
                     height: 50,

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:goldex/app_localizations.dart';
 import 'package:goldex/theme/theme.dart';
-
 import '../../widget/custom_button.dart';
 import '../assets.dart';
 import '../deposit/cubit/deposit_cubit.dart';
 import '../deposit/deposit_screen.dart';
-import '../home/cubit/home_cubit.dart';
 import '../withdrawal/cubit/withdrawal_cubit.dart';
 import '../withdrawal/withdrawal_screen.dart';
 import 'all_transactions.dart';
@@ -112,7 +111,7 @@ class _WalletScreenState extends State<WalletScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Balance:',
+                                  context.translate('balance'),
                                   style: TextStyle(color: Colors.white, fontSize: 17),
                                 ),
                                 Padding(
@@ -142,7 +141,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                           width: 5,
                                         ),
                                         Text(
-                                          '123.4 gr',
+                                          '123.4 ${context.translate('gram')}',
                                           style: TextStyle(color: Colors.white, fontSize: 18),
                                         ),
                                       ],
@@ -166,7 +165,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                             fontSize: 14,
                                           ),
                                           children: [
-                                            TextSpan(text: 'Deposit USD '),
+                                            TextSpan(text: context.translate('depositUSD')),
                                             TextSpan(
                                               text: '+',
                                               style: TextStyle(
@@ -196,7 +195,7 @@ class _WalletScreenState extends State<WalletScreen> {
                 children: [
                   Expanded(
                     child: CustomButton(
-                      text: "Deposit",
+                      text: context.translate('deposit'),
                       backgroundColor: colorGreen,
                       textColor: Colors.white,
                       height: 50,
@@ -226,7 +225,7 @@ class _WalletScreenState extends State<WalletScreen> {
                   ),
                   Expanded(
                     child: CustomButton(
-                      text: "Withdrawal",
+                      text: context.translate('withdrawal'),
                       backgroundColor: Colors.white,
                       textColor: colorGreen,
                       height: 50,
@@ -258,7 +257,7 @@ class _WalletScreenState extends State<WalletScreen> {
                 padding: EdgeInsets.fromLTRB(2, 39, 5, 0),
                 child: Row(
                   children: [
-                    Text('Transactions', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: colorLightGreyModal)),
+                    Text(context.translate('transactions'), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: colorLightGreyModal)),
                     SizedBox(
                       width: 13,
                     ),
@@ -272,7 +271,7 @@ class _WalletScreenState extends State<WalletScreen> {
                             )),
                           );
                         },
-                        child: Text('see all', style: TextStyle(fontSize: 12, color: colorGreen))),
+                        child: Text(context.translate('seeAll'), style: TextStyle(fontSize: 12, color: colorGreen))),
                   ],
                 )),
             Expanded(

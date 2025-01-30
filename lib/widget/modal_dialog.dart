@@ -2,14 +2,18 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:goldex/app_localizations.dart';
 import 'package:goldex/presentation/sell/sell_screen.dart';
 import 'package:goldex/theme/theme.dart';
 import '../presentation/assets.dart';
 import '../presentation/buy/buy_screen.dart';
+import '../presentation/transfer/cubit/transfer_cubit.dart';
 import '../presentation/transfer/transfer_screen.dart';
 
 class DraggableModalDialog extends StatefulWidget {
-  const DraggableModalDialog({super.key});
+  final DraggableScrollableController draggableController;
+  const DraggableModalDialog({super.key, required this.draggableController});
 
   @override
   _DraggableModalDialogState createState() => _DraggableModalDialogState();
@@ -18,34 +22,6 @@ class DraggableModalDialog extends StatefulWidget {
 class _DraggableModalDialogState extends State<DraggableModalDialog> {
   int _currentSlide = 0;
   int _selectedIndex = 0;
-  int index = 0;
-  late ScrollController _scrollController;
-  Color appBarColor = Colors.blue;
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController = ScrollController();
-    _scrollController.addListener(_updateAppBarColor);
-  }
-
-  void _updateAppBarColor() {
-    double scrollOffset = _scrollController.offset;
-    double maxScroll = _scrollController.position.maxScrollExtent;
-    double scrollPercentage = (scrollOffset / maxScroll).clamp(0, 1);
-
-    setState(() {
-      appBarColor = Color.lerp(Colors.blue, Colors.green, scrollPercentage)!;
-    });
-  }
-
-  @override
-  void dispose() {
-    _scrollController.removeListener(_updateAppBarColor);
-    _scrollController.dispose();
-    super.dispose();
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +42,7 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
             ),
           ),
           child: SingleChildScrollView(
+            physics: NeverScrollableScrollPhysics(),
             child: Column(
               children: [
                 Padding(
@@ -75,7 +52,7 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
                     children: [
                       actionButton(
                         Asset.buyModal,
-                        'Buy Gold',
+                        context.translate('buyGold'),
                         () {
                           Navigator.push(
                             context,
@@ -85,7 +62,7 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
                       ),
                       actionButton(
                         Asset.sellModal,
-                        'Sell Gold',
+                        context.translate('sellGold'),
                         () {
                           Navigator.push(
                             context,
@@ -95,11 +72,14 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
                       ),
                       actionButton(
                         Asset.transferModal,
-                        'Transfer',
+                        context.translate('transfer'),
                         () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => TransferScreen()),
+                            MaterialPageRoute(builder: (context) => BlocProvider(
+                              create: (context) => TransferCubit(),
+                              child: TransferScreen(),
+                            )),
                           );
                         },
                       ),
@@ -125,7 +105,7 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    'Gold price chart',
+                                    context.translate('goldPriceChart'),
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -206,7 +186,7 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
                                           end: Alignment.bottomCenter,
                                         ),
                                       ),
-            
+
                                     ),
                                   ],
                                 ),
@@ -219,7 +199,7 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(25, 28, 25, 0),
+                  padding: const EdgeInsets.fromLTRB(5, 28, 5, 0),
                   child: Column(
                     children: [
                       CarouselSlider(
@@ -228,11 +208,11 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
                             margin: const EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
                               color: Colors.green,
-                              borderRadius: BorderRadius.circular(25),
+                              borderRadius: BorderRadius.circular(15),
                             ),
                             child: Center(
                               child: Text(
-                                'Slider',
+                                context.translate('slider'),
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -244,6 +224,7 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
                         ],
                         options: CarouselOptions(
                           height: 84,
+                          viewportFraction: 1,
                           autoPlay: true,
                           enlargeCenterPage: true,
                           onPageChanged: (index, reason) {

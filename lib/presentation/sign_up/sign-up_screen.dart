@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:goldex/app_localizations.dart';
 import '../../theme/theme.dart';
 import '../../widget/custom_button.dart';
 import '../../widget/dotter_painter.dart';
@@ -26,7 +27,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           backgroundColor: Colors.black,
           body: Stack(
             children: [
-              // Background with dots
               Positioned.fill(
                 child: CustomPaint(
                   painter: DottedBackgroundPainter(),
@@ -64,11 +64,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _buildStepIndicator("Sign Up", 0),
+          _buildStepIndicator(context.translate('signUp'), 0),
           _buildDivider(),
-          _buildStepIndicator("Set Password", 1),
+          _buildStepIndicator(context.translate('setPassword'), 1),
           _buildDivider(),
-          _buildStepIndicator("Verify", 2),
+          _buildStepIndicator(context.translate('verify'), 2),
         ],
       ),
     );
@@ -128,9 +128,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: Row(
                         children: [
                           Text(
-                              'First Name',
-                              textAlign: TextAlign.left,
-                              textDirection: TextDirection.ltr, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16)
+                            context.translate('firstName'),
+                            textAlign: TextAlign.left,
+                            textDirection: TextDirection.ltr, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16)
                           ),
                         ],
                       ),
@@ -159,9 +159,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: Row(
                         children: [
                           Text(
-                              'Last Name',
-                              textAlign: TextAlign.left,
-                              textDirection: TextDirection.ltr, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16)
+                            context.translate('lastName'),
+                            textAlign: TextAlign.left,
+                            textDirection: TextDirection.ltr, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16)
                           ),
                         ],
                       ),
@@ -177,11 +177,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         fillColor: Colors.white,
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(color: Colors.white, width: 1.5), // رنگ border پیش‌فرض
+                          borderSide: BorderSide(color: Colors.white, width: 1.5),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(color: Colors.blue, width: 2.0), // رنگ border هنگام فوکوس
+                          borderSide: BorderSide(color: Colors.blue, width: 2.0),
                         ),
                       ),
                     ),
@@ -190,9 +190,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: Row(
                         children: [
                           Text(
-                              "Phone Number",
-                              textAlign: TextAlign.left,
-                              textDirection: TextDirection.ltr, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16)
+                            context.translate('phoneNumber'),
+                            textAlign: TextAlign.left,
+                            textDirection: TextDirection.ltr, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16)
                           ),
                         ],
                       ),
@@ -209,11 +209,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         fillColor: Colors.white,
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(color: Colors.white, width: 1.5), // رنگ border پیش‌فرض
+                          borderSide: BorderSide(color: Colors.white, width: 1.5),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(color: Colors.blue, width: 2.0), // رنگ border هنگام فوکوس
+                          borderSide: BorderSide(color: Colors.blue, width: 2.0),
                         ),
                       ),
                     ),
@@ -222,8 +222,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: Row(
                         children: [
                           Text(
-                              "Verification Code",
-                              textDirection: TextDirection.ltr, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16)
+                            context.translate('verificationCode'),
+                            textDirection: TextDirection.ltr, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16)
                           ),
                         ],
                       ),
@@ -242,18 +242,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               fillColor: Colors.white,
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25),
-                                borderSide: BorderSide(color: Colors.white, width: 1.5), // رنگ border پیش‌فرض
+                                borderSide: BorderSide(color: Colors.white, width: 1.5),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25),
-                                borderSide: BorderSide(color: Colors.blue, width: 2.0), // رنگ border هنگام فوکوس
+                                borderSide: BorderSide(color: Colors.blue, width: 2.0),
                               ),
                             ),
                           ),
                         ),
                         SizedBox(width: 8),
                         CustomButton(
-                          text: "Send Code",
+                          text: context.translate('sendCode'),
                           backgroundColor: colorGreen,
                           textColor: Colors.white,
                           height: 40,
@@ -285,16 +285,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   fontSize: 14,
                                 ),
                                 children: [
-                                  TextSpan(text: 'I have '),
+                                  TextSpan(text: context.translate('iHave')),
                                   TextSpan(
-                                    text:
-                                    'read the ToS',
+                                    text: context.translate('readTheToS'),
                                     style: TextStyle(
                                       fontFamily: 'IRsans',
                                       color: colorGreen,
                                     ),
                                   ),
-                                  TextSpan(text: ' and agreed with them',),
+                                  TextSpan(text: context.translate('andAgreedWithThem')),
                                 ],
                               ),
                             ),
@@ -304,7 +303,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     SizedBox(height: 24),
                     CustomButton(
-                      text: "Confirm & Continue",
+                      text: context.translate('confirmAndContinue'),
                       backgroundColor: colorGreen,
                       textColor: Colors.white,
                       height: 50,
@@ -328,7 +327,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             TextButton(
               onPressed: () {},
               child: Text(
-                "Already have an account? Log In",
+                context.translate('alreadyHaveAnAccount') + context.translate('logIn'),
                 style: TextStyle(color: Colors.white60),
               ),
             ),
@@ -388,9 +387,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: Row(
                           children: [
                             Text(
-                                "Password",
-                                textAlign: TextAlign.left,
-                                textDirection: TextDirection.ltr, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16)
+                              context.translate('password'),
+                              textAlign: TextAlign.left,
+                              textDirection: TextDirection.ltr, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16)
                             ),
                           ],
                         ),
@@ -407,11 +406,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           fillColor: Colors.white,
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(25),
-                            borderSide: BorderSide(color: Colors.white, width: 1.5), // رنگ border پیش‌فرض
+                            borderSide: BorderSide(color: Colors.white, width: 1.5),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(25),
-                            borderSide: BorderSide(color: Colors.blue, width: 2.0), // رنگ border هنگام فوکوس
+                            borderSide: BorderSide(color: Colors.blue, width: 2.0),
                           ),
                         ),
                       ),
@@ -421,7 +420,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: Row(
                           children: [
                             Text(
-                              "Repeat Password",
+                              context.translate('repeatPassword'),
                               textAlign: TextAlign.left,
                               textDirection: TextDirection.ltr, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
                             ),
@@ -440,11 +439,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           fillColor: Colors.white,
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(25),
-                            borderSide: BorderSide(color: Colors.white, width: 1.5), // رنگ border پیش‌فرض
+                            borderSide: BorderSide(color: Colors.white, width: 1.5),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(25),
-                            borderSide: BorderSide(color: Colors.blue, width: 2.0), // رنگ border هنگام فوکوس
+                            borderSide: BorderSide(color: Colors.blue, width: 2.0),
                           ),
                         ),
                       ),
@@ -454,7 +453,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         children: [
                           Checkbox(value: false, onChanged: (value) {}),
                           Text(
-                            "Show Password",
+                            context.translate('showPassword'),
                             style: TextStyle(color: Colors.black),
                           )
                         ],
@@ -463,7 +462,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   Spacer(),
                   CustomButton(
-                    text: "Confirm & Continue",
+                    text: context.translate('confirmAndContinue'),
                     backgroundColor: colorGreen,
                     textColor: Colors.white,
                     height: 50,
@@ -518,7 +517,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: Row(
                       children: [
                         Text(
-                          "Take a Selfie",
+                          context.translate('takeSelfie'),
                           textAlign: TextAlign.left,
                           textDirection: TextDirection.ltr,
                           style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
@@ -537,7 +536,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   CustomButton(
-                    text: "Open Camera",
+                    text: context.translate('openCamera'),
                     backgroundColor: colorGreen,
                     textColor: Colors.white,
                     height: 40,
@@ -556,7 +555,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: Row(
                       children: [
                         Text(
-                          "Verify with",
+                          context.translate('verifyWith'),
                           textAlign: TextAlign.left,
                           textDirection: TextDirection.ltr,
                           style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
@@ -566,9 +565,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   DropdownButtonFormField(
                     items: [
-                      DropdownMenuItem(value: "Passport", child: Text("Passport")),
-                      DropdownMenuItem(value: "ID Card", child: Text("ID Card")),
-                      DropdownMenuItem(value: "Driver License", child: Text("Driver License")),
+                      DropdownMenuItem(value: context.translate('passport'), child: Text(context.translate('passport'))),
+                      DropdownMenuItem(value: context.translate('iDCard'), child: Text(context.translate('iDCard'))),
+                      DropdownMenuItem(value: context.translate('driverLicense'), child: Text(context.translate('driverLicense'))),
                     ],
                     onChanged: (value) {},
                     decoration: InputDecoration(
@@ -580,19 +579,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25),
-                        borderSide: BorderSide(color: Colors.white, width: 1.5), // رنگ border پیش‌فرض
+                        borderSide: BorderSide(color: Colors.white, width: 1.5),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25),
-                        borderSide: BorderSide(color: Colors.blue, width: 2.0), // رنگ border هنگام فوکوس
+                        borderSide: BorderSide(color: Colors.blue, width: 2.0),
                       ),
                     ),
-                    hint: Text("Select Document"),
+                    hint: Text(context.translate('selectDocument')),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 22, 0, 0),
                     child: CustomButton(
-                      text: "Take Photo",
+                      text: context.translate('takePhoto'),
                       backgroundColor: colorGreen,
                       textColor: Colors.white,
                       height: 40,
@@ -609,7 +608,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   Spacer(),
                   CustomButton(
-                    text: "Confirm",
+                    text: context.translate('confirm'),
                     backgroundColor: colorGreen,
                     textColor: Colors.white,
                     height: 50,
@@ -632,7 +631,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
               child: CustomButton(
-                text: "Skip Verification",
+                text: context.translate('skipVerification'),
                 backgroundColor: colorDarkGrey,
                 textColor: Colors.white,
                 height: 50,
