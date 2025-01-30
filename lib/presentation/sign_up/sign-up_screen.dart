@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:goldex/app_localizations.dart';
 import '../../theme/theme.dart';
 import '../../widget/custom_button.dart';
@@ -563,13 +564,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ],
                     ),
                   ),
-                  DropdownButtonFormField(
-                    items: [
-                      DropdownMenuItem(value: context.translate('passport'), child: Text(context.translate('passport'))),
-                      DropdownMenuItem(value: context.translate('iDCard'), child: Text(context.translate('iDCard'))),
-                      DropdownMenuItem(value: context.translate('driverLicense'), child: Text(context.translate('driverLicense'))),
-                    ],
-                    onChanged: (value) {},
+                  DropdownButtonFormField<String>(
+                    items: cubit.items.map((item) {
+                      return DropdownMenuItem(
+                        value: item['value'],
+                        child: Row(
+                          children: [
+                            SizedBox(width: 8),
+                            Text(context.translate(item['label']!)),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      if (value != null) {
+                        context.read<SingUpCubit>().selectValue(value, context.translate);
+                      }
+                    },
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,

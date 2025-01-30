@@ -13,3 +13,5 @@ abstract class SingUpState extends Equatable {
 
 class SingUpInitial extends SingUpState {
 }
+
+class SelectedValue extends SingUpState {}
