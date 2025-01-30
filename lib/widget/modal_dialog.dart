@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:goldex/presentation/sell/sell_screen.dart';
 import 'package:goldex/theme/theme.dart';
+import '../presentation/assets.dart';
 import '../presentation/buy/buy_screen.dart';
 import '../presentation/transfer/transfer_screen.dart';
 
@@ -64,213 +65,215 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
               top: Radius.circular(60),
             ),
           ),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    actionButton(
-                      'assets/images/modal/buy.png',
-                      'Buy Gold',
-                      () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => BuyScreen()),
-                        );
-                      },
-                    ),
-                    actionButton(
-                      'assets/images/modal/sell.png',
-                      'Sell Gold',
-                      () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SellScreen()),
-                        );
-                      },
-                    ),
-                    actionButton(
-                      'assets/images/modal/transfer.png',
-                      'Transfer',
-                      () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => TransferScreen()),
-                        );
-                      },
-                    ),
-                  ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      actionButton(
+                        Asset.buyModal,
+                        'Buy Gold',
+                        () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => BuyScreen()),
+                          );
+                        },
+                      ),
+                      actionButton(
+                        Asset.sellModal,
+                        'Sell Gold',
+                        () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => SellScreen()),
+                          );
+                        },
+                      ),
+                      actionButton(
+                        Asset.transferModal,
+                        'Transfer',
+                        () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => TransferScreen()),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              SingleChildScrollView(
-                controller: scrollController,
-                child: Center(
-                  child: Container(
-                    width: 379,
-                    height: 317,
-                    decoration: BoxDecoration(
-                      color: colorLightGrey,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  'Gold price chart',
+                SingleChildScrollView(
+                  controller: scrollController,
+                  child: Center(
+                    child: Container(
+                      width: 379,
+                      height: 317,
+                      decoration: BoxDecoration(
+                        color: colorLightGrey,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    'Gold price chart',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: colorLightGreyModal1,
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: List.generate(4, (index) {
+                                      return _buildTimeframeButton(index);
+                                    }),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 8),
+                            Row(
+                              children: [
+                                Text(
+                                  '67.51',
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 32,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
                                   ),
                                 ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: colorLightGreyModal1,
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: List.generate(4, (index) {
-                                    return _buildTimeframeButton(index);
-                                  }),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 8),
-                          Row(
-                            children: [
-                              Text(
-                                '67.51',
-                                style: TextStyle(
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              SizedBox(width: 8),
-                              Text(
-                                '+2.1%',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.green,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 16),
-                          Expanded(
-                            child: LineChart(
-                              LineChartData(
-                                gridData: FlGridData(show: false),
-                                titlesData: FlTitlesData(show: false),
-                                borderData: FlBorderData(show: false),
-                                lineBarsData: [
-                                  LineChartBarData(
-                                    spots: [
-                                      FlSpot(0, 3),
-                                      FlSpot(1, 2),
-                                      FlSpot(2, 5),
-                                      FlSpot(3, 3.1),
-                                      FlSpot(4, 4),
-                                      FlSpot(5, 3.5),
-                                      FlSpot(6, 4.1),
-                                    ],
-                                    isCurved: true,
-                                    color: Colors.black,
-                                    barWidth: 1,
-                                    isStrokeCapRound: true,
-                                    belowBarData: BarAreaData(
-                                      show: true,
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          colorGreen,
-                                          colorLightGrey,
-                                        ],
-                                        stops: [
-                                          0.01,
-                                          1.0,
-                                        ],
-                                        begin: Alignment.topCenter,
-                                        end: Alignment.bottomCenter,
-                                      ),
-                                    ),
-
+                                SizedBox(width: 8),
+                                Text(
+                                  '+2.1%',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.green,
                                   ),
-                                ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 16),
+                            Expanded(
+                              child: LineChart(
+                                LineChartData(
+                                  gridData: FlGridData(show: false),
+                                  titlesData: FlTitlesData(show: false),
+                                  borderData: FlBorderData(show: false),
+                                  lineBarsData: [
+                                    LineChartBarData(
+                                      spots: [
+                                        FlSpot(0, 3),
+                                        FlSpot(1, 2),
+                                        FlSpot(2, 5),
+                                        FlSpot(3, 3.1),
+                                        FlSpot(4, 4),
+                                        FlSpot(5, 3.5),
+                                        FlSpot(6, 4.1),
+                                      ],
+                                      isCurved: true,
+                                      color: Colors.black,
+                                      barWidth: 1,
+                                      isStrokeCapRound: true,
+                                      belowBarData: BarAreaData(
+                                        show: true,
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            colorGreen,
+                                            colorLightGrey,
+                                          ],
+                                          stops: [
+                                            0.01,
+                                            1.0,
+                                          ],
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                        ),
+                                      ),
+            
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(25, 28, 25, 0),
-                child: Column(
-                  children: [
-                    CarouselSlider(
-                      items: [
-                        Container(
-                          margin: const EdgeInsets.all(8.0),
-                          decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Slider',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(25, 28, 25, 0),
+                  child: Column(
+                    children: [
+                      CarouselSlider(
+                        items: [
+                          Container(
+                            margin: const EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Slider',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
+                        ],
+                        options: CarouselOptions(
+                          height: 84,
+                          autoPlay: true,
+                          enlargeCenterPage: true,
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              _currentSlide = index;
+                            });
+                          },
                         ),
-                      ],
-                      options: CarouselOptions(
-                        height: 84,
-                        autoPlay: true,
-                        enlargeCenterPage: true,
-                        onPageChanged: (index, reason) {
-                          setState(() {
-                            _currentSlide = index;
-                          });
-                        },
                       ),
-                    ),
-                    SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(
-                        3, // Number of slides
-                        (index) => Container(
-                          width: 8,
-                          height: 8,
-                          margin: const EdgeInsets.symmetric(horizontal: 4),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: _currentSlide == index ? Colors.black : Colors.grey,
+                      SizedBox(height: 8),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(
+                          3, // Number of slides
+                          (index) => Container(
+                            width: 8,
+                            height: 8,
+                            margin: const EdgeInsets.symmetric(horizontal: 4),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: _currentSlide == index ? Colors.black : Colors.grey,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
@@ -326,56 +329,3 @@ Widget actionButton(String icon, String label, VoidCallback onTap) {
     ),
   );
 }
-
-// Widget transactionCard(String name, String amount, Color color, String subtitle, String unit) {
-//   return SizedBox(
-//     height: 90,
-//     child: Card(
-//       margin: const EdgeInsets.fromLTRB(18, 0, 18, 13),
-//       shape: RoundedRectangleBorder(
-//         borderRadius: BorderRadius.circular(25),
-//       ),
-//       color: colorLightGrey,
-//       child: ListTile(
-//         leading: Container(
-//           width: 70,
-//           height: 70,
-//           decoration: const BoxDecoration(
-//             shape: BoxShape.circle,
-//           ),
-//           child: name == 'Selling Gold'
-//               ? Image.asset(
-//                   'assets/images/selling_gold.png',
-//                 )
-//               : Image.asset(
-//                   'assets/images/generic_avatar.png',
-//                 ),
-//         ),
-//         title: Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
-//         subtitle: Text(subtitle),
-//         trailing: RichText(
-//           text: TextSpan(
-//             children: [
-//               TextSpan(
-//                 text: amount,
-//                 style: TextStyle(
-//                   color: color,
-//                   fontWeight: FontWeight.bold,
-//                   fontSize: 30,
-//                 ),
-//               ),
-//               TextSpan(
-//                 text: ' $unit',
-//                 style: TextStyle(
-//                   color: colorLightGreyUnit,
-//                   fontWeight: FontWeight.normal,
-//                   fontSize: 21,
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     ),
-//   );
-// }

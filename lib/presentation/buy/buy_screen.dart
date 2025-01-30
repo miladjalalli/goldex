@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:goldex/theme/theme.dart';
 import '../../widget/custom_bottom_bar.dart';
 import '../../widget/custom_button.dart';
+import '../assets.dart';
 
 class BuyScreen extends StatefulWidget {
   const BuyScreen({super.key});
@@ -39,7 +40,7 @@ class _BuyScreenState extends State<BuyScreen> {
             Navigator.pop(context);
           },
           child: SvgPicture.asset(
-            'assets/icons/back.svg',
+            Asset.back,
           ),
         ),
         backgroundColor: Colors.white,
@@ -152,7 +153,7 @@ class _BuyScreenState extends State<BuyScreen> {
                                     Row(
                                       children: [
                                         SvgPicture.asset(
-                                          'assets/icons/gold.svg',
+                                          Asset.gold,
                                           fit: BoxFit.cover,
                                           width: 18,
                                           height: 18,

@@ -5,6 +5,7 @@ import 'package:goldex/presentation/home/home_screen.dart';
 import 'package:goldex/theme/theme.dart';
 import '../../widget/custom_button.dart';
 import '../../widget/dotter_painter.dart';
+import '../assets.dart';
 import '../sign_up/cubit/sing_up_cubit.dart';
 import '../sign_up/sign-up_screen.dart';
 
@@ -31,7 +32,7 @@ class LoginScreen extends StatelessWidget {
                 children: [
                   Center(
                     child: Image.asset(
-                      'assets/images/header_logo.png',
+                      Asset.headerLogo,
                       width: 80,
                       height: 80,
                     ),

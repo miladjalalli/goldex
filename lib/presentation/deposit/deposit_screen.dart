@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:goldex/presentation/confirmation/confirmation_screen.dart';
 import 'package:goldex/theme/theme.dart';
 import '../../widget/custom_button.dart';
+import '../assets.dart';
 import 'cubit/deposit_cubit.dart';
 
 class DepositScreen extends StatefulWidget {
@@ -30,7 +31,7 @@ class _DepositScreenState extends State<DepositScreen> {
             Navigator.pop(context);
           },
           child: SvgPicture.asset(
-            'assets/icons/back.svg',
+            Asset.back
           ),
         ),
         backgroundColor: Colors.white,

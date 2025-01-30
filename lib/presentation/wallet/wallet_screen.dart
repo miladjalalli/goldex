@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:goldex/theme/theme.dart';
 
 import '../../widget/custom_button.dart';
+import '../assets.dart';
 import '../deposit/cubit/deposit_cubit.dart';
 import '../deposit/deposit_screen.dart';
 import '../home/cubit/home_cubit.dart';
@@ -132,7 +133,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                     Row(
                                       children: [
                                         SvgPicture.asset(
-                                          'assets/icons/gold.svg',
+                                          Asset.gold,
                                           fit: BoxFit.cover,
                                           width: 18,
                                           height: 18,
@@ -208,7 +209,7 @@ class _WalletScreenState extends State<WalletScreen> {
                         color: Colors.white,
                       ),
                       isIconEnabled: true,
-                      icon: 'assets/icons/deposit.svg',
+                      icon: Asset.deposit,
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -238,7 +239,7 @@ class _WalletScreenState extends State<WalletScreen> {
                         color: colorGreen,
                       ),
                       isIconEnabled: true,
-                      icon: 'assets/icons/withdrawal.svg',
+                      icon: Asset.withdrawal,
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -323,7 +324,7 @@ Widget cardView(var transaction) {
             child: Row(
               children: [
                 SvgPicture.asset(
-                  transaction['type'] == 'dollar' ? 'assets/icons/dollar.svg' : 'assets/icons/gold.svg',
+                  transaction['type'] == 'dollar' ? Asset.dollar : Asset.gold,
                 ),
                 SizedBox(width: 10),
                 Expanded(
@@ -381,7 +382,7 @@ Widget cardView(var transaction) {
                   textAlign: TextAlign.end,
                 ),
                 SizedBox(width: 12,),
-                SvgPicture.asset('assets/icons/attention.svg',
+                SvgPicture.asset(Asset.attention,
                   width: 13,
                   height: 15,)
               ],

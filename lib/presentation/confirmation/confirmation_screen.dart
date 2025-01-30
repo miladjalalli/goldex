@@ -4,6 +4,7 @@ import 'package:flutter_verification_code/flutter_verification_code.dart';
 
 import '../../theme/theme.dart';
 import '../../widget/custom_button.dart';
+import '../assets.dart';
 
 class ConfirmationScreen extends StatefulWidget {
   @override
@@ -28,7 +29,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
             Navigator.pop(context);
           },
           child: SvgPicture.asset(
-            'assets/icons/back.svg',
+            Asset.back,
           ),
         ),
         backgroundColor: Colors.white,
@@ -231,7 +232,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
             child: CustomButton(
               text: "Share",
               isIconEnabled: true,
-              icon: 'assets/icons/share.svg',
+              icon: Asset.share,
               backgroundColor: Colors.white,
               textColor: colorLightGreyModal2,
               height: 50,
@@ -255,7 +256,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
             child: CustomButton(
               text: "Save to Gallery",
               isIconEnabled: true,
-              icon: 'assets/icons/download.svg',
+              icon: Asset.download,
               backgroundColor: colorGreen,
               textColor: Colors.white,
               height: 50,

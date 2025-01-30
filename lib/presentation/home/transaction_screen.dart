@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widget/modal_dialog.dart';
+import '../assets.dart';
 
 class TransactionScreen extends StatelessWidget {
   const TransactionScreen({super.key});
@@ -28,7 +29,7 @@ class TransactionScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Image.asset(
-                            'assets/images/person.png',
+                            Asset.person,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -80,7 +81,7 @@ class TransactionScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Image.asset(
-                          'assets/images/bank.png',
+                          Asset.bank,
                           fit: BoxFit.cover,
                         ),
                       ),

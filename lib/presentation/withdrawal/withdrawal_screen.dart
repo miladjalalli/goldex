@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:goldex/presentation/confirmation/confirmation_screen.dart';
 import 'package:goldex/theme/theme.dart';
 import '../../widget/custom_button.dart';
+import '../assets.dart';
 import 'cubit/withdrawal_cubit.dart';
 
 class WithdrawalScreen extends StatefulWidget {
@@ -30,7 +31,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
             Navigator.pop(context);
           },
           child: SvgPicture.asset(
-            'assets/icons/back.svg',
+            Asset.back,
           ),
         ),
         backgroundColor: Colors.white,
@@ -210,7 +211,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                               prefixIcon: Padding(
                                 padding: const EdgeInsets.fromLTRB(19,0,20,0),
                                 child: SvgPicture.asset(
-                                  'assets/icons/pay/master_card.svg',
+                                  Asset.masterCard,
                                 ),
                               ),
                             ),

@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goldex/theme/theme.dart';
 
+import '../presentation/assets.dart';
+
 class CounterWidget extends StatefulWidget {
-  const CounterWidget({super.key});
+  final Function(int) onQuantityChanged; // تابع برای ارسال مقدار جدید
+
+  const CounterWidget({super.key, required this.onQuantityChanged});
 
   @override
   _CounterWidgetState createState() => _CounterWidgetState();
@@ -13,25 +17,20 @@ class CounterWidget extends StatefulWidget {
 class _CounterWidgetState extends State<CounterWidget> {
   int quantity = 0;
 
-  void increment() {
+  void updateQuantity(int newQuantity) {
     setState(() {
-      quantity++;
+      quantity = newQuantity;
     });
+    widget.onQuantityChanged(quantity); // ارسال مقدار جدید به والد
   }
+
+  void increment() => updateQuantity(quantity + 1);
 
   void decrement() {
-    setState(() {
-      if (quantity > 0) {
-        quantity--;
-      }
-    });
+    if (quantity > 0) updateQuantity(quantity - 1);
   }
 
-  void delete() {
-    setState(() {
-      quantity = 0;
-    });
-  }
+  void delete() => updateQuantity(0);
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +52,11 @@ class _CounterWidgetState extends State<CounterWidget> {
         children: [
           if (quantity > 0)
             IconButton(
-              icon: quantity == 1 ? SvgPicture.asset('assets/icons/delete.svg') : Icon(Icons.remove),
+              icon: quantity == 1
+                  ? SvgPicture.asset(Asset.delete)
+                  : Icon(Icons.remove),
               onPressed: quantity == 1 ? delete : decrement,
-              color: quantity == 1 ? Colors.black : colorGreen ,
+              color: quantity == 1 ? Colors.black : colorGreen,
             ),
           if (quantity > 0)
             Padding(

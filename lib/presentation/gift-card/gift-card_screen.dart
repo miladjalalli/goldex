@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:goldex/presentation/confirmation/confirmation_screen.dart';
 import 'package:goldex/theme/theme.dart';
 import '../../widget/custom_button.dart';
+import '../assets.dart';
 import 'cubit/gift_card_cubit.dart';
 import 'give_gift_screen.dart';
 
@@ -16,6 +16,8 @@ class GiftCardScreen extends StatefulWidget {
 }
 
 class _GiftCardScreenState extends State<GiftCardScreen> {
+
+  int quantity = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class _GiftCardScreenState extends State<GiftCardScreen> {
             Navigator.pop(context);
           },
           child: SvgPicture.asset(
-            'assets/icons/back.svg',
+            Asset.back,
           ),
         ),
         backgroundColor: Colors.white,
@@ -65,7 +67,7 @@ class _GiftCardScreenState extends State<GiftCardScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset('assets/images/gift-card.png',
+                    Image.asset(Asset.giftCard,
                         fit: BoxFit.cover)
                   ],
                 ),

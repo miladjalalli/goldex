@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goldex/theme/theme.dart';
 
+import '../presentation/assets.dart';
+
 class CustomBottomBar extends StatefulWidget {
   final Function(int) onItemSelected;
 
@@ -38,10 +40,10 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildIcon('assets/icons/profile.svg', 0, screenWidth),
-          _buildIcon('assets/icons/service.svg', 1, screenWidth),
-          _buildIcon('assets/icons/wallet.svg', 2, screenWidth),
-          _buildIcon('assets/icons/transaction.svg', 3, screenWidth),
+          _buildIcon(Asset.profile, 0, screenWidth),
+          _buildIcon(Asset.service, 1, screenWidth),
+          _buildIcon(Asset.wallet, 2, screenWidth),
+          _buildIcon(Asset.transaction, 3, screenWidth),
         ],
       ),
     );

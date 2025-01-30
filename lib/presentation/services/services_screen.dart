@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../theme/theme.dart';
+import '../assets.dart';
 import '../gift-card/cubit/gift_card_cubit.dart';
 import '../gift-card/gift-card_screen.dart';
 import 'cubit/services_cubit.dart';
@@ -52,9 +53,18 @@ class _ServicesScreenState extends State<ServicesScreen> {
                             fit: BoxFit.cover,
                             width: width,
                             height: 190,
+                            loadingBuilder: (context, child, progress) {
+                              if (progress == null) {
+                                return child;
+                              } else {
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                            },
                             errorBuilder: (context, error, stackTrace) {
                               return Image.asset(
-                                'assets/images/default.png',
+                                Asset.imageDefault,
                                 fit: BoxFit.cover,
                                 width: double.infinity,
                                 height: 190,
@@ -129,11 +139,10 @@ class _ServicesScreenState extends State<ServicesScreen> {
                             color: Colors.transparent,
                             child: InkWell(
                               onTap: () {
-                                // Handle 'Get your Gold' click
                                 print("Get your Gold clicked");
                               },
                               child: ListTile(
-                                leading: SvgPicture.asset('assets/icons/service/get-gold.svg', width: 17, height: 17),
+                                leading: SvgPicture.asset(Asset.getGold, width: 17, height: 17),
                                 title: const Text(
                                   'Get your Gold',
                                   style: TextStyle(
@@ -165,7 +174,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                               },
                               child: ListTile(
                                 leading: SvgPicture.asset(
-                                  'assets/icons/service/gift.svg',
+                                  Asset.gift,
                                   width: 17,
                                   height: 17,
                                 ),

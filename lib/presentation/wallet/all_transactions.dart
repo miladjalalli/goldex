@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../theme/theme.dart';
+import '../assets.dart';
 import 'cubit/wallet_cubit.dart';
 
 double width = 0;
@@ -28,7 +29,7 @@ class AllTransactionsScreen extends StatelessWidget {
             Navigator.pop(context);
           },
           child: SvgPicture.asset(
-            'assets/icons/back.svg',
+            Asset.back,
           ),
         ),
         backgroundColor: Colors.white,
@@ -73,7 +74,7 @@ Widget cardView(var transaction) {
               child: Row(
                 children: [
                   SvgPicture.asset(
-                    transaction['type'] == 'dollar' ? 'assets/icons/dollar.svg' : 'assets/icons/gold.svg',
+                    transaction['type'] == 'dollar' ? Asset.dollar : Asset.gold,
                   ),
                   SizedBox(width: 10),
                   Expanded(
@@ -131,7 +132,7 @@ Widget cardView(var transaction) {
                     textAlign: TextAlign.end,
                   ),
                   SizedBox(width: 12,),
-                  SvgPicture.asset('assets/icons/attention.svg',
+                  SvgPicture.asset(Asset.attention,
                   width: 13,
                   height: 15,)
                 ],

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../theme/theme.dart';
 import '../../widget/custom_button.dart';
 import '../../widget/dotter_painter.dart';
+import '../assets.dart';
 import 'cubit/sing_up_cubit.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -529,7 +530,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     padding: const EdgeInsets.fromLTRB(0, 5, 0, 21),
                     child: Center(
                       child: Image.asset(
-                        'assets/images/generic_avatar.png',
+                        Asset.genericAvatar,
                         width: 105,
                         height: 105,
                       ),

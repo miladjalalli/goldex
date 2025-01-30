@@ -5,6 +5,7 @@ import 'package:goldex/presentation/confirmation/confirmation_screen.dart';
 import 'package:goldex/theme/theme.dart';
 import '../../widget/custom_bottom_bar.dart';
 import '../../widget/custom_button.dart';
+import '../assets.dart';
 
 class TransferScreen extends StatefulWidget {
   const TransferScreen({super.key});
@@ -32,7 +33,7 @@ class _TransferScreenState extends State<TransferScreen> {
             Navigator.pop(context);
           },
           child: SvgPicture.asset(
-            'assets/icons/back.svg',
+            Asset.back,
           ),
         ),
         backgroundColor: Colors.white,
@@ -87,7 +88,7 @@ class _TransferScreenState extends State<TransferScreen> {
                             child: Row(
                               children: [
                                 SvgPicture.asset(
-                                  'assets/icons/gold.svg',
+                                  Asset.gold,
                                   fit: BoxFit.cover,
                                   width: 18,
                                   height: 18,
@@ -102,7 +103,7 @@ class _TransferScreenState extends State<TransferScreen> {
                             child: Row(
                               children: [
                                 SvgPicture.asset(
-                                  'assets/icons/dollar.svg',
+                                  Asset.dollar,
                                   fit: BoxFit.cover,
                                   width: 18,
                                   height: 18,
