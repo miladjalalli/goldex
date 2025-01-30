@@ -18,16 +18,8 @@ class GiftCardCubit extends Cubit<GiftCardState> {
   ];
 
   List<Map<String, dynamic>> items = [
-    {
-      'icon': Asset.inPerson,
-      'title': 'Get your Gold',
-      'content': 'Here is the content for "Get your Gold"',
-    },
-    {
-      'icon': Asset.post,
-      'title': 'Gift Card',
-      'content': 'Here is the content for "Gift Card"',
-    },
+    { 'title': 'In Person', 'icon': Asset.inPerson,'content': 'Here is the content for "Get your Gold"'},
+    { 'title': 'Send by post', 'icon': Asset.post,'content': 'Here is the content for "Gift Card"'},
   ];
 
   void updateQuantity(int index, int quantity) {
