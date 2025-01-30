@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:goldex/presentation/transaction/transaction_screen.dart';
 import 'package:goldex/presentation/wallet/wallet_screen.dart';
 import '../../widget/custom_bottom_bar.dart';
+import '../profile/profile_screen.dart';
 import '../services/cubit/services_cubit.dart';
 import '../services/services_screen.dart';
 import '../wallet/cubit/wallet_cubit.dart';
@@ -18,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 3;
 
   final List<Widget> _pages = [
-    Center(child: Text('Profile Item', style: TextStyle(color: Colors.white))),
+    ProfileScreen(),
     BlocProvider(
       create: (context) => ServicesCubit(),
       child: ServicesScreen(),

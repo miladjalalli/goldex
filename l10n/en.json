@@ -90,5 +90,16 @@
   "verifyWith": "Verify with",
   "welcomeBack": "welcome back",
   "withdrawal": "Withdrawal",
-  "yourRequestMessage": "your request will be submitted and will be done by 2 work days."
+  "yourRequestMessage": "your request will be submitted and will be done by 2 work days.",
+  "goldexEntryGifts": "Goldex Entry Gifts",
+  "getFreeGift": "Get a free Gift",
+  "inviteFreind": "Invite a Freind",
+  "settings": "Settings",
+  "security": "Security",
+  "appearances": "Appearances",
+  "aboutGoldex": "About Goldex",
+  "logout": "Logout",
+  "notVerified": "Not Verified",
+  "editProfile": "Edit Profile",
+  "support": "Support"
 }

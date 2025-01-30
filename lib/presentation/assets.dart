@@ -8,6 +8,7 @@ class Asset {
   static const String _imgModal = 'assets/images/modal';
   static const String _icons = 'assets/icons';
   static const String _iconsPay = 'assets/icons/pay';
+  static const String _iconsProfile = 'assets/icons/profile';
   static const String _iconsService = 'assets/icons/service';
 
   static const String bank = '$_img/bank.png';
@@ -36,15 +37,24 @@ class Asset {
   static const String profile = '$_icons/profile.svg';
   static const String service = '$_icons/service.svg';
   static const String share = '$_icons/share.svg';
+  static const String support = '$_icons/support.svg';
   static const String transaction = '$_icons/transaction.svg';
   static const String wallet = '$_icons/wallet.svg';
   static const String withdrawal = '$_icons/withdrawal.svg';
+  static const String complete = '$_icons/complete.svg';
+  static const String edit = '$_icons/edit.svg';
 
   static const String applePay = '$_iconsPay/apple-pay.svg';
   static const String googlePay = '$_iconsPay/google-pay.svg';
   static const String masterCard = '$_iconsPay/master-card.svg';
   static const String payPal = '$_iconsPay/pay-pal.svg';
   static const String visaCard = '$_iconsPay/visa-card.svg';
+
+  static const String hide = '$_iconsProfile/hide.svg';
+  static const String info = '$_iconsProfile/info.svg';
+  static const String invite = '$_iconsProfile/invite.svg';
+  static const String lock = '$_iconsProfile/lock.svg';
+  static const String logOut = '$_iconsProfile/logOut.svg';
 
   static const String getGold = '$_iconsService/get-gold.svg';
   static const String gift = '$_iconsService/gift.svg';
