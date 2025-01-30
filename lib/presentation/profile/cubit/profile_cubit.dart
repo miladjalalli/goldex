@@ -6,9 +6,11 @@ part 'profile_state.dart';
 class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit() : super(ProfileInitial());
 
+  int completeField = 0;
+
   List<Map<String, dynamic>> documents = [
     {'title': 'Phone number', 'completed': true},
-    {'title': 'E-Mail', 'completed': false},
+    {'title': 'E-Mail', 'completed': true},
     {'title': 'Selfie Photo', 'completed': false},
     {'title': 'Verify Identity', 'completed': false},
     {'title': 'Payment method', 'completed': false},

@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:goldex/app_localizations.dart';
 import 'package:goldex/theme/theme.dart';
 import 'package:goldex/widget/custom_button.dart';
-import '../../widget/profile_complete_widget.dart';
 import '../assets.dart';
 import 'cubit/profile_cubit.dart';
 import 'edit_profile.dart';
@@ -158,7 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   height: 17,
                                 ),
                                 title: Text(
-                                  context.translate('inviteFreind'),
+                                  context.translate('inviteFriend'),
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.black,

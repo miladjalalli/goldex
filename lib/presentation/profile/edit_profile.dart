@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goldex/app_localizations.dart';
-
 import '../../theme/theme.dart';
 import '../../widget/custom_button.dart';
 import '../../widget/profile_complete_widget.dart';
@@ -16,6 +15,8 @@ class EditProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProfileCubit cubit = context.read<ProfileCubit>();
+    var completeDocuments = cubit.documents.where((document) => document['completed'] == true).toList();
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -76,8 +77,8 @@ class EditProfileScreen extends StatelessWidget {
                 Text('Scott Williams', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: colorLightGreyModal)),
                 Padding(
                   padding: const EdgeInsets.only(left: 10, right: 10),
-                  child: ProfileCompletionWidget(completedFields: 1, totalFields: 5),
-                ) // This widget should display progress
+                  child: ProfileCompletionWidget(completedFields: completeDocuments.length, totalFields: cubit.documents.length),
+                )
               ],
             ),
         ListView.builder(
