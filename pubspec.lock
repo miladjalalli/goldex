@@ -97,6 +97,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.19.0"
+  country_codes:
+    dependency: "direct main"
+    description:
+      name: country_codes
+      sha256: "745aaf075b4e824d4b0d285efea2e2206108bfd959381e7302790dea816b82dd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.2+3"
   crypto:
     dependency: transitive
     description:
@@ -365,6 +373,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+  otp_text_field:
+    dependency: "direct main"
+    description:
+      name: otp_text_field
+      sha256: "340b1ed135e1abe9fac0aaebe1c4e48147d95a3e29ecb03ae45ad63a7c28d65d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.3"
   path:
     dependency: transitive
     description:

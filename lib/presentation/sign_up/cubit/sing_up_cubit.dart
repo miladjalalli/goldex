@@ -10,7 +10,13 @@ class SingUpCubit extends Cubit<SingUpState>  {
   SingUpCubit() : super(SingUpInitial());
 
   int currentIndex = 0;
+  bool showOTP = false;
+  bool isFormValid = false;
+
   final PageController pageController = PageController();
+  List<String> countryCodes = ['+1', '+44', '+49', '+91', '+98', '+33', '+61', '+81'];
+  String selectedCountryCodes = "";
+
   final List<Map<String, String>> items = [
     {'value': 'passport', 'label': 'passport'},
     {'value': 'iDCard', 'label': 'iDCard'},
@@ -43,5 +49,11 @@ class SingUpCubit extends Cubit<SingUpState>  {
     }
     emit(state);
   }
+
+  void changeContent() {
+    showOTP = true;
+    emit(ChangeContent());
+  }
+
 
 }

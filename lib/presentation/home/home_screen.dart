@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.black,
       body: _pages[_currentIndex],
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 33),
+        padding: const EdgeInsets.only(bottom: 20),
         child: CustomBottomBar(
           onItemSelected: (int index) {
             setState(() {

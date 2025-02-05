@@ -101,5 +101,12 @@
   "logout": "خروچ",
   "notVerified": "تایید نشده",
   "editProfile": "ویرایش",
-  "support": "پشتیبانی"
+  "support": "پشتیبانی",
+  "phoneNumberEmail": "Phone number or E-mail",
+  "useYourFingerprint": "or use your fingerprint",
+  "singUp": "Sing Up",
+  "pleaseEnterVerificationCode": "Please Enter the Verification Code",
+  "invitationCode": "Invitation Code",
+  "gr": "gr",
+  "total": "Total"
 }

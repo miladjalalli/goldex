@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goldex/app_localizations.dart';
+import 'package:goldex/presentation/sell/sell_order_summary.dart';
 import 'package:goldex/theme/theme.dart';
+import '../../widget/card_widget.dart';
 import '../../widget/custom_button.dart';
 import '../assets.dart';
 
@@ -18,14 +20,6 @@ class _SellScreenState extends State<SellScreen> {
 
   TextEditingController controller1 = TextEditingController(text: '4.2');
   TextEditingController controller2 = TextEditingController(text: '250');
-
-  void swapSuffix() {
-    setState(() {
-      String temp = suffix1;
-      suffix1 = suffix2;
-      suffix2 = temp;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,187 +46,42 @@ class _SellScreenState extends State<SellScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Card(
-              color: Colors.black,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: SizedBox(
-                height: 245,
-                width: double.infinity,
-                child: Stack(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        gradient: RadialGradient(
-                          center: Alignment(1.0, -1.0),
-                          radius: 1.9,
-                          colors: [
-                            colorDarkGrey,
-                            Colors.transparent,
-                          ],
-                          stops: [0.4, 1.0],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        gradient: RadialGradient(
-                          center: Alignment(-2.0, -1.0),
-                          radius: 1.6,
-                          colors: [
-                            colorGreen,
-                            Colors.transparent,
-                          ],
-                          stops: [0.2, 1.0],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        gradient: RadialGradient(
-                          center: Alignment(0, -2.1),
-                          radius: 1.4,
-                          colors: [
-                            colorGreen,
-                            Colors.transparent,
-                          ],
-                          stops: [0.2, 1.0],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Scott Williams',
-                            style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Text(
-                            '2020-1821-1530-2401',
-                            style: TextStyle(color: colorGreen, fontSize: 14),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  context.translate('balance'),
-                                  style: TextStyle(color: Colors.white, fontSize: 17),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                  child: Text(
-                                    '\$1430.5',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 36,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          Asset.gold,
-                                          fit: BoxFit.cover,
-                                          width: 18,
-                                          height: 18,
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          '123.4 ${context.translate('gram')}',
-                                          style: TextStyle(color: Colors.white, fontSize: 18),
-                                        ),
-                                      ],
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () {},
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.transparent,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(16),
-                                          side: BorderSide(color: Colors.white),
-                                        ),
-                                        minimumSize: Size(111, 25), // Set width and height here
-                                      ),
-                                      child: RichText(
-                                        textAlign: TextAlign.justify,
-                                        textDirection: TextDirection.ltr,
-                                        text: TextSpan(
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 14,
-                                          ),
-                                          children: [
-                                            TextSpan(text: context.translate('depositUSD')),
-                                            TextSpan(
-                                              text: '+',
-                                              style: TextStyle(
-                                                color: colorGreen,
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+            CardWidget(
+                name: 'Scott Williams',
+                balance: '\$1430.5',
+                cardNumber: '2020-1821-1530-2401',
+                goldAmount: '123.4 ',
+                type: context.translate('gr'),
+                onDeposit: () => {}
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(60, 25, 60, 0),
-              child: Row(
-                children: [
-                  RichText(
-                    textAlign: TextAlign.justify,
-                    textDirection: TextDirection.ltr,
-                    text: TextSpan(
-                      style: TextStyle(
-                        color: colorLightGreyModal,
-                        fontSize: 18,
-                      ),
-                      children: [
-                        TextSpan(text: context.translate('liveGoldPrice')),
-                        TextSpan(
-                          text: '68.21',
-                          style: TextStyle(color: colorGold, fontSize: 34, fontWeight: FontWeight.bold),
-                        ),
-                        TextSpan(
-                          text: context.translate('perGram'),
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: colorLightGreyModal3,
-                          ),
-                        ),
-                      ],
+              padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
+              child: Center(
+                child: RichText(
+                  textAlign: TextAlign.justify,
+                  textDirection: TextDirection.ltr,
+                  text: TextSpan(
+                    style: TextStyle(
+                      color: colorLightGreyModal,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400
                     ),
+                    children: [
+                      TextSpan(text: '${context.translate('liveGoldPrice')}  '),
+                      TextSpan(
+                        text: '68.21',
+                        style: TextStyle(color: colorGold, fontSize: 34, fontWeight: FontWeight.w800),
+                      ),
+                      TextSpan(
+                        text: '${context.translate('perGram')}  ',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: colorLightGreyModal3,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
             Padding(
@@ -255,35 +104,35 @@ class _SellScreenState extends State<SellScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start, // Align content to start
                     children: [
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 5, 0, 5),
-                        child: Text(
-                          context.translate('iWantToSell'),
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                          ),
+                        padding: const EdgeInsets.fromLTRB(23, 10, 0, 7),
+                        child: Row(
+                          children: [
+                            Text(
+                              context.translate("iWantToSell"),
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
+                            ),
+                          ],
                         ),
                       ),
-                      TextField(
-                        textAlign: TextAlign.left,
-                        controller: controller1,
-                        keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
-                            borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
-                            borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                          // Increased horizontal padding
-                          filled: true,
-                          fillColor: Colors.white,
-                          suffix: Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: Text(
+                      SizedBox(
+                        height: 50,
+                        child: TextField(
+                          textAlign: TextAlign.left,
+                          controller: controller1,
+                          keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                              borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                              borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
+                            ), // Increased horizontal padding
+                            filled: true,
+                            fillColor: Colors.white,
+                            suffix: Text(
                               suffix1,
                               style: const TextStyle(
                                 fontSize: 16,
@@ -291,52 +140,42 @@ class _SellScreenState extends State<SellScreen> {
                               ),
                             ),
                           ),
-                        ),
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        padding: const EdgeInsets.fromLTRB(23, 10, 0, 7),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              context.translate('iWillEarn'),
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.swap_vert, color: colorDarkGrey),
-                              onPressed: () {
-                                swapSuffix();
-                              },
+                              context.translate("iWillEarn"),
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
                             ),
                           ],
                         ),
                       ),
-                      TextField(
-                        textAlign: TextAlign.left,
-                        controller: controller2,
-                        keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
-                            borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
-                            borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                          filled: true,
-                          fillColor: Colors.white,
-                          suffix: Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: Text(
+                      SizedBox(
+                        height: 50,
+                        child: TextField(
+                          textAlign: TextAlign.left,
+                          controller: controller2,
+                          keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                              borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                              borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
+                            ),
+                            filled: true,
+                            fillColor: Colors.white,
+                            suffix: Text(
                               suffix2,
                               style: const TextStyle(
                                 fontSize: 16,
@@ -344,10 +183,10 @@ class _SellScreenState extends State<SellScreen> {
                               ),
                             ),
                           ),
-                        ),
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                       Padding(
@@ -362,6 +201,7 @@ class _SellScreenState extends State<SellScreen> {
                                 style: TextStyle(color: Colors.grey),
                               ),
                             ),
+                            SizedBox(width: 29),
                             CustomButton(
                               text: context.translate('confirm'),
                               backgroundColor: colorGreen,
@@ -375,7 +215,12 @@ class _SellScreenState extends State<SellScreen> {
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => SellOrderSummary()),
+                                );
+                              },
                             )
                           ],
                         ),

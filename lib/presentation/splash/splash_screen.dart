@@ -89,7 +89,7 @@ class SemiCircleUpPainter extends CustomPainter {
     final paint = Paint()
       ..color = colorGreen
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 3;
+      ..strokeWidth = 2;
 
     double cx = size.width / 2;
     double cy = size.height;
@@ -99,7 +99,7 @@ class SemiCircleUpPainter extends CustomPainter {
       Rect.fromCircle(center: Offset(cx, cy), radius: r),
       0,
       3.14,
-      false, // true برای پر کردن دایره
+      false,
       paint,
     );
   }
@@ -113,7 +113,7 @@ class SemiCircleFirstBottomPainter extends CustomPainter {
     Paint paint = Paint()
       ..color = colorGreen
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 3;
+      ..strokeWidth = 2;
 
     double cx = size.width;
     double cy = size.height;
@@ -139,7 +139,7 @@ class SemiCircleSecondBottomPainter extends CustomPainter {
     Paint paint = Paint()
       ..color = colorGreen
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 3;
+      ..strokeWidth = 2;
 
     double cx = size.width;
     double cy = size.height;

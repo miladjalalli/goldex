@@ -15,3 +15,4 @@ class SingUpInitial extends SingUpState {
 }
 
 class SelectedValue extends SingUpState {}
+class ChangeContent extends SingUpState {}

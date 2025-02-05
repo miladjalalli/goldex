@@ -141,38 +141,39 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
     return Card(
       color: colorLightGreyModal4,
       elevation: 5,
+      margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25),
       ),
       child: Container(
         constraints: BoxConstraints(minHeight: 201),
+        height: 201,
         width: 347,
         padding: EdgeInsets.all(16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Stack(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  '${cubit.giftCards[index]['title']!.split(' ').first}\n${cubit.giftCards[index]['title']!.split(' ').last} ',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 48,
-                    fontWeight: FontWeight.bold,
-                    height: 0.9,
-                  ),
-                  textAlign: TextAlign.start,
-                  maxLines: 2,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${cubit.giftCards[index]['title']!.split(' ').first}\n${cubit.giftCards[index]['title']!.split(' ').last} ',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 48,
+                        fontWeight: FontWeight.bold,
+                        height: 0.9,
+                      ),
+                      textAlign: TextAlign.start,
+                      maxLines: 2,
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 32.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
+                Padding(
+                  padding: const EdgeInsets.only(top: 16.0),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
@@ -194,19 +195,23 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
                       ),
                     ],
                   ),
-                ],
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                CounterWidget(
-                  onQuantityChanged: (quantity) {
-                    cubit.updateQuantity(index, quantity);
-                  },
                 ),
+
               ],
             ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  CounterWidget(
+                    onQuantityChanged: (quantity) {
+                      cubit.updateQuantity(index, quantity);
+                    },
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),

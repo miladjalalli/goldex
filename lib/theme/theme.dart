@@ -5,6 +5,7 @@ class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     primarySwatch: Colors.blue,
     brightness: Brightness.light,
+    fontFamily: 'opensans'
     // Define other properties for light theme
   );
 
@@ -12,6 +13,7 @@ class AppTheme {
     primarySwatch: Colors.blue,
     brightness: Brightness.dark,
     // Define other properties for dark theme
+      fontFamily: 'opensans'
   );
 
 }
@@ -56,4 +58,6 @@ const Color colorLightGreyModal6 = Color(0xff565656);
 const Color colorLightGreyModal7 = Color(0xff959595);
 const Color colorLightGreyModal8 = Color(0xffE6E6E6);
 const Color colorLightGreyModal9 = Color(0xffF2F2F2);
+const Color colorLightGreyModal10 = Color(0xff4F4F4F);
+const Color colorLightGreyModal11 = Color(0xffC8C8C8);
 

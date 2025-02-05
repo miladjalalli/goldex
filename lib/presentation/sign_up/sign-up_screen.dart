@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:goldex/app_localizations.dart';
 import '../../theme/theme.dart';
+import '../../widget/country_code.dart';
 import '../../widget/custom_button.dart';
-import '../../widget/dotter_painter.dart';
 import '../assets.dart';
 import 'cubit/sing_up_cubit.dart';
 
@@ -16,12 +16,10 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SingUpCubit, SingUpState>(
-      listener: (context, state) {
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         SingUpCubit cubit = context.read<SingUpCubit>();
         return Scaffold(
@@ -29,8 +27,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
           body: Stack(
             children: [
               Positioned.fill(
-                child: CustomPaint(
-                  painter: DottedBackgroundPainter(),
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(Asset.background),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
               ),
               // Login content
@@ -43,9 +46,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         controller: cubit.pageController,
                         physics: NeverScrollableScrollPhysics(),
                         children: [
+                          _buildPhoneNumberStep(),
                           _buildSignUpStep(),
                           _buildSetPasswordStep(),
-                          _buildVerifyStep(),
                         ],
                       ),
                     ),
@@ -61,15 +64,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Widget _buildHeader() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(47, 70, 47, 30),
+      padding: const EdgeInsets.fromLTRB(40, 100, 41, 70),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _buildStepIndicator(context.translate('signUp'), 0),
+          _buildStepIndicator(context.translate('phoneNumber'), 0),
           _buildDivider(),
-          _buildStepIndicator(context.translate('setPassword'), 1),
+          _buildStepIndicator(context.translate('singUp'), 1),
           _buildDivider(),
-          _buildStepIndicator(context.translate('verify'), 2),
+          _buildStepIndicator(context.translate('setPassword'), 2),
         ],
       ),
     );
@@ -82,8 +85,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
         Text(
           title,
           style: TextStyle(
-            color: cubit.currentIndex == index ? Colors.white : cubit.currentIndex >= index ? Colors.green : Colors.white60,
-            fontWeight: FontWeight.bold,
+            color: cubit.currentIndex == index
+                ? Colors.white
+                : cubit.currentIndex >= index
+                    ? Colors.green
+                    : Colors.white60,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ],
@@ -91,15 +98,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Widget _buildDivider() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
-      height: 2,
-      width: 30,
-      color: Colors.white,
+    return Padding(
+      padding: const EdgeInsets.only(left: 6.0, right: 6),
+      child: Container(
+        height: 2,
+        width: 30,
+        color: Colors.white60,
+      ),
     );
   }
 
-  Widget _buildSignUpStep() {
+  Widget _buildPhoneNumberStep() {
     SingUpCubit cubit = context.read<SingUpCubit>();
     return Padding(
       padding: const EdgeInsets.fromLTRB(21, 0, 21, 35),
@@ -107,10 +116,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Column(
           children: [
             Container(
-              height: 540,
+              height: 448,
+              width: 363,
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: colorLightGrey,
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(25),
                 boxShadow: [
                   BoxShadow(
@@ -120,160 +130,187 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ],
               ),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 10, 0, 5),
-                      child: Row(
-                        children: [
-                          Text(
-                            context.translate('firstName'),
-                            textAlign: TextAlign.left,
-                            textDirection: TextDirection.ltr, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16)
-                          ),
-                        ],
-                      ),
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                        hintText: "",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                        filled: true,
-                        fillColor: Colors.white,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(color: Colors.white, width: 1.5), // رنگ border پیش‌فرض
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(color: Colors.blue, width: 2.0), // رنگ border هنگام فوکوس
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 14, 0, 5),
-                      child: Row(
-                        children: [
-                          Text(
-                            context.translate('lastName'),
-                            textAlign: TextAlign.left,
-                            textDirection: TextDirection.ltr, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16)
-                          ),
-                        ],
-                      ),
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                        hintText: "",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                        filled: true,
-                        fillColor: Colors.white,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(color: Colors.white, width: 1.5),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(color: Colors.blue, width: 2.0),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 14, 0, 5),
-                      child: Row(
-                        children: [
-                          Text(
-                            context.translate('phoneNumber'),
-                            textAlign: TextAlign.left,
-                            textDirection: TextDirection.ltr, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16)
-                          ),
-                        ],
-                      ),
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                        hintText: "",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                        suffixIcon: Icon(Icons.error, color: Colors.red),
-                        filled: true,
-                        fillColor: Colors.white,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(color: Colors.white, width: 1.5),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(color: Colors.blue, width: 2.0),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 14, 0, 5),
-                      child: Row(
-                        children: [
-                          Text(
-                            context.translate('verificationCode'),
-                            textDirection: TextDirection.ltr, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16)
-                          ),
-                        ],
-                      ),
-                    ),
-                    Row(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Visibility(
+                    visible: !cubit.showOTP,
+                    child: Column(
                       children: [
-                        Expanded(
-                          child: TextField(
-                            decoration: InputDecoration(
-                              hintText: "",
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                              filled: true,
-                              fillColor: Colors.white,
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25),
-                                borderSide: BorderSide(color: Colors.white, width: 1.5),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25),
-                                borderSide: BorderSide(color: Colors.blue, width: 2.0),
-                              ),
-                            ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(23, 5, 0, 7),
+                          child: Text(
+                            context.translate("phoneNumberEmail"),
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
                           ),
                         ),
-                        SizedBox(width: 8),
-                        CustomButton(
-                          text: context.translate('sendCode'),
-                          backgroundColor: colorGreen,
-                          textColor: Colors.white,
-                          height: 40,
-                          width: 144,
-                          borderColor: colorGreen,
-                          borderRadius: BorderRadius.circular(25),
-                          textStyle: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 37.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                width: 90,
+                                height: 50,
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(25),
+                                  border: Border.all(
+                                    color: colorLightGreyModal2, // Set border color here
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Theme(
+                                  data: Theme.of(context).copyWith(
+                                    cardColor: Colors.white, // تغییر پس‌زمینه‌ی لیست بازشونده
+                                    popupMenuTheme: PopupMenuThemeData(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12), // گرد کردن لیست بازشونده
+                                      ),
+                                    ),
+                                  ),
+                                  child: DropdownButtonHideUnderline(
+                                    child: DropdownButton<String>(
+                                      value: cubit.selectedCountryCodes.isNotEmpty
+                                          ? cubit.selectedCountryCodes
+                                          : cubit.countryCodes.first,
+                                      isExpanded: true,
+                                      icon: Icon(Icons.arrow_drop_down, color: Colors.blue),
+                                      items: cubit.countryCodes.map((String code) {
+                                        return DropdownMenuItem<String>(
+                                          value: code,
+                                          child: Text(code, style: TextStyle(fontSize: 18)),
+                                        );
+                                      }).toList(),
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          cubit.selectedCountryCodes = newValue!;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                )
+
+                              ),
+                              SizedBox(width: 6),
+                              Expanded(
+                                child: TextField(
+                                  decoration: InputDecoration(
+                                    hintText: "",
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25),
+                                    ),
+                                    contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                    suffixIcon: Icon(Icons.error, color: Colors.red),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25),
+                                      borderSide: BorderSide(color: colorLightGreyModal2, width: 1),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25),
+                                      borderSide: BorderSide(color: Colors.blue, width: 1),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          onPressed: () {},
-                        )
+                        ),
                       ],
                     ),
-                    SizedBox(height: 16),
-                    Row(
+                  ),
+                  Visibility(
+                    visible: cubit.showOTP,
+                    child: Column(
                       children: [
-                        Checkbox(value: false, onChanged: (value) {}),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(25, 5, 0, 35),
+                          child: Row(
+                            children: [
+                              Text(
+                                context.translate("pleaseEnterVerificationCode"),
+                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Center(
+                          child: VerificationCode(
+                            digitsOnly: true,
+                            isSecure: true,
+                            textStyle: TextStyle(fontSize: 20, color: Colors.black),
+                            keyboardType: TextInputType.number,
+                            underlineColor: Colors.transparent,
+                            fillColor: Colors.grey[200],
+                            itemSize: 50,
+                            cursorColor: Colors.green,
+                            fullBorder: true,
+                            underlineWidth: 0,
+                            length: 5,
+                            onCompleted: (String value) {
+                              setState(() {
+
+                              });
+                            },
+                            onEditing: (bool value) {
+                              setState(() {
+
+                              });
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(22, 29, 81, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                context.translate('didntReceiveCode'),
+                                style: TextStyle(color: Colors.black),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              TextButton(
+                                onPressed: () {},
+                                child: Text(context.translate('resend'), style: TextStyle(color: Colors.green)),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Spacer(),
+                  Visibility(
+                    visible: !cubit.showOTP,
+                    child: Row(
+                      children: [
+                        Transform.scale(
+                          scale: 19 / 19,
+                          child: Checkbox(
+                            value: false,
+                            onChanged: (val) {},
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5), // Set border radius
+                            ),
+                            side: BorderSide(width: 2, color: colorLightGreyModal2),
+                            // Border weight & color
+                            visualDensity: VisualDensity(horizontal: -1, vertical: -4),
+                            // Remove padding
+                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap, // Reduce touch target size
+                          ),
+                        ),
                         Expanded(
                           child: GestureDetector(
                             onTap: () {}, // Handle ToS link tap
@@ -302,8 +339,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 24),
-                    CustomButton(
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 25, bottom: 0),
+                    child: CustomButton(
                       text: context.translate('confirmAndContinue'),
                       backgroundColor: colorGreen,
                       textColor: Colors.white,
@@ -317,26 +356,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         color: Colors.white,
                       ),
                       onPressed: () {
-                        cubit.goToNextPage();
+                        if(cubit.showOTP) {
+                          cubit.goToNextPage();
+                        } else {
+                          cubit.changeContent();
+                        }
                       },
-                    )
-                  ],
-                ),
+                    ),
+                  ),
+                ],
               ),
             ),
+
             SizedBox(height: 50),
             TextButton(
               onPressed: () {},
               child: Text(
-                context.translate('alreadyHaveAnAccount') + context.translate('logIn'),
-                style: TextStyle(color: Colors.white60),
+                context.translate('alreadyHaveAnAccount'),
+                style: TextStyle(color: Colors.white,
+                fontWeight: FontWeight.w500,
+                fontSize: 14),
               ),
             ),
             const SizedBox(height: 5),
             CustomButton(
-              text: "Log in",
+              text: context.translate('logIn'),
               backgroundColor: Colors.transparent,
-              textColor: Colors.white,
+              textColor: colorGreen,
               height: 50,
               width: 300,
               borderColor: Colors.white,
@@ -344,7 +390,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               textStyle: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: colorGreen,
               ),
               onPressed: () {
                 // Handle Sign Up action
@@ -356,7 +402,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Widget _buildSetPasswordStep() {
+  Widget _buildSignUpStep() {
     SingUpCubit cubit = context.read<SingUpCubit>();
 
     return Padding(
@@ -366,10 +412,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              height: 540,
+              height: 448,
+              width: 363,
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: colorLightGrey,
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(25),
                 boxShadow: [
                   BoxShadow(
@@ -384,80 +431,100 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 14, 0, 5),
+                        padding: const EdgeInsets.fromLTRB(23, 5, 0, 7),
                         child: Row(
                           children: [
                             Text(
-                              context.translate('password'),
-                              textAlign: TextAlign.left,
-                              textDirection: TextDirection.ltr, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16)
+                              context.translate("firstName"),
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
                             ),
                           ],
                         ),
                       ),
-                      TextField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                            hintText: "",
+                      SizedBox(
+                        height: 50,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25),
                             ),
-                            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                          filled: true,
-                          fillColor: Colors.white,
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
-                            borderSide: BorderSide(color: Colors.white, width: 1.5),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
-                            borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                            filled: true,
+                            fillColor: Colors.white,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                              borderSide: BorderSide(color: colorLightGreyModal2, width: 1),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                              borderSide: BorderSide(color: Colors.blue, width: 1),
+                            ),
                           ),
                         ),
                       ),
-
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 14, 0, 5),
+                        padding: const EdgeInsets.fromLTRB(23, 10, 0, 7),
                         child: Row(
                           children: [
                             Text(
-                              context.translate('repeatPassword'),
-                              textAlign: TextAlign.left,
-                              textDirection: TextDirection.ltr, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+                              context.translate("lastName"),
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
                             ),
                           ],
                         ),
                       ),
-                      TextField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: "",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                          filled: true,
-                          fillColor: Colors.white,
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
-                            borderSide: BorderSide(color: Colors.white, width: 1.5),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
-                            borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                      SizedBox(
+                        height: 50,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            filled: true,
+                            fillColor: Colors.white,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                              borderSide: BorderSide(color: colorLightGreyModal2, width: 1),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                              borderSide: BorderSide(color: Colors.blue, width: 1),
+                            ),
                           ),
                         ),
                       ),
-                      SizedBox(height: 43),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Checkbox(value: false, onChanged: (value) {}),
-                          Text(
-                            context.translate('showPassword'),
-                            style: TextStyle(color: Colors.black),
-                          )
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(23, 10, 0, 7),
+                        child: Row(
+                          children: [
+                            Text(
+                              context.translate("invitationCode"),
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 50,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            filled: true,
+                            fillColor: Colors.white,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                              borderSide: BorderSide(color: colorLightGreyModal2, width: 1),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                              borderSide: BorderSide(color: Colors.blue, width: 1),
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -488,7 +555,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Widget _buildVerifyStep() {
+  Widget _buildSetPasswordStep() {
     SingUpCubit cubit = context.read<SingUpCubit>();
 
     return Padding(
@@ -498,10 +565,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              height: 540,
+              height: 448,
+              width: 363,
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: colorLightGrey,
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(25),
                 boxShadow: [
                   BoxShadow(
@@ -514,112 +582,105 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 14, 0, 5),
+                    padding: const EdgeInsets.fromLTRB(23, 5, 0, 7),
                     child: Row(
                       children: [
                         Text(
-                          context.translate('takeSelfie'),
-                          textAlign: TextAlign.left,
-                          textDirection: TextDirection.ltr,
-                          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+                          context.translate("password"),
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
                         ),
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 21),
-                    child: Center(
-                      child: Image.asset(
-                        Asset.genericAvatar,
-                        width: 105,
-                        height: 105,
+                  SizedBox(
+                    height: 50,
+                    child: TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: BorderSide(color: colorLightGreyModal2, width: 1),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: BorderSide(color: Colors.blue, width: 1),
+                        ),
                       ),
                     ),
                   ),
-                  CustomButton(
-                    text: context.translate('openCamera'),
-                    backgroundColor: colorGreen,
-                    textColor: Colors.white,
-                    height: 40,
-                    width: 144,
-                    borderColor: colorGreen,
-                    borderRadius: BorderRadius.circular(25),
-                    textStyle: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {},
-                  ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 35, 0, 12),
+                    padding: const EdgeInsets.fromLTRB(23, 10, 0, 7),
                     child: Row(
                       children: [
                         Text(
-                          context.translate('verifyWith'),
-                          textAlign: TextAlign.left,
-                          textDirection: TextDirection.ltr,
-                          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+                          context.translate("repeatPassword"),
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
                         ),
                       ],
                     ),
                   ),
-                  DropdownButtonFormField<String>(
-                    items: cubit.items.map((item) {
-                      return DropdownMenuItem(
-                        value: item['value'],
-                        child: Row(
-                          children: [
-                            SizedBox(width: 8),
-                            Text(context.translate(item['label']!)),
-                          ],
+                  SizedBox(
+                    height: 50,
+                    child: TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25),
                         ),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      if (value != null) {
-                        context.read<SingUpCubit>().selectValue(value, context.translate);
-                      }
-                    },
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                        borderSide: BorderSide(color: Colors.white, width: 1.5),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                        borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                        filled: true,
+                        fillColor: Colors.white,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: BorderSide(color: colorLightGreyModal2, width: 1),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: BorderSide(color: Colors.blue, width: 1),
+                        ),
                       ),
                     ),
-                    hint: Text(context.translate('selectDocument')),
                   ),
+
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 22, 0, 0),
-                    child: CustomButton(
-                      text: context.translate('takePhoto'),
-                      backgroundColor: colorGreen,
-                      textColor: Colors.white,
-                      height: 40,
-                      width: 144,
-                      borderColor: colorGreen,
-                      borderRadius: BorderRadius.circular(25),
-                      textStyle: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {},
+                    padding: const EdgeInsets.only(top: 11),
+                    child: Row(
+                      children: [
+                        Transform.scale(
+                          scale: 19 / 19,
+                          child: Checkbox(
+                            value: false,
+                            onChanged: (val) {},
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5), // Set border radius
+                            ),
+                            side: BorderSide(width: 2, color: colorLightGreyModal2),
+                            // Border weight & color
+                            visualDensity: VisualDensity(horizontal: -1, vertical: -4),
+                            // Remove padding
+                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap, // Reduce touch target size
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            context.translate('showPassword'),
+                            textAlign: TextAlign.justify,
+                            textDirection: TextDirection.ltr,
+                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Spacer(),
                   CustomButton(
-                    text: context.translate('confirm'),
+                    text: context.translate('confirmAndContinue'),
                     backgroundColor: colorGreen,
                     textColor: Colors.white,
                     height: 50,
@@ -638,27 +699,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ],
               ),
             ),
-
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
-              child: CustomButton(
-                text: context.translate('skipVerification'),
-                backgroundColor: colorDarkGrey,
-                textColor: Colors.white,
-                height: 50,
-                width: 300,
-                borderColor: colorDarkGrey,
-                borderRadius: BorderRadius.circular(25),
-                textStyle: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  cubit.goToNextPage();
-                },
-              ),
-            )
           ],
         ),
       ),

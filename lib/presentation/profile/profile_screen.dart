@@ -225,7 +225,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               },
                               child: ListTile(
                                 leading: SvgPicture.asset(
-                                  Asset.hide,
+                                  Asset.hideProfile,
                                   width: 17,
                                   height: 17,
                                 ),

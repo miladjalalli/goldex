@@ -10,12 +10,28 @@ class TransactionScreen extends StatefulWidget {
   _TransactionScreenState createState() => _TransactionScreenState();
 }
 
-class _TransactionScreenState extends State<TransactionScreen> {
+class _TransactionScreenState extends State<TransactionScreen> with SingleTickerProviderStateMixin {
   final DraggableScrollableController _draggableController = DraggableScrollableController();
   Color appBarColor = Colors.black;
+  late AnimationController _overlayController;
+  late Animation<double> _overlayAnimation;
+
+  double _overlayHeight = 0.0; // مقدار به‌روز شده برای کنترل ارتفاع لایه مشکی
+
+  @override
+  void initState() {
+    super.initState();
+    // انیمیشن برای لایه مشکی
+    _overlayController = AnimationController(
+      duration: const Duration(milliseconds: 300), // زمان انیمیشن
+      vsync: this,
+    );
+  }
+
 
   @override
   void dispose() {
+    _overlayController.dispose();
     _draggableController.dispose();
     super.dispose();
   }
@@ -31,6 +47,12 @@ class _TransactionScreenState extends State<TransactionScreen> {
       ),
       body: Stack(
         children: [
+          Positioned.fill(
+            child: Image.asset(
+              Asset.home,
+              fit: BoxFit.cover,
+            ),
+          ),
           Column(
             children: [
               Padding(
@@ -76,36 +98,26 @@ class _TransactionScreenState extends State<TransactionScreen> {
                   ],
                 ),
               ),
-              // Gold Jar and Balance Section
-              Expanded(
-                flex: 2,
-                child: Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.white.withOpacity(0.2),
-                            blurRadius: 100,
-                            spreadRadius: 20,
-                          ),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image.asset(
-                          Asset.bank,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
             ],
           ),
-          DraggableModalDialog(draggableController: _draggableController),
+          AnimatedPositioned(
+            duration: Duration(milliseconds: 300),
+            bottom: _overlayHeight * MediaQuery.of(context).size.height,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+            ),
+          ),
+          DraggableModalDialog(
+            draggableController: _draggableController,
+            onScroll: (overlayHeight) {
+              // تنظیم مقدار overlayHeight برای هماهنگ کردن حرکت
+              setState(() {
+                _overlayHeight = overlayHeight;
+              });
+            },
+          ),
         ],
       ),
     );

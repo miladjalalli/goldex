@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goldex/app_localizations.dart';
 import 'package:goldex/presentation/home/home_screen.dart';
 import 'package:goldex/theme/theme.dart';
@@ -20,8 +21,13 @@ class LoginScreen extends StatelessWidget {
       body: Stack(
         children: [
           Positioned.fill(
-            child: CustomPaint(
-              painter: DottedBackgroundPainter(),
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(Asset.login),
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
           ),
           Align(
@@ -29,15 +35,8 @@ class LoginScreen extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Center(
-                    child: Image.asset(
-                      Asset.headerLogo,
-                      width: 80,
-                      height: 80,
-                    ),
-                  ),
                   Container(
-                    padding: EdgeInsets.fromLTRB(61, 0, 61, 17),
+                    padding: EdgeInsets.fromLTRB(61, 90, 61, 17),
                     child: Column(
                       children: [
                         Text(
@@ -62,8 +61,10 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 24),
-                    padding: const EdgeInsets.fromLTRB(21, 43, 21 , 35),
+                    width: 363,
+                    height: 411,
+                    margin: const EdgeInsets.symmetric(horizontal: 32),
+                    padding: const EdgeInsets.fromLTRB(24, 18, 24, 24),
                     decoration: BoxDecoration(
                       color: colorLightGrey,
                       borderRadius: BorderRadius.circular(25),
@@ -77,95 +78,160 @@ class LoginScreen extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
-                        // Email field
-                        TextField(
-                          decoration: InputDecoration(
-                            hintText: context.translate('email'),
-                            prefixIcon: Icon(Icons.email),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                              borderSide: BorderSide(color: Colors.white, width: 1.5), // رنگ border پیش‌فرض
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                              borderSide: BorderSide(color: Colors.blue, width: 2.0), // رنگ border هنگام فوکوس
-                            ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(23, 5, 0, 7),
+                          child: Row(
+                            children: [
+                              Text(
+                                context.translate("phoneNumberEmail"),
+                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
+                              ),
+                            ],
                           ),
                         ),
-                        const SizedBox(height: 16),
-                        TextField(
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            hintText: context.translate('Password'),
-                            prefixIcon: Icon(Icons.lock),
-                            suffixIcon: Icon(Icons.visibility_off),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                              borderSide: BorderSide(color: Colors.white, width: 1.5), // رنگ border پیش‌فرض
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                              borderSide: BorderSide(color: Colors.blue, width: 2.0), // رنگ border هنگام فوکوس
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Checkbox(value: false, onChanged: (val) {}),
-                                Text(context.translate('rememberMe')),
-                              ],
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                // Handle forgot password
-                              },
-                              child: Text(
-                                context.translate('forgotPassword'),
-                                style: TextStyle(
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                        SizedBox(
+                          height: 50,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(vertical: 14, horizontal: 20), // Padding for text input
+                              filled: true,
+                              fillColor: Colors.white,
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                                borderSide: BorderSide(color: colorLightGreyModal2, width: 1),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                                borderSide: BorderSide(color: Colors.blue, width: 1),
                               ),
                             ),
-                          ],
-                        ),
-                        const SizedBox(height: 16),
-                        CustomButton(
-                          text: context.translate('logIn'),
-                          backgroundColor: colorGreen,
-                          textColor: Colors.white,
-                          height: 50,
-                          width: 300,
-                          borderColor: colorGreen,
-                          borderRadius: BorderRadius.circular(25),
-                          textStyle: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
                           ),
-                          onPressed: () {
-                            Navigator.push(
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(23, 10, 0, 7),
+                          child: Row(
+                            children: [
+                              Text(
+                                context.translate("password"),
+                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 50,
+                          child: TextField(
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(vertical: 14, horizontal: 20), // Padding for text input
+                              suffixIcon: Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 14, 12, 14),
+                                child: SizedBox(
+                                  width: 24, // Set the width
+                                  height: 24, // Set the height
+                                  child: SvgPicture.asset(
+                                    Asset.hide,
+                                    fit: BoxFit.contain, // Ensure it fits within the box
+                                  ),
+                                ),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                              filled: true,
+                              fillColor: Colors.white,
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                                borderSide: BorderSide(color: colorLightGreyModal2, width: 1),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                                borderSide: BorderSide(color: Colors.blue, width: 1),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 13.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Transform.scale(
+                                    scale: 19 / 19,
+                                    child: Checkbox(
+                                      value: false,
+                                      onChanged: (val) {},
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5), // Set border radius
+                                      ),
+                                      side: BorderSide(width: 2, color: colorLightGreyModal2),
+                                      // Border weight & color
+                                      visualDensity: VisualDensity(horizontal: -1, vertical: -4),
+                                      // Remove padding
+                                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap, // Reduce touch target size
+                                    ),
+                                  ),
+                                  Text(
+                                    context.translate('rememberMe'),
+                                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14, color: colorLightGreyModal10),
+                                  ),
+                                ],
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  // Handle forgot password
+                                },
+                                child: Text(
+                                  context.translate('forgotPassword'),
+                                  style: TextStyle(
+                                    color: Colors.green,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 17.0),
+                          child: CustomButton(
+                            text: context.translate('logIn'),
+                            backgroundColor: colorGreen,
+                            textColor: Colors.white,
+                            height: 50,
+                            width: 300,
+                            borderColor: colorGreen,
+                            borderRadius: BorderRadius.circular(25),
+                            textStyle: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              Navigator.push(
                                 context,
-                              MaterialPageRoute(builder: (context) => HomeScreen()),
-                            );
-                          },
-                        )
+                                MaterialPageRoute(builder: (context) => HomeScreen()),
+                              );
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                          child: Text(
+                            context.translate("useYourFingerprint"),
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                          child: SvgPicture.asset(
+                              Asset.fingerPrint),
+                        ),
                       ],
                     ),
                   ),
@@ -175,32 +241,30 @@ class LoginScreen extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.white,
+                      fontWeight: FontWeight.w500
                     ),
                   ),
                   const SizedBox(height: 12),
                   CustomButton(
                     text: context.translate('signUp'),
                     backgroundColor: Colors.transparent,
-                    textColor: Colors.white,
+                    textColor: colorGreen,
                     height: 50,
                     width: 300,
                     borderColor: Colors.white,
                     borderRadius: BorderRadius.circular(25),
                     textStyle: TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      color: colorGreen
                     ),
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) {
-                                return BlocProvider<SingUpCubit>(
-                                  create: (context) => SingUpCubit(),
-                                  child: const SignUpScreen(),
-                                );
-                              }));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return BlocProvider<SingUpCubit>(
+                          create: (context) => SingUpCubit(),
+                          child: const SignUpScreen(),
+                        );
+                      }));
                     },
                   )
                 ],
@@ -212,7 +276,3 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
-
-
-
-

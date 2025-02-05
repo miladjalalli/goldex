@@ -42,6 +42,9 @@ dependencies:
   carousel_slider:
   flutter_verification_code: ^1.1.7
   badges:
+  country_codes:
+  otp_text_field:
+
 
 dev_dependencies:
   flutter_test:
@@ -66,4 +69,10 @@ flutter:
     - assets/icons/profile/
     - assets/icons/service/
     - l10n/
+    - assets/fonts/opensanc.ttf
 
+
+  fonts:
+    - family: opensans
+      fonts:
+        - asset: assets/fonts/opensanc.ttf

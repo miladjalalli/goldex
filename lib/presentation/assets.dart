@@ -11,6 +11,7 @@ class Asset {
   static const String _iconsProfile = 'assets/icons/profile';
   static const String _iconsService = 'assets/icons/service';
 
+  static const String login = '$_img/login.png';
   static const String bank = '$_img/bank.png';
   static const String imageDefault = '$_img/image-default.png';
   static const String genericAvatar = '$_img/generic-avatar.png';
@@ -19,6 +20,8 @@ class Asset {
   static const String logo = '$_img/logo.png';
   static const String person = '$_img/person.png';
   static const String sellingGold = '$_img/selling-gold.png';
+  static const String background = '$_img/background.png';
+  static const String home = '$_img/home.png';
 
   static const String buyModal = '$_imgModal/buy.png';
   static const String sellModal = '$_imgModal/sell.png';
@@ -32,6 +35,7 @@ class Asset {
   static const String dollar = '$_icons/dollar.svg';
   static const String download = '$_icons/download.svg';
   static const String gold = '$_icons/gold.svg';
+  static const String hide = '$_icons/hide.svg';
   static const String inPerson = '$_icons/in-person.svg';
   static const String post = '$_icons/post.svg';
   static const String profile = '$_icons/profile.svg';
@@ -43,6 +47,8 @@ class Asset {
   static const String withdrawal = '$_icons/withdrawal.svg';
   static const String complete = '$_icons/complete.svg';
   static const String edit = '$_icons/edit.svg';
+  static const String fingerPrint = '$_icons/finger-print.svg';
+  static const String copy = '$_icons/copy.svg';
 
   static const String applePay = '$_iconsPay/apple-pay.svg';
   static const String googlePay = '$_iconsPay/google-pay.svg';
@@ -50,7 +56,7 @@ class Asset {
   static const String payPal = '$_iconsPay/pay-pal.svg';
   static const String visaCard = '$_iconsPay/visa-card.svg';
 
-  static const String hide = '$_iconsProfile/hide.svg';
+  static const String hideProfile = '$_iconsProfile/hide-profile.svg';
   static const String info = '$_iconsProfile/info.svg';
   static const String invite = '$_iconsProfile/invite.svg';
   static const String lock = '$_iconsProfile/lock.svg';
