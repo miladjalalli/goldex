@@ -39,9 +39,6 @@ class BarcodeScannerScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        title: Text(
-          context.translate('orderSummary'),
-        ),
         titleTextStyle: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w700,
