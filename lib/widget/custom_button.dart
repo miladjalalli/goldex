@@ -4,13 +4,13 @@ import 'package:goldex/theme/theme.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
-  final Color? backgroundColor;
+  final Color backgroundColor;
   final Color textColor;
   final double height;
   final double width;
   final Color borderColor;
   final VoidCallback onPressed;
-  final BorderRadiusGeometry borderRadius;
+  final BorderRadius borderRadius;
   final TextStyle textStyle;
   final String? icon;
   final bool isIconEnabled;
@@ -18,7 +18,7 @@ class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
     required this.text,
-    this.backgroundColor,
+    required this.backgroundColor,
     required this.textColor,
     required this.height,
     required this.width,
@@ -31,43 +31,50 @@ class CustomButton extends StatelessWidget {
   });
 
   @override
-  @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: height,
       width: width,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          gradient: backgroundColor == Colors.white || backgroundColor == Colors.transparent
-              ? null
-              : const LinearGradient(
-            begin: Alignment.centerRight,
-            end: Alignment.centerLeft,
-            colors: [colorDarkGreen, colorGreen],
+      child: Material(
+        color: Colors.transparent, // رنگ پس‌زمینه شفاف باشد
+        borderRadius: borderRadius, // گوشه‌های گرد برای افکت Ripple
+        child: Ink(
+          decoration: BoxDecoration(
+            gradient: backgroundColor == Colors.white || backgroundColor == Colors.transparent
+                ? null
+                : const LinearGradient(
+              begin: Alignment.centerRight,
+              end: Alignment.centerLeft,
+              colors: [colorDarkGreen, colorGreen],
+            ),
+            color: backgroundColor == Colors.white ? Colors.white : null,
+            borderRadius: borderRadius,
+            border: Border.all(color: borderColor),
           ),
-          borderRadius: borderRadius,
-          border: Border.all(color: borderColor),
-        ),
-        child: InkWell(
-          onTap: onPressed,
-          child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (isIconEnabled && icon != null) ...[
-                  SvgPicture.asset(
-                    icon!,
-                    width: 20,
-                    height: 20,
+          child: InkWell(
+            borderRadius: borderRadius,
+            onTap: onPressed,
+            splashColor: Colors.white.withOpacity(0.3), // رنگ موجی که موقع لمس نمایش داده می‌شود
+            highlightColor: Colors.white.withOpacity(0.1), // رنگ پس‌زمینه موقع لمس
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (isIconEnabled && icon != null) ...[
+                    SvgPicture.asset(
+                      icon!,
+                      width: 20,
+                      height: 20,
+                    ),
+                    const SizedBox(width: 8),
+                  ],
+                  Text(
+                    text,
+                    style: textStyle.copyWith(color: textColor),
                   ),
-                  const SizedBox(width: 8),
                 ],
-                Text(
-                  text,
-                  style: textStyle.copyWith(color: textColor),
-                ),
-              ],
+              ),
             ),
           ),
         ),
