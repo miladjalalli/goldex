@@ -40,14 +40,14 @@ class CustomButton extends StatelessWidget {
         borderRadius: borderRadius,
         child: Ink(
           decoration: BoxDecoration(
-            gradient: backgroundColor == Colors.white || backgroundColor == Colors.transparent
+            gradient: backgroundColor == Colors.white || backgroundColor == Colors.transparent || backgroundColor == Colors.black
                 ? null
                 : const LinearGradient(
               begin: Alignment.centerRight,
               end: Alignment.centerLeft,
               colors: [colorDarkGreen, colorGreen],
             ),
-            color: backgroundColor == Colors.white ? Colors.white : null,
+            color: backgroundColor == Colors.white ? Colors.white :backgroundColor == Colors.black ? Colors.black : null,
             borderRadius: borderRadius,
             border: Border.all(color: borderColor),
           ),
@@ -64,6 +64,7 @@ class CustomButton extends StatelessWidget {
                   if (isIconEnabled && icon != null) ...[
                     SvgPicture.asset(
                       icon!,
+                      color: textColor,
                       width: 20,
                       height: 20,
                     ),

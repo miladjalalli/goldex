@@ -289,7 +289,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       text: context.translate('logout'),
                       isIconEnabled: true,
                       icon: Asset.logOut,
-                      backgroundColor: colorRedBack,
+                      backgroundColor: Colors.transparent,
                       textColor: colorRed,
                       height: 50,
                       width: 229,
