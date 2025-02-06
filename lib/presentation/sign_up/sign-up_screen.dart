@@ -352,7 +352,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       borderRadius: BorderRadius.circular(25),
                       textStyle: TextStyle(
                         fontSize: 14,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w900,
                         color: Colors.white,
                       ),
                       onPressed: () {
@@ -388,8 +388,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               borderColor: Colors.white,
               borderRadius: BorderRadius.circular(25),
               textStyle: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                fontWeight: FontWeight.w900,
                 color: colorGreen,
               ),
               onPressed: () {
@@ -442,7 +442,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 50,
                         child: TextField(
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -474,7 +473,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 50,
                         child: TextField(
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -506,7 +504,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 50,
                         child: TextField(
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -539,7 +536,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     borderRadius: BorderRadius.circular(25),
                     textStyle: TextStyle(
                       fontSize: 14,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w900,
                       color: Colors.white,
                     ),
                     onPressed: () {
@@ -593,7 +590,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 50,
                     child: TextField(
                       obscureText: true,
                       decoration: InputDecoration(
@@ -626,7 +622,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 50,
                     child: TextField(
                       obscureText: true,
                       decoration: InputDecoration(
@@ -689,7 +684,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     borderRadius: BorderRadius.circular(25),
                     textStyle: TextStyle(
                       fontSize: 14,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w900,
                       color: Colors.white,
                     ),
                     onPressed: () {

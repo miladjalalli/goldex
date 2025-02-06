@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goldex/app_localizations.dart';
 import 'package:goldex/theme/theme.dart';
+import '../../widget/card_widget.dart';
 import '../../widget/custom_button.dart';
 import '../assets.dart';
 import '../deposit/cubit/deposit_cubit.dart';
@@ -28,168 +29,30 @@ class _WalletScreenState extends State<WalletScreen> {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
-
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        forceMaterialTransparency: true,
+        toolbarHeight: 8,
+      ),
       body: Container(
-        padding: const EdgeInsets.fromLTRB(28, 109, 28, 16),
+        padding: const EdgeInsets.fromLTRB(28, 0, 28, 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Card(
-              color: Colors.black,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(23),
-              ),
-              child: SizedBox(
-                height: 245,
-                width: double.infinity,
-                child: Stack(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(23),
-                        gradient: RadialGradient(
-                          center: Alignment(1.0, -1.0),
-                          radius: 1.9,
-                          colors: [
-                            colorDarkGrey,
-                            Colors.transparent,
-                          ],
-                          stops: [0.4, 1.0],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(23),
-                        gradient: RadialGradient(
-                          center: Alignment(-2.0, -1.0),
-                          radius: 1.6,
-                          colors: [
-                            colorGreen,
-                            Colors.transparent,
-                          ],
-                          stops: [0.2, 1.0],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(23),
-                        gradient: RadialGradient(
-                          center: Alignment(0, -2.1),
-                          radius: 1.4,
-                          colors: [
-                            colorGreen,
-                            Colors.transparent,
-                          ],
-                          stops: [0.2, 1.0],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Scott Williams',
-                            style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Text(
-                            '2020-1821-1530-2401',
-                            style: TextStyle(color: colorGreen, fontSize: 14),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  context.translate('balance'),
-                                  style: TextStyle(color: Colors.white, fontSize: 17),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                  child: Text(
-                                    '\$1430.5',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 36,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          Asset.gold,
-                                          fit: BoxFit.cover,
-                                          width: 18,
-                                          height: 18,
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          '123.4 ${context.translate('gram')}',
-                                          style: TextStyle(color: Colors.white, fontSize: 18),
-                                        ),
-                                      ],
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () {},
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.transparent,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(16),
-                                          side: BorderSide(color: Colors.white),
-                                        ),
-                                        minimumSize: Size(111, 25), // Set width and height here
-                                      ),
-                                      child: RichText(
-                                        textAlign: TextAlign.justify,
-                                        textDirection: TextDirection.ltr,
-                                        text: TextSpan(
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 14,
-                                          ),
-                                          children: [
-                                            TextSpan(text: context.translate('depositUSD')),
-                                            TextSpan(
-                                              text: '+',
-                                              style: TextStyle(
-                                                color: colorGreen,
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+            CardWidget(
+                name: 'Scott Williams',
+                balance: '\$1430.5',
+                cardNumber: '2020-1821-1530-2401',
+                goldAmount: '123.4 ',
+                type: context.translate('gr'),
+                onDeposit: () => {}
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(2, 36, 2, 0),
+              padding: EdgeInsets.fromLTRB(2, 20, 2, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -204,7 +67,7 @@ class _WalletScreenState extends State<WalletScreen> {
                       borderRadius: BorderRadius.circular(25),
                       textStyle: TextStyle(
                         fontSize: 17,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w900,
                         color: Colors.white,
                       ),
                       isIconEnabled: true,
@@ -234,7 +97,7 @@ class _WalletScreenState extends State<WalletScreen> {
                       borderRadius: BorderRadius.circular(25),
                       textStyle: TextStyle(
                         fontSize: 17,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w900,
                         color: colorGreen,
                       ),
                       isIconEnabled: true,
@@ -254,10 +117,10 @@ class _WalletScreenState extends State<WalletScreen> {
               ),
             ),
             Container(
-                padding: EdgeInsets.fromLTRB(2, 39, 5, 0),
+                padding: EdgeInsets.fromLTRB(2, 20, 5, 0),
                 child: Row(
                   children: [
-                    Text(context.translate('transactions'), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: colorLightGreyModal)),
+                    Text(context.translate('transactions'), style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18, color: colorLightGreyModal)),
                     SizedBox(
                       width: 13,
                     ),
@@ -271,7 +134,7 @@ class _WalletScreenState extends State<WalletScreen> {
                             )),
                           );
                         },
-                        child: Text(context.translate('seeAll'), style: TextStyle(fontSize: 12, color: colorGreen))),
+                        child: Text(context.translate('seeAll'), style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400 ,color: colorGreen))),
                   ],
                 )),
             Expanded(
@@ -331,7 +194,7 @@ Widget cardView(var transaction) {
                     transaction['title']!,
                     style: const TextStyle(
                       overflow: TextOverflow.ellipsis,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w900,
                       fontSize: 14,
                     ),
                     overflow: TextOverflow.ellipsis,
@@ -356,7 +219,7 @@ Widget cardView(var transaction) {
             child: Text(
               transaction['type'] == 'dollar' ? '\$${transaction['amount']!}' : '${transaction['amount']!} gr',
               style: const TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w900,
                 fontSize: 14,
               ),
               textAlign: TextAlign.center,
@@ -375,7 +238,7 @@ Widget cardView(var transaction) {
                         : transaction['status'] == 'Failed'
                         ? colorFailed
                         : colorPending,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w900,
                     fontSize: 11,
                   ),
                   textAlign: TextAlign.end,

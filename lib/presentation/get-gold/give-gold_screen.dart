@@ -3,26 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goldex/app_localizations.dart';
-import 'package:goldex/presentation/gift-card/receiving_method.dart';
+import 'package:goldex/presentation/gift-card/give-gift_receiving_method.dart';
 import 'package:goldex/theme/theme.dart';
 import 'package:goldex/widget/custom_button.dart';
 import '../../widget/counter_widget.dart';
 import '../assets.dart';
-import 'cubit/gift_card_cubit.dart';
+import 'cubit/give_gold_cubit.dart';
+import 'get-gold_receiving_method.dart';
 
-class GiveGiftCardScreen extends StatefulWidget {
-  const GiveGiftCardScreen({super.key});
+class GiveGoldCardScreen extends StatefulWidget {
+  const GiveGoldCardScreen({super.key});
 
   @override
-  _GiveGiftCardScreenState createState() => _GiveGiftCardScreenState();
+  _GiveGoldCardScreenState createState() => _GiveGoldCardScreenState();
 }
 
-class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
+class _GiveGoldCardScreenState extends State<GiveGoldCardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    GiftCardCubit cubit = context.read<GiftCardCubit>();
-    return BlocConsumer<GiftCardCubit, GiftCardState>(
+    GiveGoldCubit cubit = context.read<GiveGoldCubit>();
+    return BlocConsumer<GiveGoldCubit, GiveGoldState>(
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
@@ -41,6 +42,7 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
             ),
             backgroundColor: Colors.white,
             elevation: 0,
+            forceMaterialTransparency: true,
             actions: [
               Padding(
                 padding: const EdgeInsets.only(right: 16.0),
@@ -61,17 +63,67 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
                 ),
               ),
             ],
-            title: Text(
-              context.translate('giftCard'),
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: colorLightGreyModal),
-            ),
             centerTitle: true,
+            title: Text(
+              context.translate('getGold'),
+            ),
+            titleTextStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: colorLightGreyModal),
           ),
           body: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 34, 20, 0),
+            padding: const EdgeInsets.fromLTRB(28, 34, 28, 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 22.0),
+                  child: Container(
+                    height: 72,
+                    width: 325,
+                    padding: const EdgeInsets.fromLTRB(13, 8, 13, 4),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color: colorLightGreyModal2,
+                        width: 1,
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                context.translate('currentBalance'),
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '431.1 ${context.translate('gr')}',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.black
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 Expanded(
                   child: ShaderMask(
                     blendMode: BlendMode.dstIn,
@@ -116,7 +168,7 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
                   borderRadius: BorderRadius.circular(25),
                   textStyle: TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w900,
                     color: Colors.white,
                   ),
                   onPressed: () {
@@ -124,8 +176,8 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
                       context,
                       MaterialPageRoute(builder: (context) =>
                           BlocProvider(
-                            create: (context) => GiftCardCubit(),
-                            child: ReceivingMethodScreen(),
+                            create: (context) => GiveGoldCubit(),
+                            child: GetGoldReceivingMethodScreen(),
                           )),
                     );
                   },
@@ -137,7 +189,7 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
     );
   }
 
-  Widget cardView(GiftCardCubit cubit, int index) {
+  Widget cardView(GiveGoldCubit cubit, int index) {
     return Card(
       color: colorLightGreyModal4,
       elevation: 5,
@@ -163,7 +215,7 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 48,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w900,
                         height: 0.9,
                       ),
                       textAlign: TextAlign.start,
@@ -180,7 +232,7 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
                         cubit.giftCards[index]['amount']!,
                         style: TextStyle(
                           fontSize: 40,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w900,
                           color: Colors.black,
                         ),
                       ),
@@ -189,7 +241,7 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
                         cubit.giftCards[index]['type']!,
                         style: TextStyle(
                           fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w900,
                           color: Colors.black,
                         ),
                       ),

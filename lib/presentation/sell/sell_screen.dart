@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goldex/app_localizations.dart';
-import 'package:goldex/presentation/sell/sell_order_summary.dart';
 import 'package:goldex/theme/theme.dart';
 import '../../widget/card_widget.dart';
 import '../../widget/custom_button.dart';
 import '../assets.dart';
+import '../order_summary/order_summary_screen.dart';
 
 class SellScreen extends StatefulWidget {
   const SellScreen({super.key});
@@ -37,9 +37,18 @@ class _SellScreenState extends State<SellScreen> {
             Asset.back,
           ),
         ),
+        centerTitle: true,
+        title: Text(
+          context.translate('sell'),
+        ),
+        titleTextStyle: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.w700,
+          color: colorLightGreyModal10,
+        ),
         backgroundColor: Colors.white,
         elevation: 0,
-
+        forceMaterialTransparency: true,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -115,13 +124,12 @@ class _SellScreenState extends State<SellScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 50,
                         child: TextField(
                           textAlign: TextAlign.left,
                           controller: controller1,
                           keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25),
                               borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
@@ -158,13 +166,12 @@ class _SellScreenState extends State<SellScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 50,
                         child: TextField(
                           textAlign: TextAlign.left,
                           controller: controller2,
                           keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25),
                               borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
@@ -198,7 +205,7 @@ class _SellScreenState extends State<SellScreen> {
                               onPressed: () {},
                               child: Text(
                                 context.translate('cancel'),
-                                style: TextStyle(color: Colors.grey),
+                                style: TextStyle(fontSize: 14, color: Colors.grey),
                               ),
                             ),
                             SizedBox(width: 29),
@@ -212,13 +219,30 @@ class _SellScreenState extends State<SellScreen> {
                               borderRadius: BorderRadius.circular(25),
                               textStyle: TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w900,
                                 color: Colors.white,
                               ),
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => SellOrderSummary()),
+                                  MaterialPageRoute(builder: (context) => OrderSummaryScreen(
+                                    title: 'Order Summary',
+                                    totalAmount: '86.36',
+                                    totalAmountType: '\$',
+                                    firstText: 'Live Gold price per gram',
+                                    firstTextAmount: "68.21",
+                                    firstTextAmountType: '\$',
+                                    secondText: 'Total USD receive',
+                                    secondTextAmount: '87.23',
+                                    secondTextAmountType: '\$',
+                                    thirdText: 'Sell amount',
+                                    thirdTextAmount: '1.5',
+                                    thirdTextAmountType: 'gr',
+                                    forthText: 'Fee',
+                                    forthPercent: '1',
+                                    forthTextAmount: '0.87',
+                                    forthTextAmountType: '\$',
+                                  )),
                                 );
                               },
                             )

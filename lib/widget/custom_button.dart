@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:goldex/theme/theme.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
-  final Color backgroundColor;
+  final Color? backgroundColor;
   final Color textColor;
   final double height;
   final double width;
@@ -17,7 +18,7 @@ class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
     required this.text,
-    required this.backgroundColor,
+    this.backgroundColor,
     required this.textColor,
     required this.height,
     required this.width,
@@ -30,38 +31,45 @@ class CustomButton extends StatelessWidget {
   });
 
   @override
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: height,
       width: width,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor,
-          minimumSize: Size(double.infinity, height),
-          shape: RoundedRectangleBorder(
-            borderRadius: borderRadius,
-            side: BorderSide(color: borderColor),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: backgroundColor == Colors.white || backgroundColor == Colors.transparent
+              ? null
+              : const LinearGradient(
+            begin: Alignment.centerRight,
+            end: Alignment.centerLeft,
+            colors: [colorDarkGreen, colorGreen],
           ),
+          borderRadius: borderRadius,
+          border: Border.all(color: borderColor),
         ),
-        onPressed: onPressed,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              text,
-              style: textStyle.copyWith(color: textColor),
+        child: InkWell(
+          onTap: onPressed,
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (isIconEnabled && icon != null) ...[
+                  SvgPicture.asset(
+                    icon!,
+                    width: 20,
+                    height: 20,
+                  ),
+                  const SizedBox(width: 8),
+                ],
+                Text(
+                  text,
+                  style: textStyle.copyWith(color: textColor),
+                ),
+              ],
             ),
-            if (isIconEnabled && icon != null) ...[
-              const SizedBox(width: 8),
-              SvgPicture.asset(
-                icon!,
-                width: 20,
-                height: 20,
-              ),
-            ],
-
-          ],
+          ),
         ),
       ),
     );

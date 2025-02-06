@@ -3,24 +3,39 @@ import 'package:flutter/material.dart';
 import 'package:goldex/theme/theme.dart';
 
 class CardBuyOrSellDetails extends StatelessWidget {
-  const CardBuyOrSellDetails({super.key, required this.firstText, required this.firstTextAmount, required this.secondText, required this.secondTextAmount, required this.thirdText, required this.thirdTextAmount, required this.forthTextAmount, required this.firstTextAmountType, required this.secondTextAmountType, required this.thirdTextAmountType, required this.forthText, required this.forthTextAmountType, required this.forthPercent});
+  const CardBuyOrSellDetails({
+    super.key,
+    this.firstText,
+    this.firstTextAmount,
+    this.secondText,
+    this.secondTextAmount,
+    this.thirdText,
+    this.thirdTextAmount,
+    this.forthTextAmount,
+    this.firstTextAmountType,
+    this.secondTextAmountType,
+    this.thirdTextAmountType,
+    this.forthText,
+    this.forthTextAmountType,
+    this.forthPercent
+  });
 
-  final String firstText;
-  final String firstTextAmount;
-  final String firstTextAmountType;
+  final String? firstText;
+  final String? firstTextAmount;
+  final String? firstTextAmountType;
 
-  final String secondText;
-  final String secondTextAmount;
-  final String secondTextAmountType;
+  final String? secondText;
+  final String? secondTextAmount;
+  final String? secondTextAmountType;
 
-  final String thirdText;
-  final String thirdTextAmount;
-  final String thirdTextAmountType;
+  final String? thirdText;
+  final String? thirdTextAmount;
+  final String? thirdTextAmountType;
 
-  final String forthText;
-  final String forthPercent;
-  final String forthTextAmount;
-  final String forthTextAmountType;
+  final String? forthText;
+  final String? forthPercent;
+  final String? forthTextAmount;
+  final String? forthTextAmountType;
 
   @override
   Widget build(BuildContext context) {
@@ -34,16 +49,30 @@ class CardBuyOrSellDetails extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildRow(firstText, firstTextAmountType == '\$' ? firstTextAmountType+firstTextAmount : firstTextAmount+firstTextAmountType),
-          _divider(),
-          _buildRow(secondText, secondTextAmountType =='\$' ? secondTextAmountType+secondTextAmount : secondTextAmount+secondTextAmountType),
-          _divider(),
-          _buildRow(thirdText, thirdTextAmountType =='\$' ? thirdTextAmountType+thirdTextAmount : thirdTextAmount+thirdTextAmountType),
-          _divider(),
-          _buildRow('$forthText ($forthPercent%)',  forthTextAmountType =='\$' ? forthTextAmountType+forthTextAmount : forthTextAmount+forthTextAmountType),
+          if (firstText != null && firstTextAmount != null)
+            _buildRow(firstText!, _formatAmount(firstTextAmountType, firstTextAmount)),
+          if (firstText != null && firstTextAmount != null) _divider(),
+          if (secondText != null && secondTextAmount != null)
+            _buildRow(secondText!, _formatAmount(secondTextAmountType, secondTextAmount)),
+          if (secondText != null && secondTextAmount != null) _divider(),
+          if (thirdText != null && thirdTextAmount != null)
+            _buildRow(thirdText!, _formatAmount(thirdTextAmountType, thirdTextAmount)),
+          if (thirdText != null && thirdTextAmount != null) _divider(),
+          if (forthText != null && forthTextAmount != null && forthPercent != null)
+            _buildRow('$forthText ($forthPercent%)', _formatAmount(forthTextAmountType, forthTextAmount)),
         ],
       ),
     );
+  }
+
+  String _formatAmount(String? type, String? amount) {
+    if(type == '\$') {
+      return '$type$amount';
+    } else if (type == 'gr') {
+      return '$amount$type';
+    } else {
+      return amount!;
+    }
   }
 
   Widget _buildRow(String title, String value) {
@@ -58,7 +87,7 @@ class CardBuyOrSellDetails extends StatelessWidget {
           ),
           Text(
             value,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: Colors.black),
           ),
         ],
       ),

@@ -6,8 +6,9 @@ import 'package:goldex/app_localizations.dart';
 import 'package:goldex/theme/theme.dart';
 import '../../widget/custom_button.dart';
 import '../assets.dart';
+import 'barcode_scanner_screen.dart';
 import 'cubit/gift_card_cubit.dart';
-import 'give_gift_screen.dart';
+import 'give-gift_screen.dart';
 
 class GiftCardScreen extends StatefulWidget {
   const GiftCardScreen({super.key});
@@ -39,23 +40,15 @@ class _GiftCardScreenState extends State<GiftCardScreen> {
         ),
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Stack(
-          alignment: Alignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  context.translate('giftCard'),
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: colorLightGreyModal,
-                  ),
-                ),
-              ],
-            ),
-          ],
+        forceMaterialTransparency: true,
+        centerTitle: true,
+        title: Text(
+          context.translate('giftCard'),
+        ),
+        titleTextStyle: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.w900,
+          color: colorLightGreyModal,
         ),
       ),
       body: SingleChildScrollView(
@@ -119,7 +112,16 @@ class _GiftCardScreenState extends State<GiftCardScreen> {
                       fontWeight: FontWeight.w700,
                       color: Colors.white,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>
+                            BlocProvider(
+                              create: (context) => GiftCardCubit(),
+                              child: BarcodeScannerScreen(title: 'GIFT\nCARD'),
+                            )),
+                      );
+                    },
                   ),
                 )
               ],

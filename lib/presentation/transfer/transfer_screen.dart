@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goldex/app_localizations.dart';
-import 'package:goldex/presentation/confirmation/confirmation_screen.dart';
 import 'package:goldex/theme/theme.dart';
 import '../../widget/custom_button.dart';
 import '../assets.dart';
+import '../order_summary/order_summary_screen.dart';
 import 'cubit/transfer_cubit.dart';
 
 class TransferScreen extends StatefulWidget {
@@ -39,31 +39,24 @@ class _TransferScreenState extends State<TransferScreen> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: SvgPicture.asset(
-                Asset.back,
-              ),
+              child: SvgPicture.asset(Asset.back),
             ),
             backgroundColor: Colors.white,
             elevation: 0,
-            title: Stack(
-              alignment: Alignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      context.translate('send'),
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: colorLightGreyModal,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+            forceMaterialTransparency: true,
+            centerTitle: true,
+            title: Text(
+              context.translate('send'),
+            ),
+            titleTextStyle: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+              color: colorLightGreyModal10,
             ),
           ),
+
+
+
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -128,23 +121,65 @@ class _TransferScreenState extends State<TransferScreen> {
                               ),
                             ),
                             hint: Text(context.translate('selectValue')),
+                            dropdownColor: Colors.white,
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 30, 0, 5),
-                            child: Text(
-                              context.translate('To'),
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
+                            padding: const EdgeInsets.fromLTRB(23, 10, 0, 7),
+                            child: Row(
+                              children: [
+                                Text(
+                                  context.translate("to"),
+                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            child: TextField(
+                              textAlign: TextAlign.left,
+                              textAlignVertical: TextAlignVertical.center,
+                              controller: cubit.cardNumberController,
+                              keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
+                              inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))],
+                              decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(25),
+                                    borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(25),
+                                    borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
+                                  ),
+                                  // Increased horizontal padding
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  hintText: context.translate('receiverCardNumber'),
+                                  hintStyle: TextStyle(fontSize: 16, color: colorLightGreyModal2)),
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                           ),
-                          TextField(
-                            textAlign: TextAlign.left,
-                            controller: cubit.cardNumberController,
-                            keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
-                            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))],
-                            decoration: InputDecoration(
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(23, 10, 0, 7),
+                            child: Row(
+                              children: [
+                                Text(
+                                  context.translate("amount"),
+                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            child: TextField(
+                              textAlign: TextAlign.left,
+                              controller: cubit.amountController,
+                              keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(25),
                                   borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
@@ -153,51 +188,9 @@ class _TransferScreenState extends State<TransferScreen> {
                                   borderRadius: BorderRadius.circular(25),
                                   borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
                                 ),
-                                contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                                // Increased horizontal padding
                                 filled: true,
                                 fillColor: Colors.white,
-                                hintText: context.translate('receiverCardNumber'),
-                                hintStyle: TextStyle(fontSize: 16, color: colorLightGreyModal2)),
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 14, 0, 5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  context.translate('amount'),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          TextField(
-                            textAlign: TextAlign.left,
-                            controller: cubit.amountController,
-                            keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25),
-                                borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25),
-                                borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
-                              ),
-                              contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                              filled: true,
-                              fillColor: Colors.white,
-                              suffix: Padding(
-                                padding: const EdgeInsets.only(right: 10),
-                                child: Text(
+                                suffix: Text(
                                   cubit.suffix1,
                                   style: const TextStyle(
                                     fontSize: 16,
@@ -205,10 +198,10 @@ class _TransferScreenState extends State<TransferScreen> {
                                   ),
                                 ),
                               ),
-                            ),
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
                           Padding(
@@ -217,7 +210,7 @@ class _TransferScreenState extends State<TransferScreen> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Text(
-                                  context.translate('balance'),
+                                  '${context.translate('balance')}:',
                                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: colorLightGreyModal5),
                                 ),
                               ],
@@ -232,9 +225,10 @@ class _TransferScreenState extends State<TransferScreen> {
                                   onPressed: () {},
                                   child: Text(
                                     context.translate('cancel'),
-                                    style: TextStyle(color: Colors.grey),
+                                    style: TextStyle(fontSize: 14, color: Colors.grey),
                                   ),
                                 ),
+                                SizedBox(width: 29),
                                 CustomButton(
                                   text: context.translate('confirm'),
                                   backgroundColor: colorGreen,
@@ -245,13 +239,29 @@ class _TransferScreenState extends State<TransferScreen> {
                                   borderRadius: BorderRadius.circular(25),
                                   textStyle: TextStyle(
                                     fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w900,
                                     color: Colors.white,
                                   ),
                                   onPressed: () {
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (context) => ConfirmationScreen()),
+                                      MaterialPageRoute(builder: (context) => OrderSummaryScreen(
+                                        title: 'Order Summary',
+                                        totalAmount: '5',
+                                        totalAmountType: 'gr',
+                                        firstText: 'Receiver name',
+                                        firstTextAmount: "akbar mansory",
+                                        secondText: 'Send amount',
+                                        secondTextAmount: '5',
+                                        secondTextAmountType: 'gr',
+                                        thirdText: null,
+                                        thirdTextAmount: null,
+                                        thirdTextAmountType: null,
+                                        forthText: 'Fee',
+                                        forthPercent: '1',
+                                        forthTextAmount: '0.87',
+                                        forthTextAmountType: 'gr',
+                                      )),
                                     );
                                   },
                                 )

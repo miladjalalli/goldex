@@ -20,49 +20,43 @@ class ProfileCompletionWidget extends StatelessWidget {
     int percentage = (progress * 100).toInt();
     int completedSteps = (percentage / 20).ceil(); // Fix to show the exact completed step
 
-    return Row(
-      children: [
-        SvgPicture.asset(Asset.complete),
-
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 8),
-              Row(
-                children: List.generate(5, (index) {
-                  bool isCompleted = index < completedSteps;
-                  return Expanded(
-                    child: Column(
-                      children: [
-                        isCompleted
-                            ? Text(
-                          "${(index + 1) * 20}%",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: colorGreen,
-                          ),
-                        ) : SizedBox(height: 48),
-                        SizedBox(height: 4),
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 2),
-                          height: 3,
-                          decoration: BoxDecoration(
-                            color: isCompleted ? colorGreen : Colors.grey[300],
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                        ),
-                        if (!isCompleted) SizedBox(height: 20),
-                      ],
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 8),
+          Row(
+            children: List.generate(5, (index) {
+              bool isCompleted = index < completedSteps;
+              return Expanded(
+                child: Column(
+                  children: [
+                    isCompleted
+                        ? Text(
+                      "${(index + 1) * 20}%",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w900,
+                        color: colorGreen,
+                      ),
+                    ) : SizedBox(height: 48),
+                    SizedBox(height: 4),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 2),
+                      height: 3,
+                      decoration: BoxDecoration(
+                        color: isCompleted ? colorGreen : Colors.grey[300],
+                        borderRadius: BorderRadius.circular(4),
+                      ),
                     ),
-                  );
-                }),
-              ),
-            ],
+                    if (!isCompleted) SizedBox(height: 20),
+                  ],
+                ),
+              );
+            }),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

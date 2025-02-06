@@ -16,14 +16,13 @@ class _TransactionScreenState extends State<TransactionScreen> with SingleTicker
   late AnimationController _overlayController;
   late Animation<double> _overlayAnimation;
 
-  double _overlayHeight = 0.0; // مقدار به‌روز شده برای کنترل ارتفاع لایه مشکی
+  double _overlayHeight = 0.0;
 
   @override
   void initState() {
     super.initState();
-    // انیمیشن برای لایه مشکی
     _overlayController = AnimationController(
-      duration: const Duration(milliseconds: 300), // زمان انیمیشن
+      duration: const Duration(milliseconds: 300),
       vsync: this,
     );
   }
@@ -43,6 +42,7 @@ class _TransactionScreenState extends State<TransactionScreen> with SingleTicker
       appBar: AppBar(
         backgroundColor: appBarColor,
         elevation: 0,
+        forceMaterialTransparency: true,
         toolbarHeight: 0,
       ),
       body: Stack(
@@ -77,7 +77,7 @@ class _TransactionScreenState extends State<TransactionScreen> with SingleTicker
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w900,
                               ),
                             ),
                             Text(

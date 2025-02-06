@@ -34,28 +34,7 @@ class EditProfileScreen extends StatelessWidget {
         ),
         automaticallyImplyLeading: false,
         elevation: 0,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-              decoration: BoxDecoration(
-                color: colorGreenBack,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SvgPicture.asset(Asset.support),
-                  SizedBox(width: 8),
-                  Text(context.translate('support'),
-                    style: TextStyle(fontSize: 16, color: colorGreen),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+        forceMaterialTransparency: true,
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 51),
@@ -74,10 +53,16 @@ class EditProfileScreen extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Scott Williams', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: colorLightGreyModal)),
+                Text('Scott Williams', style: TextStyle(fontWeight: FontWeight.w900, fontSize: 24, color: colorLightGreyModal)),
                 Padding(
                   padding: const EdgeInsets.only(left: 10, right: 10),
-                  child: ProfileCompletionWidget(completedFields: completeDocuments.length, totalFields: cubit.documents.length),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SvgPicture.asset(Asset.complete),
+                      ProfileCompletionWidget(completedFields: completeDocuments.length, totalFields: cubit.documents.length),
+                    ],
+                  ),
                 )
               ],
             ),
@@ -126,7 +111,8 @@ Widget _buildDocumentTitle(Map<String, dynamic> document) {
       Text(
         document['title'],
         style: TextStyle(
-          fontSize: 18,
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
           color: document['completed'] ? Colors.black : colorRed,
         ),
       ),

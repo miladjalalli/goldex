@@ -34,18 +34,27 @@ class AllTransactionsScreen extends StatelessWidget {
         ),
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 70.0),
-          child: Text(context.translate('transaction'), style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: colorLightGreyModal)),
+        forceMaterialTransparency: true,
+        centerTitle: true,
+        title: Text(
+          context.translate('transaction'),
+        ),
+        titleTextStyle: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.w700,
+          color: colorLightGreyModal10,
         ),
       ),
-      body: ListView.builder(
-        shrinkWrap: true,
-        itemCount: context.read<WalletCubit>().transactions.length,
-        itemBuilder: (context, index) {
-          final transaction = context.read<WalletCubit>().transactions[index];
-          return cardView(transaction);
-        },
+      body: Padding(
+        padding: const EdgeInsets.only(top: 15, bottom: 15),
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: context.read<WalletCubit>().transactions.length,
+          itemBuilder: (context, index) {
+            final transaction = context.read<WalletCubit>().transactions[index];
+            return cardView(transaction);
+          },
+        ),
       ),
     );
   }
@@ -82,7 +91,7 @@ Widget cardView(var transaction) {
                       transaction['title']!,
                       style: const TextStyle(
                         overflow: TextOverflow.ellipsis,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w900,
                         fontSize: 14,
                       ),
                       overflow: TextOverflow.ellipsis,
@@ -107,7 +116,7 @@ Widget cardView(var transaction) {
               child: Text(
                 transaction['type'] == 'dollar' ? '\$${transaction['amount']!}' : '${transaction['amount']!} gr',
                 style: const TextStyle(
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w900,
                   fontSize: 14,
                 ),
                 textAlign: TextAlign.center,
@@ -126,7 +135,7 @@ Widget cardView(var transaction) {
                           : transaction['status'] == 'Failed'
                           ? colorFailed
                           : colorPending,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w900,
                       fontSize: 11,
                     ),
                     textAlign: TextAlign.end,

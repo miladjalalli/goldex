@@ -22,37 +22,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
         elevation: 0,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-              decoration: BoxDecoration(
-                color: colorGreenBack,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SvgPicture.asset(Asset.support),
-                  SizedBox(width: 8),
-                  Text(context.translate('support'),
-                    style: TextStyle(fontSize: 16, color: colorGreen),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+        forceMaterialTransparency: true,
+        toolbarHeight: -5,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                  decoration: BoxDecoration(
+                    color: colorGreenBack,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SvgPicture.asset(Asset.support),
+                      SizedBox(width: 8),
+                      Text(context.translate('support'),
+                        style: TextStyle(fontSize: 16, color: colorGreen),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Image.asset(
@@ -65,8 +68,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Scott Williams', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: colorLightGreyModal)),
-                Text(context.translate('notVerified'), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: colorRedLight)),
+                Text('Scott Williams', style: TextStyle(fontWeight: FontWeight.w900, fontSize: 24, color: colorLightGreyModal)),
+                Text(context.translate('notVerified'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16, color: colorRedLight)),
                 Padding(
                   padding: const EdgeInsets.only(top: 24, bottom: 24.0),
                   child: CustomButton(
@@ -101,7 +104,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     padding: EdgeInsets.fromLTRB(15, 24, 0, 11),
                     child: Row(
                       children: [
-                        Text(context.translate('goldexEntryGifts'), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: colorLightGreyModal)),
+                        Text(context.translate('goldexEntryGifts'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18, color: colorLightGreyModal)),
                       ],
                     )),
                 Padding(
@@ -175,7 +178,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     padding: EdgeInsets.fromLTRB(15, 18, 0, 11),
                     child: Row(
                       children: [
-                        Text(context.translate('settings'), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: colorLightGreyModal)),
+                        Text(context.translate('settings'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18, color: colorLightGreyModal)),
                       ],
                     )),
                 Padding(

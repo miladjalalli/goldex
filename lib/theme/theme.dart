@@ -24,7 +24,6 @@ const Color colorDarkBlue = Color(0xff3D405B);
 const Color colorCream = Color(0xffE5E5E5);
 const Color colorLightSalmon = Color(0xfff58457);
 const Color colorLighter = Color(0xff31e2b4);
-const Color colorDarkGreen = Color(0xff149372);
 const Color colorGrey = Color(0xff8D99AE);
 const Color colorWhite = Color(0xffffffff);
 const Color colorLightYellow = Color(0xfffae19e);
@@ -43,6 +42,7 @@ const Color colorRedLight = Color(0xffC00F0C);
 
 const Color colorGreenBack = Color(0xffE1FFEB);
 const Color colorGreen = Color(0xff50C878);
+const Color colorDarkGreen = Color(0xff068B4D);
 
 const Color colorDarkGreyNavigation = Color(0xff181818);
 const Color colorLightGreyUnit = Color(0xff1E1E1E);

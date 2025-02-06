@@ -45,7 +45,7 @@ class LoginScreen extends StatelessWidget {
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 32,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w900,
                           ),
                         ),
                         const SizedBox(height: 12),
@@ -90,10 +90,9 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          height: 50,
                           child: TextField(
                             decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(vertical: 14, horizontal: 20), // Padding for text input
+                              contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20), // Padding for text input
                               filled: true,
                               fillColor: Colors.white,
                               enabledBorder: OutlineInputBorder(
@@ -119,11 +118,10 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          height: 50,
                           child: TextField(
                             obscureText: true,
                             decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(vertical: 14, horizontal: 20), // Padding for text input
+                              contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20), // Padding for text input
                               suffixIcon: Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 14, 12, 14),
                                 child: SizedBox(
@@ -208,8 +206,8 @@ class LoginScreen extends StatelessWidget {
                             borderColor: colorGreen,
                             borderRadius: BorderRadius.circular(25),
                             textStyle: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
                               color: Colors.white,
                             ),
                             onPressed: () {
@@ -254,7 +252,7 @@ class LoginScreen extends StatelessWidget {
                     borderColor: Colors.white,
                     borderRadius: BorderRadius.circular(25),
                     textStyle: TextStyle(
-                      fontSize: 20,
+                      fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: colorGreen
                     ),

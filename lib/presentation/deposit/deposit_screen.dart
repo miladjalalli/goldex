@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goldex/app_localizations.dart';
 import 'package:goldex/presentation/confirmation/confirmation_screen.dart';
+import 'package:goldex/presentation/services/services_screen.dart';
 import 'package:goldex/theme/theme.dart';
 import '../../widget/custom_button.dart';
 import '../assets.dart';
@@ -20,6 +21,7 @@ class _DepositScreenState extends State<DepositScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
     DepositCubit cubit = context.read<DepositCubit>();
     return Scaffold(
       backgroundColor: Colors.white,
@@ -37,24 +39,18 @@ class _DepositScreenState extends State<DepositScreen> {
         ),
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Stack(
-          alignment: Alignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  context.translate('deposit'),
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: colorLightGreyModal,
-                  ),
-                ),
-              ],
-            ),
-          ],
+        forceMaterialTransparency: true,
+        centerTitle: true,
+        title: Text(
+          context.translate('deposit'),
+          textAlign: TextAlign.center,
         ),
+        titleTextStyle: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.w700,
+          color: colorLightGreyModal10,
+        ),
+        automaticallyImplyLeading: false,
       ),
       body: BlocConsumer<DepositCubit, DepositState>(
         listener: (context, state) {
@@ -94,57 +90,51 @@ class _DepositScreenState extends State<DepositScreen> {
                               ),
                             ),
                             width: double.infinity,
-                            child: SingleChildScrollView(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 4),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          context.translate('currentBalance'),
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w400,
-                                              color: colorLightGreyModal5
-                                          ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        context.translate('currentBalance'),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w400,
+                                            color: colorLightGreyModal5
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          '1430.5 ${context.translate('USD')}',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black
-                                          ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        '1430.5 ${context.translate('USD')}',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.black
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 18, 0, 5),
+                            padding: const EdgeInsets.fromLTRB(23, 10, 0, 7),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  context.translate('amount'),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                                  context.translate("amount"),
+                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
                                 ),
                               ],
                             ),
@@ -171,20 +161,16 @@ class _DepositScreenState extends State<DepositScreen> {
                             ),
                             style: const TextStyle(
                               fontSize: 24,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w900,
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 18, 0, 5),
+                            padding: const EdgeInsets.fromLTRB(23, 10, 0, 7),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  context.translate('paymentMethod'),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                                  context.translate("paymentMethod"),
+                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
                                 ),
                               ],
                             ),
@@ -212,7 +198,7 @@ class _DepositScreenState extends State<DepositScreen> {
                                         borderRadius: BorderRadius.circular(12),
                                         border: Border.all(
                                           color: isSelected ? colorGreen : colorLightGreyModal2,
-                                          width: 2,
+                                          width: isSelected ? 2 : 1,
                                         ),
                                       ),
                                       child: Row(
@@ -238,9 +224,10 @@ class _DepositScreenState extends State<DepositScreen> {
                                   onPressed: () {},
                                   child: Text(
                                     context.translate('cancel'),
-                                    style: TextStyle(color: Colors.grey),
+                                    style: TextStyle(fontSize: 14, color: Colors.grey),
                                   ),
                                 ),
+                                SizedBox(width: 29),
                                 CustomButton(
                                   text: context.translate('confirm'),
                                   backgroundColor: colorGreen,
@@ -251,7 +238,7 @@ class _DepositScreenState extends State<DepositScreen> {
                                   borderRadius: BorderRadius.circular(25),
                                   textStyle: TextStyle(
                                     fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w900,
                                     color: Colors.white,
                                   ),
                                   onPressed: () {

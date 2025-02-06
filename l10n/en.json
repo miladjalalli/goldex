@@ -108,5 +108,19 @@
   "pleaseEnterVerificationCode": "Please Enter the Verification Code",
   "invitationCode": "Invitation Code",
   "gr": "gr",
-  "total": "Total"
+  "total": "Total:",
+  "transactionReceipt": "Transaction receipt",
+  "buy": "Buy",
+  "orderSummary": "Order Summary",
+  "sell": "Sell",
+  "issuanceFee": "Issuance fee",
+  "visitTime": "Visit time",
+  "officeAddress": "Office Address",
+  "getGold": "Get Gold",
+  "x": "X",
+  "enterSerialCode": "Enter Serial Code",
+  "or": "Or",
+  "scanYourCard": "Scan your Card",
+  "gotIt": "Got it!",
+  "youHaveGotMessage": "You’ve Got 50mg Gift\nfrom scott williams"
 }

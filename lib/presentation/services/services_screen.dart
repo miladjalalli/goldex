@@ -6,6 +6,8 @@ import 'package:goldex/app_localizations.dart';
 
 import '../../theme/theme.dart';
 import '../assets.dart';
+import '../get-gold/cubit/give_gold_cubit.dart';
+import '../get-gold/give-gold_screen.dart';
 import '../gift-card/cubit/gift_card_cubit.dart';
 import '../gift-card/gift-card_screen.dart';
 import 'cubit/services_cubit.dart';
@@ -120,7 +122,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                     padding: EdgeInsets.fromLTRB(15, 39, 0, 11),
                     child: Row(
                       children: [
-                        Text(context.translate('services'), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: colorLightGreyModal)),
+                        Text(context.translate('services'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18, color: colorLightGreyModal)),
                       ],
                     )),
                 Padding(
@@ -137,7 +139,15 @@ class _ServicesScreenState extends State<ServicesScreen> {
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => BlocProvider(
+                                    create: (context) => GiveGoldCubit(),
+                                    child: GiveGoldCardScreen(),
+                                  )),
+                                );
+                              },
                               child: ListTile(
                                 leading: SvgPicture.asset(Asset.getGold, width: 17, height: 17),
                                 title: Text(

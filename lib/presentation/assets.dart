@@ -49,6 +49,10 @@ class Asset {
   static const String edit = '$_icons/edit.svg';
   static const String fingerPrint = '$_icons/finger-print.svg';
   static const String copy = '$_icons/copy.svg';
+  static const String trailingDown = '$_icons/trailingDown.svg';
+  static const String trailingUp = '$_icons/trailingUp.svg';
+  static const String barcode = '$_icons/barcode.svg';
+  static const String scan = '$_icons/scan.svg';
 
   static const String applePay = '$_iconsPay/apple-pay.svg';
   static const String googlePay = '$_iconsPay/google-pay.svg';

@@ -5,7 +5,7 @@ import 'package:goldex/theme/theme.dart';
 import 'package:goldex/widget/card_widget.dart';
 import '../../widget/custom_button.dart';
 import '../assets.dart';
-import 'buy_order_summary.dart';
+import '../order_summary/order_summary_screen.dart';
 
 class BuyScreen extends StatefulWidget {
   const BuyScreen({super.key});
@@ -37,22 +37,25 @@ class _BuyScreenState extends State<BuyScreen> {
             Asset.back,
           ),
         ),
+        centerTitle: true,
+        title: Text(
+          context.translate('buy'),
+        ),
+        titleTextStyle: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.w700,
+          color: colorLightGreyModal10,
+        ),
         backgroundColor: Colors.white,
         elevation: 0,
+        forceMaterialTransparency: true,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CardWidget(
-                name: 'Scott Williams',
-                balance: '\$1430.5',
-                cardNumber: '2020-1821-1530-2401',
-                goldAmount: '123.4 ',
-                type: context.translate('gr'),
-                onDeposit: () => {}
-            ),
+            CardWidget(name: 'Scott Williams', balance: '\$1430.5', cardNumber: '2020-1821-1530-2401', goldAmount: '123.4 ', type: context.translate('gr'), onDeposit: () => {}),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
               child: Center(
@@ -60,11 +63,7 @@ class _BuyScreenState extends State<BuyScreen> {
                   textAlign: TextAlign.justify,
                   textDirection: TextDirection.ltr,
                   text: TextSpan(
-                    style: TextStyle(
-                      color: colorLightGreyModal,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400
-                    ),
+                    style: TextStyle(color: colorLightGreyModal, fontSize: 18, fontWeight: FontWeight.w400),
                     children: [
                       TextSpan(text: '${context.translate('liveGoldPrice')}  '),
                       TextSpan(
@@ -85,7 +84,7 @@ class _BuyScreenState extends State<BuyScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(10 ,36 ,10, 0),
+              padding: const EdgeInsets.fromLTRB(10, 36, 10, 0),
               child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -114,13 +113,12 @@ class _BuyScreenState extends State<BuyScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 50,
                         child: TextField(
                           textAlign: TextAlign.left,
                           controller: controller1,
                           keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25),
                               borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
@@ -158,13 +156,12 @@ class _BuyScreenState extends State<BuyScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 50,
                         child: TextField(
                           textAlign: TextAlign.left,
                           controller: controller2,
                           keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25),
                               borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
@@ -198,7 +195,7 @@ class _BuyScreenState extends State<BuyScreen> {
                               onPressed: () {},
                               child: Text(
                                 context.translate('cancel'),
-                                style: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w600),
+                                style: TextStyle(fontSize: 14, color: Colors.grey),
                               ),
                             ),
                             SizedBox(width: 29),
@@ -218,7 +215,25 @@ class _BuyScreenState extends State<BuyScreen> {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => BuyOrderSummary()),
+                                  MaterialPageRoute(
+                                      builder: (context) => OrderSummaryScreen(
+                                            title: 'Order Summary',
+                                            totalAmount: '102.68',
+                                            totalAmountType: '\$',
+                                            firstText: 'Live Gold price per gram',
+                                            firstTextAmount: "68.21",
+                                            firstTextAmountType: '\$',
+                                            secondText: 'Total Gold receive',
+                                            secondTextAmount: '1.5',
+                                            secondTextAmountType: 'gr',
+                                            thirdText: 'Net Gold price',
+                                            thirdTextAmount: '102',
+                                            thirdTextAmountType: '\$',
+                                            forthText: 'Fee',
+                                            forthPercent: '1',
+                                            forthTextAmount: '0.68',
+                                            forthTextAmountType: '\$',
+                                          )),
                                 );
                               },
                             )

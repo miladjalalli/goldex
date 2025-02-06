@@ -8,8 +8,25 @@ import '../../widget/custom_button.dart';
 import '../assets.dart';
 
 class ConfirmationScreen extends StatefulWidget {
+
+  final bool showTextMessage;
+  final bool showShareBottom;
+  final bool showSaveToGalleryBottom;
+  final bool showGotItBottom;
+
+  const ConfirmationScreen(
+      {
+        super.key,
+        this.showTextMessage = false,
+        this.showShareBottom = true,
+        this.showSaveToGalleryBottom = true,
+        this.showGotItBottom = false
+      }
+    );
+
   @override
   _ConfirmationScreenState createState() => _ConfirmationScreenState();
+
 }
 
 class _ConfirmationScreenState extends State<ConfirmationScreen> {
@@ -35,6 +52,16 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
         ),
         backgroundColor: Colors.white,
         elevation: 0,
+        forceMaterialTransparency: true,
+        centerTitle: true,
+        title: Text(
+          _isCodeConfirmed ? context.translate('transactionReceipt') : context.translate('confirmTransaction'),
+        ),
+        titleTextStyle: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
+          color: colorLightGreyModal,
+        ),
       ),
       body: _isCodeConfirmed ? _buildTransactionDetails() : _buildConfirmationCode(),
     );
@@ -45,24 +72,8 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
       children: [
         Expanded(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(81, 66, 81, 124),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      context.translate('confirmTransaction'),
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 18),
                 child: Row(
@@ -142,7 +153,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
             borderRadius: BorderRadius.circular(25),
             textStyle: TextStyle(
               fontSize: 16,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w900,
               color: Colors.white,
             ),
             onPressed: () {
@@ -159,34 +170,25 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
   Widget _buildTransactionDetails() {
     return Center(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(54, 60, 54, 124),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  context.translate('confirmTransaction'),
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
+          Spacer(),
+          Visibility(
+            visible: widget.showTextMessage,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 27.0),
+              child: Text(context.translate('youHaveGotMessage'), style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: Colors.black),),
             ),
           ),
           Container(
             width: 320,
-            padding: EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: colorLightGreyModal8,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(29),
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.2),
-                  blurRadius: 10,
+                  blurRadius: 29,
                   offset: Offset(0, 5),
                 ),
               ],
@@ -195,82 +197,128 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  context.translate('totalGoldSell'),
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: colorLightGreyModal6,
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 21, vertical: 23), // Padding for content
+                  child: Column(
+                    children: [
+                      Text(
+                        context.translate('totalGoldSell'),
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: colorLightGreyModal6,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        '10 ${context.translate('gr')}',
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: Colors.green,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: 8),
-                Text(
-                  '10 ${context.translate('gram')}',
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.green,
-                    fontWeight: FontWeight.bold,
+                Divider(
+                  color: Colors.white,
+                  thickness: 2,
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 21, vertical: 23), // Padding for content
+                  child: Column(
+                    children: [
+                      Text(
+                        context.translate('transactionDetails'),
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: colorLightGreyModal6,
+                          fontWeight: FontWeight.w500
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                      _buildDetailRow(context.translate('totalMoneyReceived'), '252.5 ${context.translate('USD')}'),
+                      _buildDetailRow(context.translate('transactionCode'), '3214568'),
+                      _buildDetailRow(context.translate('time'), '07/07/2024 - 20:54'),
+                      _buildDetailRow(context.translate('type'), context.translate('buyGold')),
+                    ],
                   ),
                 ),
-                SizedBox(height: 20),
-                Text(
-                  context.translate('transactionDetails'),
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: colorLightGreyModal6,
-                  ),
-                ),
-                SizedBox(height: 16),
-                _buildDetailRow(context.translate('totalMoneyReceived'), '252.5 ${context.translate('USD')}'),
-                _buildDetailRow(context.translate('transactionCode'), '3214568'),
-                _buildDetailRow(context.translate('time'), '07/07/2024 - 20:54'),
-                _buildDetailRow(context.translate('type'), context.translate('buyGold')),
               ],
             ),
           ),
           Spacer(),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 11.0),
-            child: CustomButton(
-              text: context.translate('share'),
-              isIconEnabled: true,
-              icon: Asset.share,
-              backgroundColor: Colors.white,
-              textColor: colorLightGreyModal2,
-              height: 50,
-              width: 300,
-              borderColor: colorLightGreyModal2,
-              borderRadius: BorderRadius.circular(25),
-              textStyle: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+          Visibility(
+            visible: widget.showShareBottom,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: widget.showGotItBottom || widget.showSaveToGalleryBottom ? 11.0 : 32),
+              child: CustomButton(
+                text: context.translate('share'),
+                isIconEnabled: true,
+                icon: Asset.share,
+                backgroundColor: Colors.white,
+                textColor: colorLightGreyModal2,
+                height: 50,
+                width: 300,
+                borderColor: colorLightGreyModal2,
+                borderRadius: BorderRadius.circular(25),
+                textStyle: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _isCodeConfirmed = true;
+                  });
+                },
               ),
-              onPressed: () {
-                setState(() {
-                  _isCodeConfirmed = true;
-                });
-              },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 32.0),
-            child: CustomButton(
-              text: context.translate('saveGallery'),
-              isIconEnabled: true,
-              icon: Asset.download,
-              backgroundColor: colorGreen,
-              textColor: Colors.white,
-              height: 50,
-              width: 300,
-              borderColor: colorGreen,
-              borderRadius: BorderRadius.circular(25),
-              textStyle: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+          Visibility(
+            visible: widget.showSaveToGalleryBottom,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: widget.showGotItBottom ? 11.0 : 32),
+              child: CustomButton(
+                text: context.translate('saveGallery'),
+                isIconEnabled: true,
+                icon: Asset.download,
+                backgroundColor: colorGreen,
+                textColor: Colors.white,
+                height: 50,
+                width: 300,
+                borderColor: colorGreen,
+                borderRadius: BorderRadius.circular(25),
+                textStyle: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                },
               ),
-              onPressed: () {
-              },
+            ),
+          ),
+          Visibility(
+            visible: widget.showGotItBottom,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 32.0),
+              child: CustomButton(
+                text: context.translate('gotIt'),
+                backgroundColor: colorGreen,
+                textColor: Colors.white,
+                height: 50,
+                width: 300,
+                borderColor: colorGreen,
+                borderRadius: BorderRadius.circular(25),
+                textStyle: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                },
+              ),
             ),
           ),
         ],
@@ -288,6 +336,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
             title,
             style: TextStyle(
               fontSize: 12,
+              fontWeight: FontWeight.w500,
               color: colorLightGreyModal7,
             ),
           ),
@@ -295,7 +344,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
             value,
             style: TextStyle(
               fontSize: 12,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w500,
               color: colorLightGreyModal6,
             ),
           ),

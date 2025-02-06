@@ -37,23 +37,15 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
         ),
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Stack(
-          alignment: Alignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  context.translate('withdrawal'),
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: colorLightGreyModal,
-                  ),
-                ),
-              ],
-            ),
-          ],
+        forceMaterialTransparency: true,
+        centerTitle: true,
+        title: Text(
+          context.translate('withdrawal'),
+        ),
+        titleTextStyle: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.w700,
+          color: colorLightGreyModal10,
         ),
       ),
       body: BlocConsumer<WithdrawalCubit, WithdrawalState>(
@@ -100,7 +92,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 4),
+                                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
@@ -124,7 +116,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                                           '1430.5 ${context.translate('USD')}',
                                           style: TextStyle(
                                               fontSize: 20,
-                                              fontWeight: FontWeight.bold,
+                                              fontWeight: FontWeight.w900,
                                               color: Colors.black
                                           ),
                                         ),
@@ -136,89 +128,85 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 18, 0, 5),
+                            padding: const EdgeInsets.fromLTRB(23, 10, 0, 7),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  context.translate('amount'),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                                  context.translate("amount"),
+                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
                                 ),
                               ],
                             ),
                           ),
-                          TextField(
-                            textAlign: TextAlign.left,
-                            controller: cubit.amountController,
-                            keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25),
-                                borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
+                          SizedBox(
+                            child: TextField(
+                              textAlign: TextAlign.left,
+                              controller: cubit.amountController,
+                              keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(25),
+                                  borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(25),
+                                  borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
+                                hintText: context.translate('USD'),
+                                hintStyle: TextStyle(fontSize: 16, color: colorLightGreyModal2),
+                                hintTextDirection: TextDirection.ltr,
                               ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25),
-                                borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w700,
                               ),
-                              contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                              filled: true,
-                              fillColor: Colors.white,
-                              hintText: context.translate('USD'),
-                              hintStyle: TextStyle(fontSize: 16, color: colorLightGreyModal2),
-                              hintTextDirection: TextDirection.rtl,
-                            ),
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 18, 0, 5),
+                            padding: const EdgeInsets.fromLTRB(23, 10, 0, 7),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  context.translate('toYourAccount'),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                                  context.translate("toYourAccount"),
+                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
                                 ),
                               ],
                             ),
                           ),
-                          TextField(
-                            textAlign: TextAlign.left,
-                            controller: cubit.accountNumberController,
-                            keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25),
-                                borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25),
-                                borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
-                              ),
-                              contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                              filled: true,
-                              fillColor: Colors.white,
-                              hintText: '2064 - 5699 - 2569 - 6919',
-                              hintStyle: TextStyle(fontSize: 16, color: colorLightGreyModal2),
-                              hintTextDirection: TextDirection.rtl,
-                              prefixIcon: Padding(
-                                padding: const EdgeInsets.fromLTRB(19,0,20,0),
-                                child: SvgPicture.asset(
-                                  Asset.masterCard,
+                          SizedBox(
+                            child: TextField(
+                              textAlign: TextAlign.left,
+                              controller: cubit.accountNumberController,
+                              keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(25),
+                                  borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(25),
+                                  borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
+                                hintText: '2064 - 5699 - 2569 - 6919',
+                                hintStyle: TextStyle(fontSize: 16, color: colorLightGreyModal2),
+                                hintTextDirection: TextDirection.rtl,
+                                prefixIcon: Padding(
+                                  padding: const EdgeInsets.fromLTRB(19,0,20,0),
+                                  child: SvgPicture.asset(
+                                    Asset.masterCard,
+                                  ),
                                 ),
                               ),
-                            ),
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
                           Padding(
@@ -230,9 +218,10 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                                   onPressed: () {},
                                   child: Text(
                                     context.translate('cancel'),
-                                    style: TextStyle(color: Colors.grey),
+                                    style: TextStyle(fontSize: 14, color: Colors.grey),
                                   ),
                                 ),
+                                SizedBox(width: 29),
                                 CustomButton(
                                   text: context.translate('confirm'),
                                   backgroundColor: colorGreen,
@@ -243,7 +232,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                                   borderRadius: BorderRadius.circular(25),
                                   textStyle: TextStyle(
                                     fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w900,
                                     color: Colors.white,
                                   ),
                                   onPressed: () {
