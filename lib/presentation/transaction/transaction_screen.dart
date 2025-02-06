@@ -112,7 +112,6 @@ class _TransactionScreenState extends State<TransactionScreen> with SingleTicker
           DraggableModalDialog(
             draggableController: _draggableController,
             onScroll: (overlayHeight) {
-              // تنظیم مقدار overlayHeight برای هماهنگ کردن حرکت
               setState(() {
                 _overlayHeight = overlayHeight;
               });

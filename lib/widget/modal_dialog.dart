@@ -29,15 +29,14 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // لایه مشکی که فقط بالای modal را پوشش می‌دهد
         AnimatedPositioned(
           duration: Duration(milliseconds: 300),
-          top: 0,  // بالای صفحه
+          top: 0,
           left: 0,
           right: 0,
-          height: _overlayHeight * MediaQuery.of(context).size.height, // فقط ارتفاع مشکی را مطابق با اسکرول تنظیم می‌کنیم
+          height: _overlayHeight * MediaQuery.of(context).size.height,
           child: Container(
-            color: Colors.black.withOpacity(0.7), // لایه مشکی با شفافیت
+            color: Colors.black.withOpacity(0.7),
           ),
         ),
         DraggableScrollableSheet(
@@ -49,9 +48,9 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
             scrollController.addListener(() {
               double newHeight = scrollController.position.pixels / 100;
               setState(() {
-                _overlayHeight = newHeight.clamp(0.0, 1.0); // محدود کردن مقدار بین 0 و 1
+                _overlayHeight = newHeight.clamp(0.0, 1.0);
               });
-              widget.onScroll(_overlayHeight); // ارسال مقدار به والد
+              widget.onScroll(_overlayHeight);
             });
             return Container(
               height: 140,

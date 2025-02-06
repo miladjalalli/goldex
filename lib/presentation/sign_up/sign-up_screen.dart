@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:goldex/app_localizations.dart';
 import '../../theme/theme.dart';
-import '../../widget/country_code.dart';
 import '../../widget/custom_button.dart';
 import '../assets.dart';
 import 'cubit/sing_up_cubit.dart';
@@ -158,16 +157,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(25),
                                   border: Border.all(
-                                    color: colorLightGreyModal2, // Set border color here
+                                    color: colorLightGreyModal2,
                                     width: 1,
                                   ),
                                 ),
                                 child: Theme(
                                   data: Theme.of(context).copyWith(
-                                    cardColor: Colors.white, // تغییر پس‌زمینه‌ی لیست بازشونده
+                                    cardColor: Colors.white,
                                     popupMenuTheme: PopupMenuThemeData(
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12), // گرد کردن لیست بازشونده
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
                                     ),
                                   ),
@@ -302,18 +301,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             value: false,
                             onChanged: (val) {},
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5), // Set border radius
+                              borderRadius: BorderRadius.circular(5),
                             ),
                             side: BorderSide(width: 2, color: colorLightGreyModal2),
                             // Border weight & color
                             visualDensity: VisualDensity(horizontal: -1, vertical: -4),
                             // Remove padding
-                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap, // Reduce touch target size
+                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
                         ),
                         Expanded(
                           child: GestureDetector(
-                            onTap: () {}, // Handle ToS link tap
+                            onTap: () {},
                             child: RichText(
                               textAlign: TextAlign.justify,
                               textDirection: TextDirection.ltr,
@@ -653,13 +652,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             value: false,
                             onChanged: (val) {},
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5), // Set border radius
+                              borderRadius: BorderRadius.circular(5),
                             ),
                             side: BorderSide(width: 2, color: colorLightGreyModal2),
                             // Border weight & color
                             visualDensity: VisualDensity(horizontal: -1, vertical: -4),
                             // Remove padding
-                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap, // Reduce touch target size
+                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
                         ),
                         Expanded(

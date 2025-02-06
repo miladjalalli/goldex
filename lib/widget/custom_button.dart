@@ -36,8 +36,8 @@ class CustomButton extends StatelessWidget {
       height: height,
       width: width,
       child: Material(
-        color: Colors.transparent, // رنگ پس‌زمینه شفاف باشد
-        borderRadius: borderRadius, // گوشه‌های گرد برای افکت Ripple
+        color: Colors.transparent,
+        borderRadius: borderRadius,
         child: Ink(
           decoration: BoxDecoration(
             gradient: backgroundColor == Colors.white || backgroundColor == Colors.transparent
@@ -54,8 +54,8 @@ class CustomButton extends StatelessWidget {
           child: InkWell(
             borderRadius: borderRadius,
             onTap: onPressed,
-            splashColor: Colors.white.withOpacity(0.3), // رنگ موجی که موقع لمس نمایش داده می‌شود
-            highlightColor: Colors.white.withOpacity(0.1), // رنگ پس‌زمینه موقع لمس
+            splashColor: Colors.white.withOpacity(0.3),
+            highlightColor: Colors.white.withOpacity(0.1),
             child: Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
