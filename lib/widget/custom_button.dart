@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:goldex/theme/theme.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
-  final Color backgroundColor;
+  final Color backgroundColorStart;
+  Color? backgroundColorEnd;
   final Color textColor;
   final double height;
   final double width;
@@ -15,10 +15,11 @@ class CustomButton extends StatelessWidget {
   final String? icon;
   final bool isIconEnabled;
 
-  const CustomButton({
+  CustomButton({
     super.key,
     required this.text,
-    required this.backgroundColor,
+    required this.backgroundColorStart,
+    this.backgroundColorEnd,
     required this.textColor,
     required this.height,
     required this.width,
@@ -28,7 +29,9 @@ class CustomButton extends StatelessWidget {
     this.textStyle = const TextStyle(fontSize: 18, fontWeight: FontWeight.bold), // Default textStyle
     this.icon,
     this.isIconEnabled = false,
-  });
+  }) {
+    backgroundColorEnd ??= backgroundColorStart;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +43,20 @@ class CustomButton extends StatelessWidget {
         borderRadius: borderRadius,
         child: Ink(
           decoration: BoxDecoration(
-            gradient: backgroundColor == Colors.white || backgroundColor == Colors.transparent || backgroundColor == Colors.black
+            gradient: backgroundColorStart == Colors.white ||
+                    backgroundColorStart == Colors.transparent ||
+                    backgroundColorStart == Colors.black
                 ? null
-                : const LinearGradient(
-              begin: Alignment.centerRight,
-              end: Alignment.centerLeft,
-              colors: [colorDarkGreen, colorGreen],
-            ),
-            color: backgroundColor == Colors.white ? Colors.white :backgroundColor == Colors.black ? Colors.black : null,
+                : LinearGradient(
+                    begin: Alignment.centerRight,
+                    end: Alignment.centerLeft,
+                    colors: [backgroundColorEnd!, backgroundColorStart],
+                  ),
+            color: backgroundColorStart == Colors.white
+                ? Colors.white
+                : backgroundColorStart == Colors.black
+                    ? Colors.black
+                    : null,
             borderRadius: borderRadius,
             border: Border.all(color: borderColor),
           ),

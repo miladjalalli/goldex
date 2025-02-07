@@ -167,7 +167,7 @@ class GetGoldOrderSummaryScreen extends StatelessWidget {
                       SizedBox(height: 33),
                       CustomButton(
                         text: context.translate('continue'),
-                        backgroundColor: colorGreen,
+                        backgroundColorStart: colorGreen,
                         textColor: Colors.white,
                         height: 50,
                         width: 300,

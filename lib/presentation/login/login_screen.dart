@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goldex/app_localizations.dart';
 import 'package:goldex/presentation/home/home_screen.dart';
 import 'package:goldex/theme/theme.dart';
+import 'package:goldex/widget/goldex_text_form_field.dart';
 import '../../widget/custom_button.dart';
 import '../../widget/dotter_painter.dart';
 import '../assets.dart';
@@ -42,11 +43,7 @@ class LoginScreen extends StatelessWidget {
                         Text(
                           context.translate('signInToYourAccount'),
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 32,
-                            fontWeight: FontWeight.w900,
-                          ),
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
                         const SizedBox(height: 12),
                         Text(
@@ -78,73 +75,25 @@ class LoginScreen extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(23, 5, 0, 7),
-                          child: Row(
-                            children: [
-                              Text(
-                                context.translate("phoneNumberEmail"),
-                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
-                              ),
-                            ],
-                          ),
+                        GoldexTextFormField(
+                          title: context.translate("phoneNumberEmail"),
+                          textInputAction: TextInputAction.done,
+                          keyboardType: TextInputType.text,
                         ),
-                        SizedBox(
-                          child: TextField(
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20), // Padding for text input
-                              filled: true,
-                              fillColor: Colors.white,
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25),
-                                borderSide: BorderSide(color: colorLightGreyModal2, width: 1),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25),
-                                borderSide: BorderSide(color: Colors.blue, width: 1),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(23, 10, 0, 7),
-                          child: Row(
-                            children: [
-                              Text(
-                                context.translate("password"),
-                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          child: TextField(
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20), // Padding for text input
-                              suffixIcon: Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 14, 12, 14),
-                                child: SizedBox(
-                                  width: 24, // Set the width
-                                  height: 24, // Set the height
-                                  child: SvgPicture.asset(
-                                    Asset.hide,
-                                    fit: BoxFit.contain, // Ensure it fits within the box
-                                  ),
-                                ),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              filled: true,
-                              fillColor: Colors.white,
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25),
-                                borderSide: BorderSide(color: colorLightGreyModal2, width: 1),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25),
-                                borderSide: BorderSide(color: Colors.blue, width: 1),
+                        SizedBox(height: 8,),
+                        GoldexTextFormField(
+                          title: context.translate("password"),
+                          textInputAction: TextInputAction.done,
+                          keyboardType: TextInputType.visiblePassword,
+                          obscureText: true,
+                          suffixIcon: Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 14, 12, 14),
+                            child: SizedBox(
+                              width: 24, // Set the width
+                              height: 24, // Set the height
+                              child: SvgPicture.asset(
+                                Asset.hide,
+                                fit: BoxFit.contain, // Ensure it fits within the box
                               ),
                             ),
                           ),
@@ -186,7 +135,7 @@ class LoginScreen extends StatelessWidget {
                                 child: Text(
                                   context.translate('forgotPassword'),
                                   style: TextStyle(
-                                    color: Colors.green,
+                                    color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.w600,
                                     fontSize: 14
                                   ),
@@ -199,7 +148,8 @@ class LoginScreen extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 17.0),
                           child: CustomButton(
                             text: context.translate('logIn'),
-                            backgroundColor: colorGreen,
+                            backgroundColorStart: Theme.of(context).colorScheme.primary,
+                            backgroundColorEnd: Theme.of(context).colorScheme.secondary,
                             textColor: Colors.white,
                             height: 50,
                             width: 300,
@@ -222,7 +172,9 @@ class LoginScreen extends StatelessWidget {
                           padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
                           child: Text(
                             context.translate("useYourFingerprint"),
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black),
+                            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                                fontWeight: FontWeight.w400
+                            ),
                           ),
                         ),
                         Padding(
@@ -245,7 +197,7 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(height: 12),
                   CustomButton(
                     text: context.translate('signUp'),
-                    backgroundColor: Colors.transparent,
+                    backgroundColorStart: Colors.transparent,
                     textColor: colorGreen,
                     height: 50,
                     width: 300,

@@ -59,7 +59,7 @@ class _WalletScreenState extends State<WalletScreen> {
                   Expanded(
                     child: CustomButton(
                       text: context.translate('deposit'),
-                      backgroundColor: colorGreen,
+                      backgroundColorStart: colorGreen,
                       textColor: Colors.white,
                       height: 50,
                       width: 180,
@@ -89,7 +89,7 @@ class _WalletScreenState extends State<WalletScreen> {
                   Expanded(
                     child: CustomButton(
                       text: context.translate('withdrawal'),
-                      backgroundColor: Colors.white,
+                      backgroundColorStart: Colors.white,
                       textColor: colorGreen,
                       height: 50,
                       width: 180,

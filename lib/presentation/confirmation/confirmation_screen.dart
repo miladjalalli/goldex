@@ -115,13 +115,13 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(70, 29, 81, 0),
+                padding: const EdgeInsets.fromLTRB(70, 29, 0, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
                       context.translate('didntReceiveCode'),
-                      style: TextStyle(color: Colors.black),
+                      style: Theme.of(context).textTheme.bodyMedium,
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -145,7 +145,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
           padding: const EdgeInsets.only(bottom: 32.0),
           child: CustomButton(
             text: context.translate('confirm'),
-            backgroundColor: colorGreen,
+            backgroundColorStart: colorGreen,
             textColor: Colors.white,
             height: 50,
             width: 300,
@@ -256,7 +256,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                 text: context.translate('share'),
                 isIconEnabled: true,
                 icon: Asset.share,
-                backgroundColor: Colors.transparent,
+                backgroundColorStart: Colors.transparent,
                 textColor: colorGreen,
                 height: 50,
                 width: 300,
@@ -283,7 +283,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                 text: context.translate('saveGallery'),
                 isIconEnabled: true,
                 icon: Asset.download,
-                backgroundColor: colorGreen,
+                backgroundColorStart: colorGreen,
                 textColor: Colors.white,
                 height: 50,
                 width: 300,
@@ -305,7 +305,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
               padding: const EdgeInsets.only(bottom: 32.0),
               child: CustomButton(
                 text: context.translate('gotIt'),
-                backgroundColor: colorGreen,
+                backgroundColorStart: colorGreen,
                 textColor: Colors.white,
                 height: 50,
                 width: 300,

@@ -141,7 +141,7 @@ Widget _buildVerifyButton(BuildContext context) {
     padding: const EdgeInsets.only(bottom: 2.0),
     child: CustomButton(
       text: context.translate('verify'),
-      backgroundColor: colorGreen,
+      backgroundColorStart: colorGreen,
       textColor: Colors.white,
       height: 34,
       width: 109,

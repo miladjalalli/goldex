@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:goldex/app_localizations.dart';
+import 'package:goldex/widget/goldex_text_form_field.dart';
 import '../../theme/theme.dart';
 import '../../widget/custom_button.dart';
 import '../assets.dart';
@@ -83,26 +85,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
       children: [
         Text(
           title,
-          style: TextStyle(
-            color: cubit.currentIndex == index
-                ? Colors.white
-                : cubit.currentIndex >= index
-                    ? Colors.green
-                    : Colors.white60,
-            fontWeight: FontWeight.w500,
-          ),
+          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                color: cubit.currentIndex == index
+                    ? Colors.white
+                    : cubit.currentIndex >= index
+                        ? Colors.green
+                        : Colors.white60,
+                fontWeight: FontWeight.w500,
+              ),
         ),
       ],
     );
   }
 
   Widget _buildDivider() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 6.0, right: 6),
-      child: Container(
-        height: 2,
-        width: 30,
-        color: Colors.white60,
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 6.0, right: 6),
+        child: Container(
+          height: 2,
+          color: Colors.white60,
+        ),
       ),
     );
   }
@@ -150,71 +153,50 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
-                                width: 90,
-                                height: 50,
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(25),
-                                  border: Border.all(
-                                    color: colorLightGreyModal2,
-                                    width: 1,
+                                  width: 90,
+                                  height: 50,
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(25),
+                                    border: Border.all(
+                                      color: colorLightGreyModal2,
+                                      width: 1,
+                                    ),
                                   ),
-                                ),
-                                child: Theme(
-                                  data: Theme.of(context).copyWith(
-                                    cardColor: Colors.white,
-                                    popupMenuTheme: PopupMenuThemeData(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12),
+                                  child: Theme(
+                                    data: Theme.of(context).copyWith(
+                                      cardColor: Colors.white,
+                                      popupMenuTheme: PopupMenuThemeData(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(12),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  child: DropdownButtonHideUnderline(
-                                    child: DropdownButton<String>(
-                                      value: cubit.selectedCountryCodes.isNotEmpty
-                                          ? cubit.selectedCountryCodes
-                                          : cubit.countryCodes.first,
-                                      isExpanded: true,
-                                      icon: Icon(Icons.arrow_drop_down, color: Colors.blue),
-                                      items: cubit.countryCodes.map((String code) {
-                                        return DropdownMenuItem<String>(
-                                          value: code,
-                                          child: Text(code, style: TextStyle(fontSize: 18)),
-                                        );
-                                      }).toList(),
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          cubit.selectedCountryCodes = newValue!;
-                                        });
-                                      },
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton<String>(
+                                        value: cubit.selectedCountryCodes.isNotEmpty
+                                            ? cubit.selectedCountryCodes
+                                            : cubit.countryCodes.first,
+                                        isExpanded: true,
+                                        icon: Icon(Icons.arrow_drop_down, color: Colors.blue),
+                                        items: cubit.countryCodes.map((String code) {
+                                          return DropdownMenuItem<String>(
+                                            value: code,
+                                            child: Text(code, style: Theme.of(context).textTheme.bodySmall),
+                                          );
+                                        }).toList(),
+                                        onChanged: (String? newValue) {
+                                          setState(() {
+                                            cubit.selectedCountryCodes = newValue!;
+                                          });
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                )
-
-                              ),
+                                  )),
                               SizedBox(width: 6),
                               Expanded(
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                    hintText: "",
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
-                                    ),
-                                    contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                                    suffixIcon: Icon(Icons.error, color: Colors.red),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
-                                      borderSide: BorderSide(color: colorLightGreyModal2, width: 1),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
-                                      borderSide: BorderSide(color: Colors.blue, width: 1),
-                                    ),
-                                  ),
-                                ),
+                                child: GoldexTextFormField(suffixIcon: Icon(Icons.error, color: Colors.red)),
                               ),
                             ],
                           ),
@@ -251,25 +233,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             underlineWidth: 0,
                             length: 5,
                             onCompleted: (String value) {
-                              setState(() {
-
-                              });
+                              setState(() {});
                             },
                             onEditing: (bool value) {
-                              setState(() {
-
-                              });
+                              setState(() {});
                             },
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(22, 29, 81, 0),
+                          padding: const EdgeInsets.fromLTRB(22, 29, 0, 0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
                                 context.translate('didntReceiveCode'),
-                                style: TextStyle(color: Colors.black),
+                                style: Theme.of(context).textTheme.bodyMedium,
                                 textAlign: TextAlign.center,
                               ),
                             ],
@@ -327,7 +305,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     text: context.translate('readTheToS'),
                                     style: TextStyle(
                                       fontFamily: 'IRsans',
-                                      color: colorGreen,
+                                      color: Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                   TextSpan(text: context.translate('andAgreedWithThem')),
@@ -343,7 +321,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     padding: const EdgeInsets.only(top: 25, bottom: 0),
                     child: CustomButton(
                       text: context.translate('confirmAndContinue'),
-                      backgroundColor: colorGreen,
+                      backgroundColorStart: Theme.of(context).colorScheme.primary,
+                      backgroundColorEnd: Theme.of(context).colorScheme.secondary,
                       textColor: Colors.white,
                       height: 50,
                       width: 300,
@@ -355,7 +334,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         color: Colors.white,
                       ),
                       onPressed: () {
-                        if(cubit.showOTP) {
+                        if (cubit.showOTP) {
                           cubit.goToNextPage();
                         } else {
                           cubit.changeContent();
@@ -366,21 +345,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ],
               ),
             ),
-
             SizedBox(height: 50),
             TextButton(
               onPressed: () {},
               child: Text(
                 context.translate('alreadyHaveAnAccount'),
-                style: TextStyle(color: Colors.white,
-                fontWeight: FontWeight.w500,
-                fontSize: 14),
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 14),
               ),
             ),
             const SizedBox(height: 5),
             CustomButton(
               text: context.translate('logIn'),
-              backgroundColor: Colors.transparent,
+              backgroundColorStart: Colors.transparent,
               textColor: colorGreen,
               height: 50,
               width: 300,
@@ -389,7 +365,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               textStyle: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w900,
-                color: colorGreen,
+                color: Theme.of(context).colorScheme.primary,
               ),
               onPressed: () {
                 // Handle Sign Up action
@@ -429,105 +405,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 children: [
                   Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(23, 5, 0, 7),
-                        child: Row(
-                          children: [
-                            Text(
-                              context.translate("firstName"),
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
-                            ),
-                          ],
-                        ),
+                      GoldexTextFormField(
+                        title: context.translate("firstName"),
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.name,
                       ),
                       SizedBox(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                              borderSide: BorderSide(color: colorLightGreyModal2, width: 1),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                              borderSide: BorderSide(color: Colors.blue, width: 1),
-                            ),
-                          ),
-                        ),
+                        height: 8,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(23, 10, 0, 7),
-                        child: Row(
-                          children: [
-                            Text(
-                              context.translate("lastName"),
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
-                            ),
-                          ],
-                        ),
+                      GoldexTextFormField(
+                        title: context.translate("lastName"),
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.name,
                       ),
                       SizedBox(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                              borderSide: BorderSide(color: colorLightGreyModal2, width: 1),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                              borderSide: BorderSide(color: Colors.blue, width: 1),
-                            ),
-                          ),
-                        ),
+                        height: 8,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(23, 10, 0, 7),
-                        child: Row(
-                          children: [
-                            Text(
-                              context.translate("invitationCode"),
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                              borderSide: BorderSide(color: colorLightGreyModal2, width: 1),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                              borderSide: BorderSide(color: Colors.blue, width: 1),
-                            ),
-                          ),
-                        ),
+                      GoldexTextFormField(
+                        title: context.translate("invitationCode"),
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.text,
                       ),
                     ],
                   ),
                   Spacer(),
                   CustomButton(
                     text: context.translate('confirmAndContinue'),
-                    backgroundColor: colorGreen,
+                    backgroundColorStart: colorGreen,
                     textColor: Colors.white,
                     height: 50,
                     width: 300,
@@ -577,71 +481,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(23, 5, 0, 7),
-                    child: Row(
-                      children: [
-                        Text(
-                          context.translate("password"),
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
-                        ),
-                      ],
-                    ),
+                  GoldexTextFormField(
+                    title: context.translate("password"),
+                    keyboardType: TextInputType.visiblePassword,
+                    textInputAction: TextInputAction.next,
                   ),
-                  SizedBox(
-                    child: TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(color: colorLightGreyModal2, width: 1),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(color: Colors.blue, width: 1),
-                        ),
-                      ),
-                    ),
+                  GoldexTextFormField(
+                    title: context.translate("repeatPassword"),
+                    keyboardType: TextInputType.visiblePassword,
+                    textInputAction: TextInputAction.done,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(23, 10, 0, 7),
-                    child: Row(
-                      children: [
-                        Text(
-                          context.translate("repeatPassword"),
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    child: TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(color: colorLightGreyModal2, width: 1),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(color: Colors.blue, width: 1),
-                        ),
-                      ),
-                    ),
-                  ),
-
                   Padding(
                     padding: const EdgeInsets.only(top: 11),
                     child: Row(
@@ -675,7 +524,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Spacer(),
                   CustomButton(
                     text: context.translate('confirmAndContinue'),
-                    backgroundColor: colorGreen,
+                    backgroundColorStart: colorGreen,
                     textColor: Colors.white,
                     height: 50,
                     width: 300,

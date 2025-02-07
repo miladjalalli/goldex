@@ -63,7 +63,7 @@ class BarcodeScannerScreen extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(64,18,64,32),
               child: CustomButton(
                 text: context.translate('scanYourCard'),
-                backgroundColor: colorGreen,
+                backgroundColorStart: colorGreen,
                 textColor: Colors.white,
                 height: 50,
                 width: 300,
@@ -135,7 +135,7 @@ class BarcodeScannerScreen extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(64,0,64,32),
           child: CustomButton(
             text: context.translate('continue'),
-            backgroundColor: colorGreen,
+            backgroundColorStart: colorGreen,
             textColor: Colors.white,
             height: 50,
             width: 300,

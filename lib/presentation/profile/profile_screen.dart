@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:goldex/app_localizations.dart';
 import 'package:goldex/theme/theme.dart';
 import 'package:goldex/widget/custom_button.dart';
+
 import '../assets.dart';
 import 'cubit/profile_cubit.dart';
 import 'edit_profile.dart';
@@ -16,7 +17,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +48,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       SvgPicture.asset(Asset.support),
                       SizedBox(width: 8),
-                      Text(context.translate('support'),
+                      Text(
+                        context.translate('support'),
                         style: TextStyle(fontSize: 16, color: colorGreen),
                       ),
                     ],
@@ -68,13 +69,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Scott Williams', style: TextStyle(fontWeight: FontWeight.w900, fontSize: 24, color: colorLightGreyModal)),
-                Text(context.translate('notVerified'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16, color: colorRedLight)),
+                Text('Scott Williams', style: Theme.of(context).textTheme.bodyLarge),
+                Text(context.translate('notVerified'),
+                    style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16, color: colorRedLight)),
                 Padding(
                   padding: const EdgeInsets.only(top: 24, bottom: 24.0),
                   child: CustomButton(
                     text: context.translate('editProfile'),
-                    backgroundColor: Colors.black,
+                    backgroundColorStart: Colors.black,
                     textColor: Colors.white,
                     height: 50,
                     width: 143,
@@ -87,10 +89,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                      MaterialPageRoute(builder: (context) => BlocProvider(
-                        create: (context) => ProfileCubit(),
-                        child: EditProfileScreen(),
-                      )),
+                        MaterialPageRoute(
+                            builder: (context) => BlocProvider(
+                                  create: (context) => ProfileCubit(),
+                                  child: EditProfileScreen(),
+                                )),
                       );
                     },
                   ),
@@ -104,14 +107,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     padding: EdgeInsets.fromLTRB(15, 24, 0, 11),
                     child: Row(
                       children: [
-                        Text(context.translate('goldexEntryGifts'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18, color: colorLightGreyModal)),
+                        Text(context.translate('goldexEntryGifts'), style: Theme.of(context).textTheme.bodyMedium),
                       ],
                     )),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade100,
+                      color: Theme.of(context).colorScheme.onTertiary,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(
@@ -124,13 +127,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               onTap: () {},
                               child: ListTile(
                                 leading: SvgPicture.asset(Asset.gift, width: 17, height: 17),
-                                title: Text(
-                                  context.translate('getFreeGift'),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                  ),
-                                ),
+                                title: Text(context.translate('getFreeGift'),
+                                    style: Theme.of(context).textTheme.bodySmall),
                               ),
                             ),
                           ),
@@ -140,17 +138,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: const Divider(height: 1, color: colorLightGreyModal4),
                         ),
                         ClipRRect(
-                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12)),
+                          borderRadius:
+                              BorderRadius.only(bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12)),
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
                               onTap: () {
                                 // Navigator.push(
                                 //   context,
-                                  // MaterialPageRoute(builder: (context) => BlocProvider(
-                                  //   create: (context) => GiftCardCubit(),
-                                  //   child: GiftCardScreen(),
-                                  // )),
+                                // MaterialPageRoute(builder: (context) => BlocProvider(
+                                //   create: (context) => GiftCardCubit(),
+                                //   child: GiftCardScreen(),
+                                // )),
                                 // );
                               },
                               child: ListTile(
@@ -159,13 +158,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   width: 17,
                                   height: 17,
                                 ),
-                                title: Text(
-                                  context.translate('inviteFriend'),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                  ),
-                                ),
+                                title: Text(context.translate('inviteFriend'),
+                                    style: Theme.of(context).textTheme.bodySmall),
                               ),
                             ),
                           ),
@@ -178,14 +172,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     padding: EdgeInsets.fromLTRB(15, 18, 0, 11),
                     child: Row(
                       children: [
-                        Text(context.translate('settings'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18, color: colorLightGreyModal)),
+                        Text(context.translate('settings'),
+                            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18, color: colorLightGreyModal)),
                       ],
                     )),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade100,
+                      color: Theme.of(context).colorScheme.onTertiary,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(
@@ -198,13 +193,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               onTap: () {},
                               child: ListTile(
                                 leading: SvgPicture.asset(Asset.lock, width: 17, height: 17),
-                                title: Text(
-                                  context.translate('security'),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                  ),
-                                ),
+                                title:
+                                    Text(context.translate('security'), style: Theme.of(context).textTheme.bodySmall),
                               ),
                             ),
                           ),
@@ -232,13 +222,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   width: 17,
                                   height: 17,
                                 ),
-                                title: Text(
-                                  context.translate('appearances'),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                  ),
-                                ),
+                                title: Text(context.translate('appearances'),
+                                    style: Theme.of(context).textTheme.bodySmall),
                               ),
                             ),
                           ),
@@ -248,7 +233,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: const Divider(height: 1, color: colorLightGreyModal4),
                         ),
                         ClipRRect(
-                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12)),
+                          borderRadius:
+                              BorderRadius.only(bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12)),
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
@@ -267,13 +253,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   width: 17,
                                   height: 17,
                                 ),
-                                title: Text(
-                                  context.translate('aboutGoldex'),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                  ),
-                                ),
+                                title: Text(context.translate('aboutGoldex'),
+                                    style: Theme.of(context).textTheme.bodySmall),
                               ),
                             ),
                           ),
@@ -289,18 +270,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       text: context.translate('logout'),
                       isIconEnabled: true,
                       icon: Asset.logOut,
-                      backgroundColor: Colors.transparent,
+                      backgroundColorStart: Colors.transparent,
                       textColor: colorRed,
                       height: 50,
                       width: 229,
                       borderColor: colorRed,
                       borderRadius: BorderRadius.circular(25),
-                      textStyle: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                      },
+                      textStyle: Theme.of(context).textTheme.bodySmall!,
+                      onPressed: () {},
                     ),
                   ),
                 ),
@@ -315,12 +292,3 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
-
-
-
-
-
-
-
-
-

@@ -201,7 +201,7 @@ class _BuyScreenState extends State<BuyScreen> {
                             SizedBox(width: 29),
                             CustomButton(
                               text: "Confirm",
-                              backgroundColor: colorGreen,
+                              backgroundColorStart: colorGreen,
                               textColor: Colors.white,
                               height: 50,
                               width: 121,

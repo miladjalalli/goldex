@@ -74,7 +74,7 @@ class _GiftCardScreenState extends State<GiftCardScreen> {
                   padding: const EdgeInsets.only(top: 34.0),
                   child: CustomButton(
                     text: context.translate('iWantGiveGift'),
-                    backgroundColor: colorGreen,
+                    backgroundColorStart: colorGreen,
                     textColor: Colors.white,
                     height: 50,
                     width: 300,
@@ -101,7 +101,7 @@ class _GiftCardScreenState extends State<GiftCardScreen> {
                   padding: const EdgeInsets.only(top: 10.0),
                   child: CustomButton(
                     text: context.translate('IveGotGift'),
-                    backgroundColor: Colors.white,
+                    backgroundColorStart: Colors.white,
                     textColor: colorGreen,
                     height: 50,
                     width: 300,
