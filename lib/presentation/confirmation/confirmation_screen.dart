@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
-import 'package:goldex/app_localizations.dart';
+import 'package:goldex/core/app_localizations.dart';
 
-import '../../theme/theme.dart';
+import '../../core/theme/theme.dart';
 import '../../widget/custom_button.dart';
 import '../assets.dart';
 

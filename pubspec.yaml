@@ -37,6 +37,7 @@ dependencies:
   google_fonts:
   flutter_svg:
   dio:
+  get_it:
   fl_chart:
   smooth_page_indicator:
   carousel_slider:

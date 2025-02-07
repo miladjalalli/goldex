@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:goldex/app_localizations.dart';
-import 'package:goldex/theme/theme.dart';
+import 'package:goldex/core/app_localizations.dart';
+import 'package:goldex/core/theme/theme.dart';
 import '../../widget/card_widget.dart';
 import '../../widget/custom_button.dart';
 import '../assets.dart';

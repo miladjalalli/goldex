@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:goldex/app_localizations.dart';
-import '../theme/theme.dart';
+import 'package:goldex/core/app_localizations.dart';
+import '../core/theme/theme.dart';
 
 class GiftCardOrderDetails extends StatelessWidget {
   final String title;

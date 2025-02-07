@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:goldex/app_localizations.dart';
+import 'package:goldex/core/app_localizations.dart';
 
 import '../presentation/assets.dart';
-import '../theme/theme.dart';
+import '../core/theme/theme.dart';
 
 class CardWidget extends StatelessWidget {
   const CardWidget({super.key, required this.name, required this.cardNumber, required this.balance, required this.goldAmount, required this.type});

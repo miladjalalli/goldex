@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:goldex/theme/theme.dart';
+import 'package:goldex/core/theme/theme.dart';
 
 class CardBuyOrSellDetails extends StatelessWidget {
   const CardBuyOrSellDetails({

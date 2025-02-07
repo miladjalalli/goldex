@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:goldex/theme/theme.dart';
+import 'package:goldex/core/theme/theme.dart';
 import 'dart:async';
 import '../assets.dart';
 import '../login/login_screen.dart';

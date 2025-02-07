@@ -2,9 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:goldex/app_localizations.dart';
+import 'package:goldex/core/app_localizations.dart';
 
-import '../../theme/theme.dart';
+import '../../core/theme/theme.dart';
 import '../assets.dart';
 import '../get-gold/cubit/give_gold_cubit.dart';
 import '../get-gold/give-gold_screen.dart';

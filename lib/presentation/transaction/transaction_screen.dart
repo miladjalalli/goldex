@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:goldex/app_localizations.dart';
+import 'package:goldex/core/app_localizations.dart';
 import '../../widget/modal_dialog.dart';
 import '../assets.dart';
 
