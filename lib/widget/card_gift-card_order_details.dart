@@ -35,8 +35,8 @@ class GiftCardOrderDetails extends StatelessWidget {
         width: 375,
         height: 134,
         decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: colorLightGreyModal4),
+          color: Theme.of(context).colorScheme.surface,
+          border: Border.all(color: Theme.of(context).colorScheme.primaryContainer),
           borderRadius: BorderRadius.circular(25),
         ),
         child: Column(
@@ -44,7 +44,7 @@ class GiftCardOrderDetails extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 2.0, bottom: 5),
               child: ListTile(
-                leading: cardView(1),
+                leading: cardView(context, 1),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -58,7 +58,7 @@ class GiftCardOrderDetails extends StatelessWidget {
                                 TextSpan(
                                   text: giftCardAmount,
                                   style: TextStyle(fontSize: 32,
-                                      color: Colors.black,
+                                      color: Theme.of(context).colorScheme.onSurface,
                                       fontWeight: FontWeight.w700,
                                       overflow: TextOverflow.ellipsis),
                                 ),
@@ -69,7 +69,7 @@ class GiftCardOrderDetails extends StatelessWidget {
                                       giftCardType,
                                       style: TextStyle(
                                           fontSize: 20,
-                                          color: Colors.black,
+                                          color: Theme.of(context).colorScheme.onSurface,
                                           fontWeight: FontWeight.w400,
                                           overflow: TextOverflow.ellipsis
                                       ),
@@ -85,7 +85,7 @@ class GiftCardOrderDetails extends StatelessWidget {
                               giftCardTitle,
                               style: TextStyle(
                                 fontSize: 20,
-                                color: Colors.black,
+                                color: Theme.of(context).colorScheme.onSurface,
                                 fontWeight: FontWeight.w400,
                                 overflow: TextOverflow.ellipsis
                               ),
@@ -101,7 +101,7 @@ class GiftCardOrderDetails extends StatelessWidget {
                         text: TextSpan(
                           style: TextStyle(
                               fontSize: 32,
-                              color: colorGreen,
+                              color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w700,
                               overflow: TextOverflow.ellipsis
                           ),
@@ -109,7 +109,7 @@ class GiftCardOrderDetails extends StatelessWidget {
                             TextSpan(text: context.translate('x'),
                               style: TextStyle(
                                   fontSize: 25,
-                                  color: colorGreen,
+                                  color: Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.w700,
                                   overflow: TextOverflow.ellipsis
                               ),),
@@ -117,7 +117,7 @@ class GiftCardOrderDetails extends StatelessWidget {
                               text: number,
                               style: TextStyle(
                                   fontSize: 32,
-                                  color: colorGreen,
+                                  color: Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.w700,
                                   overflow: TextOverflow.ellipsis
                               ),
@@ -132,7 +132,7 @@ class GiftCardOrderDetails extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 24, right: 24),
-              child: Divider(height: 1, color: colorLightGreyModal4),
+              child: Divider(height: 1, color: Theme.of(context).colorScheme.primaryContainer),
             ),
             ListTile(
               title: Row(
@@ -146,7 +146,7 @@ class GiftCardOrderDetails extends StatelessWidget {
                           context.translate('issuanceFee'),
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.onSurface,
                             fontWeight: FontWeight.w400,
                               overflow: TextOverflow.ellipsis
                           ),
@@ -158,7 +158,7 @@ class GiftCardOrderDetails extends StatelessWidget {
                           '($issuanceFee%)',
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.onSurface,
                             fontWeight: FontWeight.w400,
                               overflow: TextOverflow.ellipsis
                           ),
@@ -174,7 +174,7 @@ class GiftCardOrderDetails extends StatelessWidget {
                           issuanceAmount,
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.onSurface,
                             fontWeight: FontWeight.w400,
                             overflow: TextOverflow.ellipsis
                           ),
@@ -186,7 +186,7 @@ class GiftCardOrderDetails extends StatelessWidget {
                           issuanceType,
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.onSurface,
                             fontWeight: FontWeight.w400,
                             overflow: TextOverflow.ellipsis
                           ),
@@ -203,9 +203,9 @@ class GiftCardOrderDetails extends StatelessWidget {
     );
   }
 
-  Widget cardView(int index) {
+  Widget cardView(BuildContext context, int index) {
     return Card(
-      color: colorLightGreyModal4,
+      color: Theme.of(context).colorScheme.primaryContainer,
       elevation: 5,
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
@@ -231,7 +231,7 @@ class GiftCardOrderDetails extends StatelessWidget {
                               TextSpan(
                                 text: 'GIFT\n', // First line text
                                 style: TextStyle(
-                                  color: Colors.black, // Color for the first line
+                                  color: Theme.of(context).colorScheme.onSurface, // Color for the first line
                                   fontSize: 10,
                                   fontWeight: FontWeight.w900,
                                   height: 0.8,
@@ -240,7 +240,7 @@ class GiftCardOrderDetails extends StatelessWidget {
                               TextSpan(
                                 text: 'CARD', // Second line text
                                 style: TextStyle(
-                                  color: Colors.white, // Color for the second line
+                                  color: Theme.of(context).colorScheme.surface,
                                   fontSize: 10,
                                   fontWeight: FontWeight.w900,
                                   height: 0.9,
@@ -264,7 +264,7 @@ class GiftCardOrderDetails extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.w900,
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
                       ),
@@ -275,7 +275,7 @@ class GiftCardOrderDetails extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 8,
                             fontWeight: FontWeight.w900,
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
                       ),

@@ -26,7 +26,7 @@ class _GiveGiftReceivingMethodScreenState extends State<GiveGiftReceivingMethodS
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           appBar: AppBar(
             leading: TextButton(
               style: ButtonStyle(
@@ -39,14 +39,14 @@ class _GiveGiftReceivingMethodScreenState extends State<GiveGiftReceivingMethodS
                 Asset.back,
               ),
             ),
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).colorScheme.surface,
             elevation: 0,
             forceMaterialTransparency: true,
             centerTitle: true,
             title: Text(
               context.translate('receivingMethod'),
             ),
-            titleTextStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: colorLightGreyModal),
+            titleTextStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Theme.of(context).colorScheme.onPrimary),
           ),
           body: Padding(
             padding: const EdgeInsets.fromLTRB(20, 34, 20, 0),
@@ -61,17 +61,11 @@ class _GiveGiftReceivingMethodScreenState extends State<GiveGiftReceivingMethodS
               padding: EdgeInsets.fromLTRB(64,0,64,32),
               child: CustomButton(
                 text: context.translate('continue'),
-                backgroundColorStart: colorGreen,
-                textColor: Colors.white,
+                backgroundColorStart: Theme.of(context).primaryColor,
+                textColor: Theme.of(context).colorScheme.surface,
                 height: 50,
                 width: 300,
-                borderColor: colorGreen,
-                borderRadius: BorderRadius.circular(25),
-                textStyle: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                ),
+                borderColor: Theme.of(context).primaryColor,
                 onPressed: () {
                   Navigator.push(context,
                   MaterialPageRoute(builder: (context) => BlocProvider(
@@ -122,20 +116,20 @@ class _GiveGiftReceivingMethodScreenState extends State<GiveGiftReceivingMethodS
                           items[index]['icon'],
                           width: 17,
                           height: 17,
-                          color: items[index]['active'] ? Colors.black : Colors.grey,
+                          color: items[index]['active'] ? Theme.of(context).colorScheme.onSurface : Colors.grey,
                         ),
                         title: Text(
                           items[index]['title'],
                           style: TextStyle(
                               fontSize: 16,
                               color: items[index]['active']
-                                  ? Colors.black : Colors.grey
+                                  ? Theme.of(context).colorScheme.onSurface : Colors.grey
                           ),
                         ),
                         trailing: SvgPicture.asset(
                           cubit.expandedState[index] ? Asset.trailingUp : Asset.trailingDown,
                           color: items[index]['active']
-                              ? Colors.black : Colors.grey,
+                              ? Theme.of(context).colorScheme.onSurface : Colors.grey,
                           width: 11,
                           height: 6,
                         ),
@@ -195,7 +189,7 @@ class _GiveGiftReceivingMethodScreenState extends State<GiveGiftReceivingMethodS
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
                                                 border: Border.all(
-                                                  color: cubit.selectedDay == day['day']! ? colorGreen : colorLightGreyModal4,
+                                                  color: cubit.selectedDay == day['day']! ? Theme.of(context).primaryColor : Theme.of(context).colorScheme.primaryContainer,
                                                   width: cubit.selectedDay == day['day']! ?  5 : 3,
                                                 ),
                                                 color: Colors.transparent, // Remove internal color
@@ -220,7 +214,7 @@ class _GiveGiftReceivingMethodScreenState extends State<GiveGiftReceivingMethodS
                                           style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: cubit.selectedDay == day['day']! ? FontWeight.w700 :FontWeight.w500,
-                                            color: colorLightGreyModal6,
+                                            color: Theme.of(context).colorScheme.onTertiaryContainer,
                                           ),
                                         ),
                                         const SizedBox(width: 5),
@@ -229,7 +223,7 @@ class _GiveGiftReceivingMethodScreenState extends State<GiveGiftReceivingMethodS
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: cubit.selectedDay == day['day']! ? FontWeight.w700 :FontWeight.w500,
-                                            color: colorLightGreyModal6,
+                                            color: Theme.of(context).colorScheme.onTertiaryContainer,
                                           ),
                                         ),
                                       ],
@@ -241,7 +235,7 @@ class _GiveGiftReceivingMethodScreenState extends State<GiveGiftReceivingMethodS
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: cubit.selectedDay == day['day']! ? FontWeight.w700 :FontWeight.w500,
-                                          color: colorLightGreyModal6,
+                                          color: Theme.of(context).colorScheme.onTertiaryContainer,
                                         ),
                                       ),
                                     ),
@@ -252,7 +246,7 @@ class _GiveGiftReceivingMethodScreenState extends State<GiveGiftReceivingMethodS
                                 Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 50.0),
                                   child: Divider(
-                                    color: colorLightGreyModal4,
+                                    color: Theme.of(context).colorScheme.primaryContainer,
                                     thickness: 1,
                                   ),
                                 ),

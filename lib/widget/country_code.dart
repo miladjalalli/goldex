@@ -70,7 +70,7 @@ class _CountryCodePickerState extends State<CountryCodePicker> {
             }).toList(),
             isExpanded: false,
             underline: Container(),
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Theme.of(context).colorScheme.surface),
           ),
         ),
         SizedBox(width: 16),
@@ -84,10 +84,10 @@ class _CountryCodePickerState extends State<CountryCodePicker> {
               ),
               contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               filled: true,
-              fillColor: Colors.white,
+              fillColor: Theme.of(context).colorScheme.surface,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(25),
-                borderSide: BorderSide(color: Colors.white, width: 1.5),
+                borderSide: BorderSide(color: Theme.of(context).colorScheme.surface, width: 1.5),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(25),

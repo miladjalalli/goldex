@@ -36,7 +36,7 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
           right: 0,
           height: _overlayHeight * MediaQuery.of(context).size.height,
           child: Container(
-            color: Colors.black.withOpacity(0.7),
+            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
           ),
         ),
         DraggableScrollableSheet(
@@ -58,7 +58,7 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
                 bottom: MediaQuery.of(context).viewInsets.bottom,
               ),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(60),
                 ),
@@ -71,7 +71,7 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
                         height: 5,
                         width: 75,
                         decoration: BoxDecoration(
-                          color: colorLightGreyModal11,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           borderRadius: BorderRadius.circular(5.0),
                         ),
                         margin: EdgeInsets.only(top: 10)
@@ -82,6 +82,7 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           actionButton(
+                            context,
                             Asset.buyModal,
                             context.translate('buyGold'),
                                 () {
@@ -92,6 +93,7 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
                             },
                           ),
                           actionButton(
+                            context,
                             Asset.sellModal,
                             context.translate('sellGold'),
                                 () {
@@ -102,6 +104,7 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
                             },
                           ),
                           actionButton(
+                            context,
                             Asset.transferModal,
                             context.translate('transfer'),
                                 () {
@@ -140,13 +143,13 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
                                         style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.w700,
-                                          color: Colors.black,
+                                          color: Theme.of(context).colorScheme.onSurface,
                                         ),
                                       ),
                                     ),
                                     Container(
                                       decoration: BoxDecoration(
-                                        color: colorLightGreyModal1,
+                                        color: Theme.of(context).colorScheme.tertiaryContainer,
                                         borderRadius: BorderRadius.circular(30),
                                       ),
                                       child: Row(
@@ -165,7 +168,7 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
                                       style: TextStyle(
                                         fontSize: 27,
                                         fontWeight: FontWeight.w400,
-                                        color: Colors.black,
+                                        color: Theme.of(context).colorScheme.onSurface,
                                       ),
                                     ),
                                     SizedBox(width: 8),
@@ -198,14 +201,14 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
                                             FlSpot(6, 4.1),
                                           ],
                                           isCurved: true,
-                                          color: Colors.black,
+                                          color: Theme.of(context).colorScheme.onSurface,
                                           barWidth: 1,
                                           isStrokeCapRound: true,
                                           belowBarData: BarAreaData(
                                             show: true,
                                             gradient: LinearGradient(
                                               colors: [
-                                                colorGreen,
+                                                Theme.of(context).primaryColor,
                                                 colorLightGrey,
                                               ],
                                               stops: [
@@ -245,7 +248,7 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
                                     style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w900,
-                                      color: Colors.white,
+                                      color: Theme.of(context).colorScheme.surface,
                                     ),
                                   ),
                                 ),
@@ -274,7 +277,7 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
                                 margin: const EdgeInsets.symmetric(horizontal: 4),
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: _currentSlide == index ? Colors.black : Colors.grey,
+                                  color: _currentSlide == index ? Theme.of(context).colorScheme.onSurface : Colors.grey,
                                 ),
                               ),
                             ),
@@ -306,14 +309,14 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
         width: 40,
         height: 40,
         decoration: BoxDecoration(
-          color: isSelected ? Colors.black : Colors.transparent,
+          color: isSelected ? Theme.of(context).colorScheme.onSurface : Colors.transparent,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Center(
           child: Text(
             labels[index],
             style: TextStyle(
-                color: isSelected ? colorGreen : colorLightGreyModal2,
+                color: isSelected ? Theme.of(context).primaryColor : Theme.of(context).colorScheme.primaryContainer,
                 fontSize: 19
             ),
           ),
@@ -323,14 +326,14 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
   }
 }
 
-Widget actionButton(String icon, String label, VoidCallback onTap) {
+Widget actionButton(BuildContext context, String icon, String label, VoidCallback onTap) {
   return GestureDetector(
     onTap: onTap,
     child: Column(
       children: [
         CircleAvatar(
           radius: 30,
-          backgroundColor: colorGreen,
+          backgroundColor: Theme.of(context).primaryColor,
           child: Image.asset(
             icon,
           ),

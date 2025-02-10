@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:goldex/core/app_localizations.dart';
 import 'package:goldex/widget/goldex_text_form_field.dart';
@@ -24,7 +23,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       builder: (context, state) {
         SingUpCubit cubit = context.read<SingUpCubit>();
         return Scaffold(
-          backgroundColor: Colors.black,
+          backgroundColor: Theme.of(context).colorScheme.onSurface,
           body: Stack(
             children: [
               Positioned.fill(
@@ -85,14 +84,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
       children: [
         Text(
           title,
-          style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                color: cubit.currentIndex == index
-                    ? Colors.white
-                    : cubit.currentIndex >= index
-                        ? Colors.green
-                        : Colors.white60,
-                fontWeight: FontWeight.w500,
-              ),
+          style: Theme
+              .of(context)
+              .textTheme
+              .titleSmall!
+              .copyWith(
+            color: cubit.currentIndex == index
+                ? Theme.of(context).colorScheme.surface
+                : cubit.currentIndex >= index
+                ? Colors.green
+                : Theme.of(context).colorScheme.onPrimary,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ],
     );
@@ -104,7 +107,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         padding: const EdgeInsets.only(left: 6.0, right: 6),
         child: Container(
           height: 2,
-          color: Colors.white60,
+          color: Theme.of(context).colorScheme.onPrimary,
         ),
       ),
     );
@@ -122,7 +125,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               width: 363,
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(25),
                 boxShadow: [
                   BoxShadow(
@@ -144,7 +147,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           padding: const EdgeInsets.fromLTRB(23, 5, 0, 7),
                           child: Text(
                             context.translate("phoneNumberEmail"),
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface),
                           ),
                         ),
                         Padding(
@@ -157,16 +160,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   height: 50,
                                   padding: EdgeInsets.all(10),
                                   decoration: BoxDecoration(
-                                    color: Colors.white,
+                                    color: Theme.of(context).colorScheme.surface,
                                     borderRadius: BorderRadius.circular(25),
                                     border: Border.all(
-                                      color: colorLightGreyModal2,
+                                      color: Theme.of(context).colorScheme.primaryContainer,
                                       width: 1,
                                     ),
                                   ),
                                   child: Theme(
                                     data: Theme.of(context).copyWith(
-                                      cardColor: Colors.white,
+                                      cardColor: Theme.of(context).colorScheme.surface,
                                       popupMenuTheme: PopupMenuThemeData(
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(12),
@@ -183,7 +186,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         items: cubit.countryCodes.map((String code) {
                                           return DropdownMenuItem<String>(
                                             value: code,
-                                            child: Text(code, style: Theme.of(context).textTheme.bodySmall),
+                                            child: Text(code, style: Theme
+                                                .of(context)
+                                                .textTheme
+                                                .bodySmall),
                                           );
                                         }).toList(),
                                         onChanged: (String? newValue) {
@@ -214,7 +220,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             children: [
                               Text(
                                 context.translate("pleaseEnterVerificationCode"),
-                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
+                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface),
                               ),
                             ],
                           ),
@@ -223,7 +229,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: VerificationCode(
                             digitsOnly: true,
                             isSecure: true,
-                            textStyle: TextStyle(fontSize: 20, color: Colors.black),
+                            textStyle: TextStyle(fontSize: 20, color: Theme.of(context).colorScheme.onSurface),
                             keyboardType: TextInputType.number,
                             underlineColor: Colors.transparent,
                             fillColor: Colors.grey[200],
@@ -247,7 +253,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             children: [
                               Text(
                                 context.translate('didntReceiveCode'),
-                                style: Theme.of(context).textTheme.bodyMedium,
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .bodyMedium,
                                 textAlign: TextAlign.center,
                               ),
                             ],
@@ -281,7 +290,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5),
                             ),
-                            side: BorderSide(width: 2, color: colorLightGreyModal2),
+                            side: BorderSide(width: 2, color: Theme.of(context).colorScheme.primaryContainer),
                             // Border weight & color
                             visualDensity: VisualDensity(horizontal: -1, vertical: -4),
                             // Remove padding
@@ -290,13 +299,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         Expanded(
                           child: GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              showCustomDialog(
+                                context,
+                                cubit.tos,
+                                    () => cubit.goToNextPage(),
+                              );
+                            },
                             child: RichText(
                               textAlign: TextAlign.justify,
                               textDirection: TextDirection.ltr,
                               text: TextSpan(
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  color: Theme.of(context).colorScheme.onSurface,
                                   fontSize: 14,
                                 ),
                                 children: [
@@ -305,7 +320,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     text: context.translate('readTheToS'),
                                     style: TextStyle(
                                       fontFamily: 'IRsans',
-                                      color: Theme.of(context).colorScheme.primary,
+                                      color: Theme
+                                          .of(context)
+                                          .primaryColor,
                                     ),
                                   ),
                                   TextSpan(text: context.translate('andAgreedWithThem')),
@@ -321,18 +338,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     padding: const EdgeInsets.only(top: 25, bottom: 0),
                     child: CustomButton(
                       text: context.translate('confirmAndContinue'),
-                      backgroundColorStart: Theme.of(context).colorScheme.primary,
+                      backgroundColorStart: Theme.of(context).primaryColor,
                       backgroundColorEnd: Theme.of(context).colorScheme.secondary,
-                      textColor: Colors.white,
+                      textColor: Theme.of(context).colorScheme.surface,
                       height: 50,
                       width: 300,
-                      borderColor: colorGreen,
-                      borderRadius: BorderRadius.circular(25),
-                      textStyle: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w900,
-                        color: Colors.white,
-                      ),
+                      borderColor: Theme.of(context).primaryColor,
                       onPressed: () {
                         if (cubit.showOTP) {
                           cubit.goToNextPage();
@@ -350,23 +361,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
               onPressed: () {},
               child: Text(
                 context.translate('alreadyHaveAnAccount'),
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 14),
+                style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.w500, fontSize: 14),
               ),
             ),
             const SizedBox(height: 5),
             CustomButton(
               text: context.translate('logIn'),
               backgroundColorStart: Colors.transparent,
-              textColor: colorGreen,
+              textColor: Theme.of(context).primaryColor,
               height: 50,
               width: 300,
-              borderColor: Colors.white,
-              borderRadius: BorderRadius.circular(25),
-              textStyle: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w900,
-                color: Theme.of(context).colorScheme.primary,
-              ),
+              borderColor: Theme.of(context).colorScheme.surface,
               onPressed: () {
                 // Handle Sign Up action
               },
@@ -391,7 +396,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               width: 363,
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(25),
                 boxShadow: [
                   BoxShadow(
@@ -431,17 +436,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Spacer(),
                   CustomButton(
                     text: context.translate('confirmAndContinue'),
-                    backgroundColorStart: colorGreen,
-                    textColor: Colors.white,
+                    backgroundColorStart: Theme.of(context).primaryColor,
+                    backgroundColorEnd: Theme.of(context).colorScheme.secondary,
+                    textColor: Theme.of(context).colorScheme.surface,
                     height: 50,
                     width: 300,
-                    borderColor: colorGreen,
-                    borderRadius: BorderRadius.circular(25),
-                    textStyle: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w900,
-                      color: Colors.white,
-                    ),
+                    borderColor: Theme.of(context).primaryColor,
                     onPressed: () {
                       cubit.goToNextPage();
                     },
@@ -469,7 +469,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               width: 363,
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(25),
                 boxShadow: [
                   BoxShadow(
@@ -503,7 +503,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5),
                             ),
-                            side: BorderSide(width: 2, color: colorLightGreyModal2),
+                            side: BorderSide(width: 2, color: Theme.of(context).colorScheme.primaryContainer),
                             // Border weight & color
                             visualDensity: VisualDensity(horizontal: -1, vertical: -4),
                             // Remove padding
@@ -515,7 +515,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             context.translate('showPassword'),
                             textAlign: TextAlign.justify,
                             textDirection: TextDirection.ltr,
-                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black),
+                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface),
                           ),
                         ),
                       ],
@@ -524,17 +524,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Spacer(),
                   CustomButton(
                     text: context.translate('confirmAndContinue'),
-                    backgroundColorStart: colorGreen,
-                    textColor: Colors.white,
+                    backgroundColorStart: Theme.of(context).primaryColor,
+                    backgroundColorEnd: Theme.of(context).colorScheme.secondary,
+                    textColor: Theme.of(context).colorScheme.surface,
                     height: 50,
                     width: 300,
-                    borderColor: colorGreen,
-                    borderRadius: BorderRadius.circular(25),
-                    textStyle: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w900,
-                      color: Colors.white,
-                    ),
+                    borderColor: Theme.of(context).primaryColor,
                     onPressed: () {
                       cubit.goToPreviousPage();
                     },
@@ -547,4 +542,99 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
-}
+
+  void showCustomDialog(BuildContext context, List<String> messages, Function() onConfirm) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: 400, minWidth: 300), // ارتفاع ثابت
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Goldex Terms & Conditions",
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 10),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: messages
+                              .asMap()
+                              .entries
+                              .map((entry) {
+                            int index = entry.key + 1;
+                            String msg = entry.value;
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 6),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "$index. ",
+                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      msg,
+                                      textAlign: TextAlign.justify,
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        CustomButton(
+                          text: context.translate('reject'),
+                          backgroundColorStart: Colors.transparent,
+                          backgroundColorEnd: Colors.transparent,
+                          textColor: Colors.red,
+                          height: 50,
+                          width: 140,
+                          borderColor: Colors.red,
+                          onPressed: () => Navigator.pop(context, false),
+                        ),
+                        CustomButton(
+                          text: context.translate('confirm'),
+                          backgroundColorStart: Theme
+                              .of(context)
+                              .colorScheme
+                              .primary,
+                          backgroundColorEnd: Theme
+                              .of(context)
+                              .colorScheme
+                              .secondary,
+                          textColor: Theme.of(context).colorScheme.surface,
+                          height: 50,
+                          width: 140,
+                          borderColor: Colors.green,
+                          onPressed: () {
+                            Navigator.pop(context, true);
+                            onConfirm();
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+    }
+  }

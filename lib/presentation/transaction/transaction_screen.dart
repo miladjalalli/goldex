@@ -12,7 +12,6 @@ class TransactionScreen extends StatefulWidget {
 
 class _TransactionScreenState extends State<TransactionScreen> with SingleTickerProviderStateMixin {
   final DraggableScrollableController _draggableController = DraggableScrollableController();
-  Color appBarColor = Colors.black;
   late AnimationController _overlayController;
   late Animation<double> _overlayAnimation;
 
@@ -38,9 +37,9 @@ class _TransactionScreenState extends State<TransactionScreen> with SingleTicker
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).colorScheme.onSurface,
       appBar: AppBar(
-        backgroundColor: appBarColor,
+        backgroundColor: Theme.of(context).colorScheme.onSurface,
         elevation: 0,
         forceMaterialTransparency: true,
         toolbarHeight: 0,
@@ -75,7 +74,7 @@ class _TransactionScreenState extends State<TransactionScreen> with SingleTicker
                             Text(
                               '${context.translate('hey')} Scott',
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Theme.of(context).colorScheme.surface,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w900,
                               ),
@@ -93,7 +92,7 @@ class _TransactionScreenState extends State<TransactionScreen> with SingleTicker
                     ),
                     Icon(
                       Icons.notifications,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                     ),
                   ],
                 ),

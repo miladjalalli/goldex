@@ -18,7 +18,7 @@ class CardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.black,
+      color: Theme.of(context).colorScheme.onSurface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
@@ -48,7 +48,7 @@ class CardWidget extends StatelessWidget {
                   center: Alignment(-2.0, -1.0),
                   radius: 1.6,
                   colors: [
-                    colorGreen,
+                    Theme.of(context).primaryColor,
                     Colors.transparent,
                   ],
                   stops: [0.2, 1.0],
@@ -62,7 +62,7 @@ class CardWidget extends StatelessWidget {
                   center: Alignment(0, -2.1),
                   radius: 1.4,
                   colors: [
-                    colorGreen,
+                    Theme.of(context).primaryColor,
                     Colors.transparent,
                   ],
                   stops: [0.2, 1.0],
@@ -79,7 +79,7 @@ class CardWidget extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w600,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                     ),
                   ),
                   Row(
@@ -88,7 +88,7 @@ class CardWidget extends StatelessWidget {
                       SizedBox(width: 7),
                       Text(
                         cardNumber,
-                        style: TextStyle(color: colorGreen, fontSize: 14, fontWeight: FontWeight.w400),
+                        style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 14, fontWeight: FontWeight.w400),
                       ),
                     ],
                   ),
@@ -99,14 +99,14 @@ class CardWidget extends StatelessWidget {
                       children: [
                         Text(
                           "${context.translate('balance')}: ",
-                          style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
+                          style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 16, fontWeight: FontWeight.w600),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                           child: Text(
                             balance,
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Theme.of(context).colorScheme.surface,
                               fontSize: 36,
                               fontWeight: FontWeight.w700,
                             ),
@@ -129,7 +129,7 @@ class CardWidget extends StatelessWidget {
                                 ),
                                 Text(
                                   goldAmount + type,
-                                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w400),
+                                  style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 18, fontWeight: FontWeight.w400),
                                 ),
                               ],
                             ),

@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).colorScheme.onSurface,
       body: _pages[_currentIndex],
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 20),

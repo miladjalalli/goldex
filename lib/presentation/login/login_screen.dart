@@ -11,7 +11,6 @@ import 'package:goldex/presentation/sign_up/sign-up_screen.dart';
 import 'package:goldex/widget/goldex_text_form_field.dart';
 import 'package:goldex/widget/custom_button.dart';
 import 'package:goldex/presentation/login/cubit/login_cubit.dart';
-import 'package:goldex/widget/dotter_painter.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -24,7 +23,7 @@ class LoginScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => sl<LoginCubit>(),
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Theme.of(context).colorScheme.onSurface,
         body: Stack(
           children: [
             Positioned.fill(
@@ -49,13 +48,13 @@ class LoginScreen extends StatelessWidget {
                           Text(
                             context.translate('signInToYourAccount'),
                             textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.titleLarge,
+                            style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 32, fontWeight: FontWeight.w900)
                           ),
                           const SizedBox(height: 12),
                           Text(
                             context.translate('enterYourEmailAndPasswordToLogIn'),
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Theme.of(context).colorScheme.surface,
                               fontWeight: FontWeight.normal,
                               fontSize: 12,
                             ),
@@ -83,7 +82,7 @@ class LoginScreen extends StatelessWidget {
                         children: [
                           GoldexTextFormField(
                             title: context.translate("phoneNumberEmail"),
-                            textInputAction: TextInputAction.done,
+                            textInputAction: TextInputAction.next,
                             keyboardType: TextInputType.text,
                           ),
                           SizedBox(height: 8,),
@@ -121,7 +120,7 @@ class LoginScreen extends StatelessWidget {
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(5), // Set border radius
                                         ),
-                                        side: BorderSide(width: 2, color: colorLightGreyModal2),
+                                        side: BorderSide(width: 2, color: Theme.of(context).colorScheme.primaryContainer),
                                         // Border weight & color
                                         visualDensity: VisualDensity(horizontal: -1, vertical: -4),
                                         // Remove padding
@@ -130,7 +129,7 @@ class LoginScreen extends StatelessWidget {
                                     ),
                                     Text(
                                       context.translate('rememberMe'),
-                                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14, color: colorLightGreyModal10),
+                                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
                                     ),
                                   ],
                                 ),
@@ -140,11 +139,7 @@ class LoginScreen extends StatelessWidget {
                                   },
                                   child: Text(
                                     context.translate('forgotPassword'),
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 14
-                                    ),
+                                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: Theme.of(context).primaryColor),
                                   ),
                                 ),
                               ],
@@ -154,18 +149,12 @@ class LoginScreen extends StatelessWidget {
                             padding: const EdgeInsets.only(top: 17.0),
                             child: CustomButton(
                               text: context.translate('logIn'),
-                              backgroundColorStart: Theme.of(context).colorScheme.primary,
+                              backgroundColorStart: Theme.of(context).primaryColor,
                               backgroundColorEnd: Theme.of(context).colorScheme.secondary,
-                              textColor: Colors.white,
+                              textColor: Theme.of(context).colorScheme.surface,
                               height: 50,
                               width: 300,
-                              borderColor: colorGreen,
-                              borderRadius: BorderRadius.circular(25),
-                              textStyle: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                              ),
+                              borderColor: Theme.of(context).primaryColor,
                               onPressed: () {
                                 Navigator.push(
                                   context,
@@ -178,9 +167,7 @@ class LoginScreen extends StatelessWidget {
                             padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
                             child: Text(
                               context.translate("useYourFingerprint"),
-                              style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                                  fontWeight: FontWeight.w400
-                              ),
+                              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: Theme.of(context).colorScheme.onSurface),
                             ),
                           ),
                           Padding(
@@ -196,7 +183,7 @@ class LoginScreen extends StatelessWidget {
                       context.translate('dontHaveAnAccount'),
                       style: TextStyle(
                           fontSize: 14,
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.surface,
                           fontWeight: FontWeight.w500
                       ),
                     ),
@@ -204,16 +191,10 @@ class LoginScreen extends StatelessWidget {
                     CustomButton(
                       text: context.translate('signUp'),
                       backgroundColorStart: Colors.transparent,
-                      textColor: colorGreen,
+                      textColor: Theme.of(context).primaryColor,
                       height: 50,
                       width: 300,
-                      borderColor: Colors.white,
-                      borderRadius: BorderRadius.circular(25),
-                      textStyle: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: colorGreen
-                      ),
+                      borderColor: Theme.of(context).colorScheme.surface,
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) {
                           return BlocProvider<SingUpCubit>(

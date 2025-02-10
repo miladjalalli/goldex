@@ -37,7 +37,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         leading: TextButton(
           style: ButtonStyle(
@@ -50,7 +50,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
             Asset.back,
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
         forceMaterialTransparency: true,
         centerTitle: true,
@@ -60,7 +60,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
         titleTextStyle: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w700,
-          color: colorLightGreyModal,
+          color: Theme.of(context).colorScheme.onPrimary,
         ),
       ),
       body: _isCodeConfirmed ? _buildTransactionDetails() : _buildConfirmationCode(),
@@ -93,7 +93,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                   child: VerificationCode(
                     digitsOnly: true,
                     isSecure: true,
-                    textStyle: TextStyle(fontSize: 20, color: Colors.black),
+                    textStyle: TextStyle(fontSize: 20, color: Theme.of(context).colorScheme.onSurface),
                     keyboardType: TextInputType.number,
                     underlineColor: Colors.transparent,
                     fillColor: Colors.grey[200],
@@ -121,7 +121,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                   children: [
                     Text(
                       context.translate('didntReceiveCode'),
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18, color: Theme.of(context).colorScheme.onPrimary),
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -145,17 +145,11 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
           padding: const EdgeInsets.only(bottom: 32.0),
           child: CustomButton(
             text: context.translate('confirm'),
-            backgroundColorStart: colorGreen,
-            textColor: Colors.white,
+            backgroundColorStart: Theme.of(context).primaryColor,
+            textColor: Theme.of(context).colorScheme.surface,
             height: 50,
             width: 300,
-            borderColor: colorGreen,
-            borderRadius: BorderRadius.circular(25),
-            textStyle: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w900,
-              color: Colors.white,
-            ),
+            borderColor: Theme.of(context).primaryColor,
             onPressed: () {
               setState(() {
                 _isCodeConfirmed = true;
@@ -177,13 +171,13 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
             visible: widget.showTextMessage,
             child: Padding(
               padding: EdgeInsets.only(bottom: 27.0),
-              child: Text(context.translate('youHaveGotMessage'), style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: Colors.black),),
+              child: Text(context.translate('youHaveGotMessage'), style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: Theme.of(context).colorScheme.onSurface),),
             ),
           ),
           Container(
             width: 320,
             decoration: BoxDecoration(
-              color: colorLightGreyModal8,
+              color: Theme.of(context).colorScheme.secondaryContainer,
               borderRadius: BorderRadius.circular(29),
               boxShadow: [
                 BoxShadow(
@@ -205,7 +199,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                         context.translate('totalGoldSell'),
                         style: TextStyle(
                           fontSize: 12,
-                          color: colorLightGreyModal6,
+                          color: Theme.of(context).colorScheme.onTertiaryContainer,
                         ),
                       ),
                       SizedBox(height: 8),
@@ -221,7 +215,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                   ),
                 ),
                 Divider(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   thickness: 2,
                 ),
                 Container(
@@ -232,7 +226,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                         context.translate('transactionDetails'),
                         style: TextStyle(
                           fontSize: 12,
-                          color: colorLightGreyModal6,
+                          color: Theme.of(context).colorScheme.onTertiaryContainer,
                           fontWeight: FontWeight.w500
                         ),
                       ),
@@ -257,16 +251,10 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                 isIconEnabled: true,
                 icon: Asset.share,
                 backgroundColorStart: Colors.transparent,
-                textColor: colorGreen,
+                textColor: Theme.of(context).primaryColor,
                 height: 50,
                 width: 300,
-                borderColor: colorGreen,
-                borderRadius: BorderRadius.circular(25),
-                textStyle: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.white,
-                ),
+                borderColor: Theme.of(context).primaryColor,
                 onPressed: () {
                   setState(() {
                     _isCodeConfirmed = true;
@@ -283,17 +271,11 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                 text: context.translate('saveGallery'),
                 isIconEnabled: true,
                 icon: Asset.download,
-                backgroundColorStart: colorGreen,
-                textColor: Colors.white,
+                backgroundColorStart: Theme.of(context).primaryColor,
+                textColor: Theme.of(context).colorScheme.surface,
                 height: 50,
                 width: 300,
-                borderColor: colorGreen,
-                borderRadius: BorderRadius.circular(25),
-                textStyle: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.white,
-                ),
+                borderColor: Theme.of(context).primaryColor,
                 onPressed: () {
                 },
               ),
@@ -305,17 +287,11 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
               padding: const EdgeInsets.only(bottom: 32.0),
               child: CustomButton(
                 text: context.translate('gotIt'),
-                backgroundColorStart: colorGreen,
-                textColor: Colors.white,
+                backgroundColorStart: Theme.of(context).primaryColor,
+                textColor: Theme.of(context).colorScheme.surface,
                 height: 50,
                 width: 300,
-                borderColor: colorGreen,
-                borderRadius: BorderRadius.circular(25),
-                textStyle: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.white,
-                ),
+                borderColor: Theme.of(context).primaryColor,
                 onPressed: () {
                 },
               ),
@@ -337,7 +313,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              color: colorLightGreyModal7,
+              color: Theme.of(context).colorScheme.onSecondaryContainer,
             ),
           ),
           Text(
@@ -345,7 +321,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              color: colorLightGreyModal6,
+              color: Theme.of(context).colorScheme.onTertiaryContainer,
             ),
           ),
         ],

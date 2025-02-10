@@ -41,7 +41,7 @@ class GoldexTextFormField extends StatelessWidget {
               children: [
                 Text(
                   title!,
-                  style: Theme.of(context).textTheme.titleSmall,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface),
                 ),
               ],
             ),
@@ -54,7 +54,7 @@ class GoldexTextFormField extends StatelessWidget {
             textInputAction: textInputAction,
             obscureText: obscureText ?? false,
             maxLines: maxLines ?? 1,
-            style: style??Theme.of(context).textTheme.bodySmall,
+            style: style ?? TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: Theme.of(context).colorScheme.onSurface),
             validator: validator,
             onChanged: onChanged,
             decoration: InputDecoration(
@@ -72,7 +72,7 @@ class GoldexTextFormField extends StatelessWidget {
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(25),
-                borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary.withAlpha(95), width: 3),
+                borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary.withAlpha(95), width: 1),
               ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(25),

@@ -35,7 +35,7 @@ class _CounterWidgetState extends State<CounterWidget> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(90),
         boxShadow: [
           BoxShadow(
@@ -55,7 +55,7 @@ class _CounterWidgetState extends State<CounterWidget> {
                   ? SvgPicture.asset(Asset.delete)
                   : Icon(Icons.remove),
               onPressed: quantity == 1 ? delete : decrement,
-              color: quantity == 1 ? Colors.black : colorGreen,
+              color: quantity == 1 ? Theme.of(context).colorScheme.onSurface : Theme.of(context).primaryColor,
             ),
           if (quantity > 0)
             Padding(
@@ -68,7 +68,7 @@ class _CounterWidgetState extends State<CounterWidget> {
           IconButton(
             icon: Icon(Icons.add),
             onPressed: increment,
-            color: colorGreen,
+            color: Theme.of(context).primaryColor,
           ),
         ],
       ),

@@ -24,7 +24,7 @@ class _DepositScreenState extends State<DepositScreen> {
     var width = MediaQuery.of(context).size.width;
     DepositCubit cubit = context.read<DepositCubit>();
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         leading: TextButton(
           style: ButtonStyle(
@@ -37,7 +37,7 @@ class _DepositScreenState extends State<DepositScreen> {
             Asset.back
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
         forceMaterialTransparency: true,
         centerTitle: true,
@@ -48,7 +48,7 @@ class _DepositScreenState extends State<DepositScreen> {
         titleTextStyle: TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.w700,
-          color: colorLightGreyModal10,
+          color: Theme.of(context).colorScheme.onPrimaryContainer,
         ),
         automaticallyImplyLeading: false,
       ),
@@ -67,10 +67,10 @@ class _DepositScreenState extends State<DepositScreen> {
                   child: Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.circular(25),
                       border: Border.all(
-                        color: colorLightGreyModal2,
+                        color: Theme.of(context).colorScheme.primaryContainer,
                         width: 1,
                       ),
                     ),
@@ -82,10 +82,10 @@ class _DepositScreenState extends State<DepositScreen> {
                           Container(
                             padding: const EdgeInsets.all(13),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: Theme.of(context).colorScheme.surface,
                               borderRadius: BorderRadius.circular(15),
                               border: Border.all(
-                                color: colorLightGreyModal2,
+                                color: Theme.of(context).colorScheme.primaryContainer,
                                 width: 1,
                               ),
                             ),
@@ -103,7 +103,7 @@ class _DepositScreenState extends State<DepositScreen> {
                                         style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w400,
-                                            color: colorLightGreyModal5
+                                            color: Theme.of(context).colorScheme.onSurface
                                         ),
                                       ),
                                     ],
@@ -119,7 +119,7 @@ class _DepositScreenState extends State<DepositScreen> {
                                         style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.w700,
-                                            color: Colors.black
+                                            color: Theme.of(context).colorScheme.onSurface
                                         ),
                                       ),
                                     ],
@@ -134,7 +134,7 @@ class _DepositScreenState extends State<DepositScreen> {
                               children: [
                                 Text(
                                   context.translate("amount"),
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
+                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface),
                                 ),
                               ],
                             ),
@@ -146,17 +146,17 @@ class _DepositScreenState extends State<DepositScreen> {
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25),
-                                borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
+                                borderSide: BorderSide(color: Theme.of(context).colorScheme.primaryContainer, width: 1),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25),
-                                borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
+                                borderSide: BorderSide(color: Theme.of(context).colorScheme.primaryContainer, width: 1),
                               ),
                               contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                               filled: true,
-                              fillColor: Colors.white,
-                              hintText: context.translate('USD'),
-                              hintStyle: TextStyle(fontSize: 16, color: colorLightGreyModal2),
+                              fillColor: Theme.of(context).colorScheme.surface,
+                              suffixIcon: Text(context.translate('USD')),
+                              hintStyle: TextStyle(fontSize: 16, color: Theme.of(context).colorScheme.primaryContainer),
                               hintTextDirection: TextDirection.rtl,
                             ),
                             style: const TextStyle(
@@ -170,7 +170,7 @@ class _DepositScreenState extends State<DepositScreen> {
                               children: [
                                 Text(
                                   context.translate("paymentMethod"),
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
+                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface),
                                 ),
                               ],
                             ),
@@ -194,10 +194,10 @@ class _DepositScreenState extends State<DepositScreen> {
                                       margin: const EdgeInsets.symmetric(horizontal: 9),
                                       padding: const EdgeInsets.all(5),
                                       decoration: BoxDecoration(
-                                        color: Colors.white,
+                                        color: Theme.of(context).colorScheme.surface,
                                         borderRadius: BorderRadius.circular(12),
                                         border: Border.all(
-                                          color: isSelected ? colorGreen : colorLightGreyModal2,
+                                          color: isSelected ? Theme.of(context).primaryColor : Theme.of(context).colorScheme.primaryContainer,
                                           width: isSelected ? 2 : 1,
                                         ),
                                       ),
@@ -230,17 +230,11 @@ class _DepositScreenState extends State<DepositScreen> {
                                 SizedBox(width: 29),
                                 CustomButton(
                                   text: context.translate('confirm'),
-                                  backgroundColorStart: colorGreen,
-                                  textColor: Colors.white,
+                                  backgroundColorStart: Theme.of(context).primaryColor,
+                                  textColor: Theme.of(context).colorScheme.surface,
                                   height: 50,
                                   width: 121,
-                                  borderColor: colorGreen,
-                                  borderRadius: BorderRadius.circular(25),
-                                  textStyle: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w900,
-                                    color: Colors.white,
-                                  ),
+                                  borderColor: Theme.of(context).primaryColor,
                                   onPressed: () {
                                     Navigator.push(
                                       context,

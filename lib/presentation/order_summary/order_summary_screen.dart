@@ -50,7 +50,7 @@ class OrderSummaryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         leading: TextButton(
           style: ButtonStyle(
@@ -70,9 +70,9 @@ class OrderSummaryScreen extends StatelessWidget {
         titleTextStyle: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w700,
-          color: colorLightGreyModal10,
+          color: Theme.of(context).colorScheme.onPrimaryContainer,
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
         forceMaterialTransparency: true,
       ),
@@ -103,26 +103,20 @@ class OrderSummaryScreen extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 20, right: 20),
-                        child: Divider(color: colorLightGreyModal2),
+                        child: Divider(color: Theme.of(context).colorScheme.primaryContainer),
                       ),
-                      Text(context.translate('total'), style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),),
+                      Text(context.translate('total'), style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface),),
                       Text(
                         totalAmountType == '\$' ? totalAmountType+totalAmount : totalAmount+totalAmountType,
-                        style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700, color: Colors.black),),
+                        style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface),),
                       SizedBox(height: 33),
                       CustomButton(
                         text: context.translate('continue'),
-                        backgroundColorStart: colorGreen,
-                        textColor: Colors.white,
+                        backgroundColorStart: Theme.of(context).primaryColor,
+                        textColor: Theme.of(context).colorScheme.surface,
                         height: 50,
                         width: 300,
-                        borderColor: colorGreen,
-                        borderRadius: BorderRadius.circular(25),
-                        textStyle: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
+                        borderColor: Theme.of(context).primaryColor,
                         onPressed: () {
                           Navigator.push(
                               context,

@@ -42,24 +42,24 @@ class CardBuyOrSellDetails extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(25),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(25),
-        border: Border.all(color: colorLightGreyModal2),
+        border: Border.all(color: Theme.of(context).colorScheme.primaryContainer),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (firstText != null && firstTextAmount != null)
-            _buildRow(firstText!, _formatAmount(firstTextAmountType, firstTextAmount)),
-          if (firstText != null && firstTextAmount != null) _divider(),
+            _buildRow(firstText!, _formatAmount(firstTextAmountType, firstTextAmount), context),
+          if (firstText != null && firstTextAmount != null) _divider(context),
           if (secondText != null && secondTextAmount != null)
-            _buildRow(secondText!, _formatAmount(secondTextAmountType, secondTextAmount)),
-          if (secondText != null && secondTextAmount != null) _divider(),
+            _buildRow(secondText!, _formatAmount(secondTextAmountType, secondTextAmount), context),
+          if (secondText != null && secondTextAmount != null) _divider(context),
           if (thirdText != null && thirdTextAmount != null)
-            _buildRow(thirdText!, _formatAmount(thirdTextAmountType, thirdTextAmount)),
-          if (thirdText != null && thirdTextAmount != null) _divider(),
+            _buildRow(thirdText!, _formatAmount(thirdTextAmountType, thirdTextAmount), context),
+          if (thirdText != null && thirdTextAmount != null) _divider(context),
           if (forthText != null && forthTextAmount != null && forthPercent != null)
-            _buildRow('$forthText ($forthPercent%)', _formatAmount(forthTextAmountType, forthTextAmount)),
+            _buildRow('$forthText ($forthPercent%)', _formatAmount(forthTextAmountType, forthTextAmount), context),
         ],
       ),
     );
@@ -75,7 +75,7 @@ class CardBuyOrSellDetails extends StatelessWidget {
     }
   }
 
-  Widget _buildRow(String title, String value) {
+  Widget _buildRow(String title, String value, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
@@ -83,18 +83,18 @@ class CardBuyOrSellDetails extends StatelessWidget {
         children: [
           Text(
             title,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Theme.of(context).colorScheme.onSurface),
           ),
           Text(
             value,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: Colors.black),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: Theme.of(context).colorScheme.onSurface),
           ),
         ],
       ),
     );
   }
 
-  Widget _divider() {
-    return const Divider(color: colorLightGreyModal2);
+  Widget _divider(BuildContext context) {
+    return  Divider(color: Theme.of(context).colorScheme.primaryContainer);
   }
 }

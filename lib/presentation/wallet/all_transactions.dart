@@ -19,7 +19,7 @@ class AllTransactionsScreen extends StatelessWidget {
     height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         leading: TextButton(
           style: ButtonStyle(
@@ -32,7 +32,7 @@ class AllTransactionsScreen extends StatelessWidget {
             Asset.back,
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
         forceMaterialTransparency: true,
         centerTitle: true,
@@ -42,7 +42,7 @@ class AllTransactionsScreen extends StatelessWidget {
         titleTextStyle: TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.w700,
-          color: colorLightGreyModal10,
+          color: Theme.of(context).colorScheme.onPrimaryContainer,
         ),
       ),
       body: Padding(
@@ -52,104 +52,106 @@ class AllTransactionsScreen extends StatelessWidget {
           itemCount: context.read<WalletCubit>().transactions.length,
           itemBuilder: (context, index) {
             final transaction = context.read<WalletCubit>().transactions[index];
-            return cardView(transaction);
+            return cardView(context, transaction);
           },
+        ),
+      ),
+    );
+  }
+
+  Widget cardView(BuildContext context, var transaction) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Container(
+          height: 50,
+          width: width,
+          padding: EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: Theme.of(context).colorScheme.onTertiary),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                flex: 3,
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      transaction['type'] == 'dollar' ? Asset.dollar : Asset.gold,
+                    ),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        transaction['title']!,
+                        style: const TextStyle(
+                          overflow: TextOverflow.ellipsis,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 14,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Text(
+                  transaction['date']!,
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 11,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Text(
+                  transaction['type'] == 'dollar' ? '\$${transaction['amount']!}' : '${transaction['amount']!} gr',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 14,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      transaction['status']!,
+                      style: TextStyle(
+                        color: transaction['status'] == 'Done'
+                            ? Theme.of(context).primaryColor
+                            : transaction['status'] == 'Failed'
+                            ? colorFailed
+                            : colorPending,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 11,
+                      ),
+                      textAlign: TextAlign.end,
+                    ),
+                    SizedBox(width: 12,),
+                    SvgPicture.asset(Asset.attention,
+                      width: 13,
+                      height: 15,)
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-Widget cardView(var transaction) {
-  return Padding(
-    padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-    child: Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Container(
-        height: 50,
-        width: width,
-        padding: EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: colorLightGreyModal9,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              flex: 3,
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    transaction['type'] == 'dollar' ? Asset.dollar : Asset.gold,
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      transaction['title']!,
-                      style: const TextStyle(
-                        overflow: TextOverflow.ellipsis,
-                        fontWeight: FontWeight.w900,
-                        fontSize: 14,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Text(
-                transaction['date']!,
-                style: TextStyle(
-                  color: Colors.grey[600],
-                  fontSize: 11,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Text(
-                transaction['type'] == 'dollar' ? '\$${transaction['amount']!}' : '${transaction['amount']!} gr',
-                style: const TextStyle(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 14,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    transaction['status']!,
-                    style: TextStyle(
-                      color: transaction['status'] == 'Done'
-                          ? colorGreen
-                          : transaction['status'] == 'Failed'
-                          ? colorFailed
-                          : colorPending,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 11,
-                    ),
-                    textAlign: TextAlign.end,
-                  ),
-                  SizedBox(width: 12,),
-                  SvgPicture.asset(Asset.attention,
-                  width: 13,
-                  height: 15,)
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
-}

@@ -10,8 +10,6 @@ class CustomButton extends StatelessWidget {
   final double width;
   final Color borderColor;
   final VoidCallback onPressed;
-  final BorderRadius borderRadius;
-  final TextStyle textStyle;
   final String? icon;
   final bool isIconEnabled;
 
@@ -25,8 +23,6 @@ class CustomButton extends StatelessWidget {
     required this.width,
     required this.borderColor,
     required this.onPressed,
-    this.borderRadius = const BorderRadius.all(Radius.circular(25.0)), // Default borderRadius
-    this.textStyle = const TextStyle(fontSize: 18, fontWeight: FontWeight.bold), // Default textStyle
     this.icon,
     this.isIconEnabled = false,
   }) {
@@ -40,31 +36,31 @@ class CustomButton extends StatelessWidget {
       width: width,
       child: Material(
         color: Colors.transparent,
-        borderRadius: borderRadius,
+        borderRadius: const BorderRadius.all(Radius.circular(25.0)),
         child: Ink(
           decoration: BoxDecoration(
-            gradient: backgroundColorStart == Colors.white ||
+            gradient: backgroundColorStart == Theme.of(context).colorScheme.surface ||
                     backgroundColorStart == Colors.transparent ||
-                    backgroundColorStart == Colors.black
+                    backgroundColorStart == Theme.of(context).colorScheme.onSurface
                 ? null
                 : LinearGradient(
                     begin: Alignment.centerRight,
                     end: Alignment.centerLeft,
                     colors: [backgroundColorEnd!, backgroundColorStart],
                   ),
-            color: backgroundColorStart == Colors.white
-                ? Colors.white
-                : backgroundColorStart == Colors.black
-                    ? Colors.black
+            color: backgroundColorStart == Theme.of(context).colorScheme.surface
+                ? Theme.of(context).colorScheme.surface
+                : backgroundColorStart == Theme.of(context).colorScheme.onSurface
+                    ? Theme.of(context).colorScheme.onSurface
                     : null,
-            borderRadius: borderRadius,
+            borderRadius: const BorderRadius.all(Radius.circular(25.0)),
             border: Border.all(color: borderColor),
           ),
           child: InkWell(
-            borderRadius: borderRadius,
+            borderRadius: const BorderRadius.all(Radius.circular(25.0)),
             onTap: onPressed,
-            splashColor: Colors.white.withOpacity(0.3),
-            highlightColor: Colors.white.withOpacity(0.1),
+            splashColor: Theme.of(context).colorScheme.surface.withOpacity(0.3),
+            highlightColor: Theme.of(context).colorScheme.surface.withOpacity(0.1),
             child: Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -81,8 +77,8 @@ class CustomButton extends StatelessWidget {
                   ],
                   Text(
                     text,
-                    style: textStyle.copyWith(color: textColor),
-                  ),
+                    style: TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w600, color: textColor)),
                 ],
               ),
             ),

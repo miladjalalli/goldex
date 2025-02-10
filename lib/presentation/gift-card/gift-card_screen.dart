@@ -25,7 +25,7 @@ class _GiftCardScreenState extends State<GiftCardScreen> {
   Widget build(BuildContext context) {
     GiftCardCubit cubit = context.read<GiftCardCubit>();
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         leading: TextButton(
           style: ButtonStyle(
@@ -38,7 +38,7 @@ class _GiftCardScreenState extends State<GiftCardScreen> {
             Asset.back,
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
         forceMaterialTransparency: true,
         centerTitle: true,
@@ -48,7 +48,7 @@ class _GiftCardScreenState extends State<GiftCardScreen> {
         titleTextStyle: TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.w900,
-          color: colorLightGreyModal,
+          color: Theme.of(context).colorScheme.onPrimary,
         ),
       ),
       body: SingleChildScrollView(
@@ -67,24 +67,18 @@ class _GiftCardScreenState extends State<GiftCardScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(23, 7, 23, 0),
-                  child: Text(context.translate('giveGoldMessage'), style: TextStyle(fontSize: 16, color: Colors.black),
+                  child: Text(context.translate('giveGoldMessage'), style: TextStyle(fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
                       textAlign: TextAlign.center),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 34.0),
                   child: CustomButton(
                     text: context.translate('iWantGiveGift'),
-                    backgroundColorStart: colorGreen,
-                    textColor: Colors.white,
+                    backgroundColorStart: Theme.of(context).primaryColor,
+                    textColor: Theme.of(context).colorScheme.surface,
                     height: 50,
                     width: 300,
-                    borderColor: colorGreen,
-                    borderRadius: BorderRadius.circular(25),
-                    textStyle: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                    ),
+                    borderColor: Theme.of(context).primaryColor,
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -101,17 +95,11 @@ class _GiftCardScreenState extends State<GiftCardScreen> {
                   padding: const EdgeInsets.only(top: 10.0),
                   child: CustomButton(
                     text: context.translate('IveGotGift'),
-                    backgroundColorStart: Colors.white,
-                    textColor: colorGreen,
+                    backgroundColorStart: Theme.of(context).colorScheme.surface,
+                    textColor: Theme.of(context).primaryColor,
                     height: 50,
                     width: 300,
-                    borderColor: colorGreen,
-                    borderRadius: BorderRadius.circular(25),
-                    textStyle: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                    ),
+                    borderColor: Theme.of(context).primaryColor,
                     onPressed: () {
                       Navigator.push(
                         context,

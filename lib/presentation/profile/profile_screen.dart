@@ -20,10 +20,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
         forceMaterialTransparency: true,
         toolbarHeight: -5,
@@ -40,7 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
                   decoration: BoxDecoration(
-                    color: colorGreenBack,
+                    color: Theme.of(context).colorScheme.primary,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
@@ -50,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       SizedBox(width: 8),
                       Text(
                         context.translate('support'),
-                        style: TextStyle(fontSize: 16, color: colorGreen),
+                        style: TextStyle(fontSize: 16, color: Theme.of(context).primaryColor),
                       ),
                     ],
                   ),
@@ -69,23 +69,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Scott Williams', style: Theme.of(context).textTheme.bodyLarge),
+                Text('Scott Williams', style: TextStyle(fontWeight: FontWeight.w900, fontSize: 24, color: Theme.of(context).colorScheme.onPrimary)),
                 Text(context.translate('notVerified'),
                     style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16, color: colorRedLight)),
                 Padding(
                   padding: const EdgeInsets.only(top: 24, bottom: 24.0),
                   child: CustomButton(
                     text: context.translate('editProfile'),
-                    backgroundColorStart: Colors.black,
-                    textColor: Colors.white,
+                    backgroundColorStart: Theme.of(context).colorScheme.onSurface,
+                    textColor: Theme.of(context).colorScheme.surface,
                     height: 50,
                     width: 143,
-                    borderColor: Colors.black,
-                    borderRadius: BorderRadius.circular(25),
-                    textStyle: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
+                    borderColor: Theme.of(context).colorScheme.onSurface,
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -107,7 +102,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     padding: EdgeInsets.fromLTRB(15, 24, 0, 11),
                     child: Row(
                       children: [
-                        Text(context.translate('goldexEntryGifts'), style: Theme.of(context).textTheme.bodyMedium),
+                        Text(context.translate('goldexEntryGifts'),
+                            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18, color: Theme.of(context).colorScheme.onPrimary)),
                       ],
                     )),
                 Padding(
@@ -128,14 +124,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               child: ListTile(
                                 leading: SvgPicture.asset(Asset.gift, width: 17, height: 17),
                                 title: Text(context.translate('getFreeGift'),
-                                    style: Theme.of(context).textTheme.bodySmall),
-                              ),
+                                    style: TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: Theme.of(context).colorScheme.onSurface)),
+                                ),
                             ),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 24, right: 24),
-                          child: const Divider(height: 1, color: colorLightGreyModal4),
+                          child: Divider(height: 1, color: Theme.of(context).colorScheme.primaryContainer),
                         ),
                         ClipRRect(
                           borderRadius:
@@ -159,7 +155,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   height: 17,
                                 ),
                                 title: Text(context.translate('inviteFriend'),
-                                    style: Theme.of(context).textTheme.bodySmall),
+                                    style: TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: Theme.of(context).colorScheme.onSurface)),
                               ),
                             ),
                           ),
@@ -173,7 +169,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Row(
                       children: [
                         Text(context.translate('settings'),
-                            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18, color: colorLightGreyModal)),
+                            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18, color: Theme.of(context).colorScheme.onPrimary)),
                       ],
                     )),
                 Padding(
@@ -194,14 +190,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               child: ListTile(
                                 leading: SvgPicture.asset(Asset.lock, width: 17, height: 17),
                                 title:
-                                    Text(context.translate('security'), style: Theme.of(context).textTheme.bodySmall),
+                                    Text(context.translate('security'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: Theme.of(context).colorScheme.onSurface)),
                               ),
                             ),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 24, right: 24),
-                          child: const Divider(height: 1, color: colorLightGreyModal4),
+                          child: Divider(height: 1, color: Theme.of(context).colorScheme.primaryContainer),
                         ),
                         ClipRRect(
                           child: Material(
@@ -223,14 +219,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   height: 17,
                                 ),
                                 title: Text(context.translate('appearances'),
-                                    style: Theme.of(context).textTheme.bodySmall),
+                                    style: TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: Theme.of(context).colorScheme.onSurface)),
                               ),
                             ),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 24, right: 24),
-                          child: const Divider(height: 1, color: colorLightGreyModal4),
+                          child: Divider(height: 1, color: Theme.of(context).colorScheme.primaryContainer),
                         ),
                         ClipRRect(
                           borderRadius:
@@ -254,7 +250,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   height: 17,
                                 ),
                                 title: Text(context.translate('aboutGoldex'),
-                                    style: Theme.of(context).textTheme.bodySmall),
+                                    style: TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: Theme.of(context).colorScheme.onSurface)),
                               ),
                             ),
                           ),
@@ -275,8 +271,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       height: 50,
                       width: 229,
                       borderColor: colorRed,
-                      borderRadius: BorderRadius.circular(25),
-                      textStyle: Theme.of(context).textTheme.bodySmall!,
                       onPressed: () {},
                     ),
                   ),

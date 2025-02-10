@@ -24,7 +24,7 @@ class _SellScreenState extends State<SellScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         leading: TextButton(
           style: ButtonStyle(
@@ -44,9 +44,9 @@ class _SellScreenState extends State<SellScreen> {
         titleTextStyle: TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.w700,
-          color: colorLightGreyModal10,
+          color: Theme.of(context).colorScheme.onPrimaryContainer,
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
         forceMaterialTransparency: true,
       ),
@@ -71,7 +71,7 @@ class _SellScreenState extends State<SellScreen> {
                   textDirection: TextDirection.ltr,
                   text: TextSpan(
                     style: TextStyle(
-                      color: colorLightGreyModal,
+                      color: Theme.of(context).colorScheme.onPrimary,
                       fontSize: 18,
                       fontWeight: FontWeight.w400
                     ),
@@ -85,7 +85,7 @@ class _SellScreenState extends State<SellScreen> {
                         text: '${context.translate('perGram')}  ',
                         style: TextStyle(
                           fontSize: 11,
-                          color: colorLightGreyModal3,
+                          color: Theme.of(context).colorScheme.primaryContainer,
                         ),
                       ),
                     ],
@@ -98,10 +98,10 @@ class _SellScreenState extends State<SellScreen> {
               child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(25),
                   border: Border.all(
-                    color: colorLightGreyModal4,
+                    color: Theme.of(context).colorScheme.primaryContainer,
                     width: 1,
                   ),
                 ),
@@ -118,7 +118,7 @@ class _SellScreenState extends State<SellScreen> {
                           children: [
                             Text(
                               context.translate("iWantToSell"),
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface),
                             ),
                           ],
                         ),
@@ -132,14 +132,14 @@ class _SellScreenState extends State<SellScreen> {
                             contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25),
-                              borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
+                              borderSide: BorderSide(color: Theme.of(context).colorScheme.primaryContainer, width: 1),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25),
-                              borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
+                              borderSide: BorderSide(color: Theme.of(context).colorScheme.primaryContainer, width: 1),
                             ), // Increased horizontal padding
                             filled: true,
-                            fillColor: Colors.white,
+                            fillColor: Theme.of(context).colorScheme.surface,
                             suffix: Text(
                               suffix1,
                               style: const TextStyle(
@@ -160,7 +160,7 @@ class _SellScreenState extends State<SellScreen> {
                           children: [
                             Text(
                               context.translate("iWillEarn"),
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface),
                             ),
                           ],
                         ),
@@ -174,14 +174,14 @@ class _SellScreenState extends State<SellScreen> {
                             contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25),
-                              borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
+                              borderSide:  BorderSide(color: Theme.of(context).colorScheme.primaryContainer, width: 1),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25),
-                              borderSide: const BorderSide(color: colorLightGreyModal4, width: 1),
+                              borderSide: BorderSide(color: Theme.of(context).colorScheme.primaryContainer, width: 1),
                             ),
                             filled: true,
-                            fillColor: Colors.white,
+                            fillColor: Theme.of(context).colorScheme.surface,
                             suffix: Text(
                               suffix2,
                               style: const TextStyle(
@@ -211,17 +211,11 @@ class _SellScreenState extends State<SellScreen> {
                             SizedBox(width: 29),
                             CustomButton(
                               text: context.translate('confirm'),
-                              backgroundColorStart: colorGreen,
-                              textColor: Colors.white,
+                              backgroundColorStart: Theme.of(context).primaryColor,
+                              textColor: Theme.of(context).colorScheme.surface,
                               height: 50,
                               width: 121,
-                              borderColor: colorGreen,
-                              borderRadius: BorderRadius.circular(25),
-                              textStyle: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w900,
-                                color: Colors.white,
-                              ),
+                              borderColor: Theme.of(context).primaryColor,
                               onPressed: () {
                                 Navigator.push(
                                   context,

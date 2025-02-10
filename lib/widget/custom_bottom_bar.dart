@@ -27,7 +27,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
       alignment: Alignment.bottomCenter,
       padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
       decoration: BoxDecoration(
-        color: Colors.black,
+        color: Theme.of(context).colorScheme.onSurface,
         borderRadius: BorderRadius.circular(screenWidth * 0.1),
         boxShadow: [
           BoxShadow(
@@ -78,7 +78,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
           child: SvgPicture.asset(
             icon,
             fit: BoxFit.cover,
-            color: isSelected ? Colors.black : Colors.grey,
+            color: isSelected ? Theme.of(context).colorScheme.onSurface : Colors.grey,
             width: screenWidth * 0.08,
             height: screenWidth * 0.08,
           ),

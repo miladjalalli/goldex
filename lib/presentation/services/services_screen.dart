@@ -32,7 +32,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           body: Container(
             padding: const EdgeInsets.fromLTRB(20, 58, 20, 16),
             child: Column(
@@ -122,7 +122,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                     padding: EdgeInsets.fromLTRB(15, 39, 0, 11),
                     child: Row(
                       children: [
-                        Text(context.translate('services'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18, color: colorLightGreyModal)),
+                        Text(context.translate('services'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18, color: Theme.of(context).colorScheme.onPrimary)),
                       ],
                     )),
                 Padding(
@@ -154,7 +154,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                   context.translate('getYourGold'),
                                   style: TextStyle(
                                     fontSize: 16,
-                                    color: Colors.black,
+                                    color: Theme.of(context).colorScheme.onSurface,
                                   ),
                                 ),
                               ),
@@ -163,7 +163,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 24, right: 24),
-                          child: const Divider(height: 1, color: colorLightGreyModal4),
+                          child:  Divider(height: 1, color: Theme.of(context).colorScheme.primaryContainer),
                         ),
                         ClipRRect(
                           borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12)),
@@ -189,7 +189,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                   context.translate('giftCard'),
                                   style: TextStyle(
                                     fontSize: 16,
-                                    color: Colors.black,
+                                    color: Theme.of(context).colorScheme.onSurface,
                                   ),
                                 ),
                               ),

@@ -37,7 +37,7 @@ class ProfileCompletionWidget extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w900,
-                        color: colorGreen,
+                        color: Theme.of(context).primaryColor,
                       ),
                     ) : SizedBox(height: 48),
                     SizedBox(height: 4),
@@ -45,7 +45,7 @@ class ProfileCompletionWidget extends StatelessWidget {
                       margin: EdgeInsets.symmetric(horizontal: 2),
                       height: 3,
                       decoration: BoxDecoration(
-                        color: isCompleted ? colorGreen : Colors.grey[300],
+                        color: isCompleted ? Theme.of(context).primaryColor : Colors.grey[300],
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),

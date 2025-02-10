@@ -26,7 +26,7 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           appBar: AppBar(
             leading: TextButton(
               style: ButtonStyle(
@@ -39,7 +39,7 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
                 Asset.back,
               ),
             ),
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).colorScheme.surface,
             elevation: 0,
             forceMaterialTransparency: true,
             actions: [
@@ -49,10 +49,10 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
                   showBadge: cubit.totalQuantity > 0,
                   badgeContent: Text(
                     cubit.totalQuantity.toString(),
-                    style: TextStyle(color: Colors.white, fontSize: 14),
+                    style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 14),
                   ),
                   badgeStyle: badges.BadgeStyle(
-                    badgeColor: colorGreen,
+                    badgeColor: Theme.of(context).primaryColor,
                   ),
                   child: SvgPicture.asset(
                     Asset.buy,
@@ -66,7 +66,7 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
             title: Text(
               context.translate('giftCard'),
             ),
-            titleTextStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: colorLightGreyModal),
+            titleTextStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Theme.of(context).colorScheme.onPrimary),
           ),
           body: Padding(
             padding: const EdgeInsets.fromLTRB(28, 34, 28, 0),
@@ -80,7 +80,7 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
                       return LinearGradient(
                         end: Alignment.topCenter,
                         begin: Alignment.bottomCenter,
-                        colors: [Colors.transparent, Colors.black],
+                        colors: [Colors.transparent, Theme.of(context).colorScheme.onSurface],
                         stops: [0.01, 0.1],
                       ).createShader(bounds);
                     },
@@ -109,17 +109,11 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
                 padding: EdgeInsets.fromLTRB(64, 0, 64, 32),
                 child: CustomButton(
                   text: context.translate('continue'),
-                  backgroundColorStart: colorGreen,
-                  textColor: Colors.white,
+                  backgroundColorStart: Theme.of(context).primaryColor,
+                  textColor: Theme.of(context).colorScheme.surface,
                   height: 50,
                   width: 300,
-                  borderColor: colorGreen,
-                  borderRadius: BorderRadius.circular(25),
-                  textStyle: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w900,
-                    color: Colors.white,
-                  ),
+                  borderColor: Theme.of(context).primaryColor,
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -140,7 +134,7 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
 
   Widget cardView(GiftCardCubit cubit, int index) {
     return Card(
-      color: colorLightGreyModal4,
+      color: Theme.of(context).colorScheme.primaryContainer,
       elevation: 5,
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
@@ -162,7 +156,7 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
                     Text(
                       '${cubit.giftCards[index]['title']!.split(' ').first}\n${cubit.giftCards[index]['title']!.split(' ').last} ',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         fontSize: 48,
                         fontWeight: FontWeight.w900,
                         height: 0.9,
@@ -182,7 +176,7 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
                         style: TextStyle(
                           fontSize: 40,
                           fontWeight: FontWeight.w900,
-                          color: Colors.black,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                       SizedBox(width: 5,),
@@ -191,7 +185,7 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w900,
-                          color: Colors.black,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                     ],

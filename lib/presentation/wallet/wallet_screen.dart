@@ -30,10 +30,10 @@ class _WalletScreenState extends State<WalletScreen> {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
         forceMaterialTransparency: true,
         toolbarHeight: 8,
@@ -59,17 +59,11 @@ class _WalletScreenState extends State<WalletScreen> {
                   Expanded(
                     child: CustomButton(
                       text: context.translate('deposit'),
-                      backgroundColorStart: colorGreen,
-                      textColor: Colors.white,
+                      backgroundColorStart: Theme.of(context).primaryColor,
+                      textColor: Theme.of(context).colorScheme.surface,
                       height: 50,
                       width: 180,
-                      borderColor: colorGreen,
-                      borderRadius: BorderRadius.circular(25),
-                      textStyle: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w900,
-                        color: Colors.white,
-                      ),
+                      borderColor: Theme.of(context).primaryColor,
                       isIconEnabled: true,
                       icon: Asset.deposit,
                       onPressed: () {
@@ -89,17 +83,11 @@ class _WalletScreenState extends State<WalletScreen> {
                   Expanded(
                     child: CustomButton(
                       text: context.translate('withdrawal'),
-                      backgroundColorStart: Colors.white,
-                      textColor: colorGreen,
+                      backgroundColorStart: Theme.of(context).colorScheme.surface,
+                      textColor: Theme.of(context).primaryColor,
                       height: 50,
                       width: 180,
-                      borderColor: colorGreen,
-                      borderRadius: BorderRadius.circular(25),
-                      textStyle: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w900,
-                        color: colorGreen,
-                      ),
+                      borderColor: Theme.of(context).primaryColor,
                       isIconEnabled: true,
                       icon: Asset.withdrawal,
                       onPressed: () {
@@ -120,7 +108,7 @@ class _WalletScreenState extends State<WalletScreen> {
                 padding: EdgeInsets.fromLTRB(2, 20, 5, 0),
                 child: Row(
                   children: [
-                    Text(context.translate('transactions'), style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18, color: colorLightGreyModal)),
+                    Text(context.translate('transactions'), style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18, color: Theme.of(context).colorScheme.onPrimary)),
                     SizedBox(
                       width: 13,
                     ),
@@ -134,7 +122,7 @@ class _WalletScreenState extends State<WalletScreen> {
                             )),
                           );
                         },
-                        child: Text(context.translate('seeAll'), style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400 ,color: colorGreen))),
+                        child: Text(context.translate('seeAll'), style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400 ,color: Theme.of(context).primaryColor))),
                   ],
                 )),
             Expanded(
@@ -144,7 +132,7 @@ class _WalletScreenState extends State<WalletScreen> {
                   return LinearGradient(
                     end: Alignment.topCenter,
                     begin: Alignment.bottomCenter,
-                    colors: [Colors.transparent, Colors.black],
+                    colors: [Colors.transparent, Theme.of(context).colorScheme.onSurface],
                     stops: [0.1, 0.8],
                   ).createShader(bounds);
                 },
@@ -163,95 +151,96 @@ class _WalletScreenState extends State<WalletScreen> {
       ),
     );
   }
-}
 
-Widget cardView(var transaction) {
-  return Card(
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20),
-    ),
-    child: Container(
-      height: 50,
-      width: width,
-      padding: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: colorLightGreyModal9,
+  Widget cardView(var transaction) {
+    return Card(
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            flex: 3,
-            child: Row(
-              children: [
-                SvgPicture.asset(
-                  transaction['type'] == 'dollar' ? Asset.dollar : Asset.gold,
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    transaction['title']!,
-                    style: const TextStyle(
+      child: Container(
+        height: 50,
+        width: width,
+        padding: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Theme.of(context).colorScheme.onTertiary),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              flex: 3,
+              child: Row(
+                children: [
+                  SvgPicture.asset(
+                    transaction['type'] == 'dollar' ? Asset.dollar : Asset.gold,
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      transaction['title']!,
+                      style: const TextStyle(
+                        overflow: TextOverflow.ellipsis,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 14,
+                      ),
                       overflow: TextOverflow.ellipsis,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 14,
                     ),
-                    overflow: TextOverflow.ellipsis,
                   ),
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Text(
+                transaction['date']!,
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 11,
                 ),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Text(
-              transaction['date']!,
-              style: TextStyle(
-                color: Colors.grey[600],
-                fontSize: 11,
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Text(
-              transaction['type'] == 'dollar' ? '\$${transaction['amount']!}' : '${transaction['amount']!} gr',
-              style: const TextStyle(
-                fontWeight: FontWeight.w900,
-                fontSize: 14,
+            Expanded(
+              flex: 2,
+              child: Text(
+                transaction['type'] == 'dollar' ? '\$${transaction['amount']!}' : '${transaction['amount']!} gr',
+                style: const TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 14,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  transaction['status']!,
-                  style: TextStyle(
-                    color: transaction['status'] == 'Done'
-                        ? colorGreen
-                        : transaction['status'] == 'Failed'
-                        ? colorFailed
-                        : colorPending,
-                    fontWeight: FontWeight.w900,
-                    fontSize: 11,
+            Expanded(
+              flex: 2,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    transaction['status']!,
+                    style: TextStyle(
+                      color: transaction['status'] == 'Done'
+                          ? Theme.of(context).primaryColor
+                          : transaction['status'] == 'Failed'
+                          ? colorFailed
+                          : colorPending,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 11,
+                    ),
+                    textAlign: TextAlign.end,
                   ),
-                  textAlign: TextAlign.end,
-                ),
-                SizedBox(width: 12,),
-                SvgPicture.asset(Asset.attention,
-                  width: 13,
-                  height: 15,)
-              ],
+                  SizedBox(width: 12,),
+                  SvgPicture.asset(Asset.attention,
+                    width: 13,
+                    height: 15,)
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }

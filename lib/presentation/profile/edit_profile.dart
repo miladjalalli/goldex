@@ -18,9 +18,9 @@ class EditProfileScreen extends StatelessWidget {
     var completeDocuments = cubit.documents.where((document) => document['completed'] == true).toList();
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         leading: TextButton(
           style: ButtonStyle(
             padding: WidgetStateProperty.all(EdgeInsets.only(left: 20)),
@@ -53,7 +53,7 @@ class EditProfileScreen extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Scott Williams', style: TextStyle(fontWeight: FontWeight.w900, fontSize: 24, color: colorLightGreyModal)),
+                Text('Scott Williams', style: TextStyle(fontWeight: FontWeight.w900, fontSize: 24, color: Theme.of(context).colorScheme.onPrimary)),
                 Padding(
                   padding: const EdgeInsets.only(left: 10, right: 10),
                   child: Row(
@@ -93,7 +93,7 @@ Widget _buildDocumentItem(Map<String, dynamic> document, BuildContext context) {
       children: [
         Row(
           children: [
-            _buildDocumentTitle(document),
+            _buildDocumentTitle(context, document),
             if (document['completed']) _buildEditButton(document),
           ],
         ),
@@ -104,7 +104,7 @@ Widget _buildDocumentItem(Map<String, dynamic> document, BuildContext context) {
   );
 }
 
-Widget _buildDocumentTitle(Map<String, dynamic> document) {
+Widget _buildDocumentTitle(BuildContext context, Map<String, dynamic> document) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.start,
     children: [
@@ -113,7 +113,7 @@ Widget _buildDocumentTitle(Map<String, dynamic> document) {
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w600,
-          color: document['completed'] ? Colors.black : colorRed,
+          color: document['completed'] ? Theme.of(context).colorScheme.onSurface : colorRed,
         ),
       ),
     ],
@@ -141,13 +141,11 @@ Widget _buildVerifyButton(BuildContext context) {
     padding: const EdgeInsets.only(bottom: 2.0),
     child: CustomButton(
       text: context.translate('verify'),
-      backgroundColorStart: colorGreen,
-      textColor: Colors.white,
+      backgroundColorStart: Theme.of(context).primaryColor,
+      textColor: Theme.of(context).colorScheme.surface,
       height: 34,
       width: 109,
-      borderColor: colorGreen,
-      borderRadius: BorderRadius.circular(25),
-      textStyle: TextStyle(fontSize: 16, color: Colors.white),
+      borderColor: Theme.of(context).primaryColor,
       onPressed: () {},
     ),
   );
