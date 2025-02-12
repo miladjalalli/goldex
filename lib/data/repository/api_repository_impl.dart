@@ -8,6 +8,9 @@ class ApiRepositoryImpl extends ApiRepository {
   ApiRepositoryImpl({required this.remoteDataSource});
 
   @override
+  Future<Response> register(Map<String, dynamic> data) => remoteDataSource.register(data);
+
+  @override
   Future<Response> chargeWallet(Map<String, dynamic> data) => remoteDataSource.chargeWallet(data);
 
   @override

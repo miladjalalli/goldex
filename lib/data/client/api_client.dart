@@ -5,7 +5,7 @@ class ApiClient {
 
   ApiClient({Dio? dio}) : _dio = dio ?? Dio() {
     _dio.options
-      ..baseUrl = 'https://api.example.com' // آدرس وب سرویس
+      ..baseUrl = 'http://app.goldex.me/api/v1/' // آدرس وب سرویس
       ..connectTimeout = const Duration(seconds: 10)
       ..receiveTimeout = const Duration(seconds: 10)
       ..headers = {'Content-Type': 'application/json'};

@@ -5,6 +5,7 @@ import 'package:goldex/data/client/api_client.dart';
 import 'package:goldex/data/source/network/remote_data_source.dart';
 import 'package:goldex/domain/repository/api_repository.dart';
 import 'package:goldex/presentation/login/cubit/login_cubit.dart';
+import 'package:goldex/presentation/sign_up/cubit/sing_up_cubit.dart';
 
 
 final sl = GetIt.instance;
@@ -25,4 +26,5 @@ void init() {
 
   // Bloc
   sl.registerFactory(() => LoginCubit(apiRepository: sl()));
+  sl.registerFactory(() => SingUpCubit(apiRepository: sl()));
 }

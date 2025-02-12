@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:goldex/core/app_localizations.dart';
+import 'package:goldex/core/dependency_injection.dart';
 import 'package:goldex/widget/goldex_text_form_field.dart';
-import '../../core/theme/theme.dart';
+
 import '../../widget/custom_button.dart';
 import '../assets.dart';
 import 'cubit/sing_up_cubit.dart';
@@ -18,48 +19,48 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SingUpCubit, SingUpState>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        SingUpCubit cubit = context.read<SingUpCubit>();
-        return Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.onSurface,
-          body: Stack(
-            children: [
-              Positioned.fill(
-                child: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(Asset.background),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
-              // Login content
-              Align(
-                child: Column(
-                  children: [
-                    _buildHeader(),
-                    Expanded(
-                      child: PageView(
-                        controller: cubit.pageController,
-                        physics: NeverScrollableScrollPhysics(),
-                        children: [
-                          _buildPhoneNumberStep(),
-                          _buildSignUpStep(),
-                          _buildSetPasswordStep(),
-                        ],
+    return  BlocConsumer<SingUpCubit, SingUpState>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            SingUpCubit cubit = context.read<SingUpCubit>();
+            return Scaffold(
+              backgroundColor: Theme.of(context).colorScheme.onSurface,
+              body: Stack(
+                children: [
+                  Positioned.fill(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(Asset.background),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  // Login content
+                  Align(
+                    child: Column(
+                      children: [
+                        _buildHeader(),
+                        Expanded(
+                          child: PageView(
+                            controller: cubit.pageController,
+                            physics: NeverScrollableScrollPhysics(),
+                            children: [
+                              _buildPhoneNumberStep(),
+                              _buildSignUpStep(),
+                              _buildSetPasswordStep(),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         );
-      },
-    );
   }
 
   Widget _buildHeader() {
@@ -84,18 +85,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
       children: [
         Text(
           title,
-          style: Theme
-              .of(context)
-              .textTheme
-              .titleSmall!
-              .copyWith(
-            color: cubit.currentIndex == index
-                ? Theme.of(context).colorScheme.surface
-                : cubit.currentIndex >= index
-                ? Colors.green
-                : Theme.of(context).colorScheme.onPrimary,
-            fontWeight: FontWeight.w500,
-          ),
+          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                color: cubit.currentIndex == index
+                    ? Theme.of(context).colorScheme.surface
+                    : cubit.currentIndex >= index
+                        ? Colors.green
+                        : Theme.of(context).colorScheme.onPrimary,
+                fontWeight: FontWeight.w500,
+              ),
         ),
       ],
     );
@@ -140,14 +137,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Visibility(
-                    visible: !cubit.showOTP,
+                    visible: !cubit.otpIsShowing,
                     child: Column(
                       children: [
                         Padding(
                           padding: const EdgeInsets.fromLTRB(23, 5, 0, 7),
                           child: Text(
                             context.translate("phoneNumberEmail"),
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface),
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: Theme.of(context).colorScheme.onSurface),
                           ),
                         ),
                         Padding(
@@ -186,10 +186,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         items: cubit.countryCodes.map((String code) {
                                           return DropdownMenuItem<String>(
                                             value: code,
-                                            child: Text(code, style: Theme
-                                                .of(context)
-                                                .textTheme
-                                                .bodySmall),
+                                            child: Text(code, style: Theme.of(context).textTheme.bodySmall),
                                           );
                                         }).toList(),
                                         onChanged: (String? newValue) {
@@ -211,7 +208,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   Visibility(
-                    visible: cubit.showOTP,
+                    visible: cubit.otpIsShowing,
                     child: Column(
                       children: [
                         Padding(
@@ -220,7 +217,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             children: [
                               Text(
                                 context.translate("pleaseEnterVerificationCode"),
-                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface),
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Theme.of(context).colorScheme.onSurface),
                               ),
                             ],
                           ),
@@ -253,10 +253,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             children: [
                               Text(
                                 context.translate('didntReceiveCode'),
-                                style: Theme
-                                    .of(context)
-                                    .textTheme
-                                    .bodyMedium,
+                                style: Theme.of(context).textTheme.bodyMedium,
                                 textAlign: TextAlign.center,
                               ),
                             ],
@@ -279,7 +276,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   Spacer(),
                   Visibility(
-                    visible: !cubit.showOTP,
+                    visible: !cubit.otpIsShowing,
                     child: Row(
                       children: [
                         Transform.scale(
@@ -303,7 +300,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               showCustomDialog(
                                 context,
                                 cubit.tos,
-                                    () => cubit.goToNextPage(),
+                                () => cubit.goToNextPage(),
                               );
                             },
                             child: RichText(
@@ -320,9 +317,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     text: context.translate('readTheToS'),
                                     style: TextStyle(
                                       fontFamily: 'IRsans',
-                                      color: Theme
-                                          .of(context)
-                                          .primaryColor,
+                                      color: Theme.of(context).primaryColor,
                                     ),
                                   ),
                                   TextSpan(text: context.translate('andAgreedWithThem')),
@@ -345,10 +340,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       width: 300,
                       borderColor: Theme.of(context).primaryColor,
                       onPressed: () {
-                        if (cubit.showOTP) {
+                        if (cubit.otpIsShowing) {
                           cubit.goToNextPage();
                         } else {
-                          cubit.changeContent();
+                          cubit.singUp();
                         }
                       },
                     ),
@@ -361,7 +356,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               onPressed: () {},
               child: Text(
                 context.translate('alreadyHaveAnAccount'),
-                style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.w500, fontSize: 14),
+                style:
+                    TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.w500, fontSize: 14),
               ),
             ),
             const SizedBox(height: 5),
@@ -515,7 +511,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             context.translate('showPassword'),
                             textAlign: TextAlign.justify,
                             textDirection: TextDirection.ltr,
-                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface),
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Theme.of(context).colorScheme.onSurface),
                           ),
                         ),
                       ],
@@ -566,10 +565,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Expanded(
                       child: SingleChildScrollView(
                         child: Column(
-                          children: messages
-                              .asMap()
-                              .entries
-                              .map((entry) {
+                          children: messages.asMap().entries.map((entry) {
                             int index = entry.key + 1;
                             String msg = entry.value;
                             return Padding(
@@ -611,14 +607,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         CustomButton(
                           text: context.translate('confirm'),
-                          backgroundColorStart: Theme
-                              .of(context)
-                              .colorScheme
-                              .primary,
-                          backgroundColorEnd: Theme
-                              .of(context)
-                              .colorScheme
-                              .secondary,
+                          backgroundColorStart: Theme.of(context).colorScheme.primary,
+                          backgroundColorEnd: Theme.of(context).colorScheme.secondary,
                           textColor: Theme.of(context).colorScheme.surface,
                           height: 50,
                           width: 140,
@@ -636,5 +626,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           );
         });
-    }
   }
+}

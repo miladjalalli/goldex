@@ -11,14 +11,5 @@ class LoginCubit extends Cubit<LoginState> {
   LoginCubit({required this.apiRepository}) : super(LoginInitial());
 
 
-  Future<void> login(Map<String, dynamic> data) async {
-    emit(LoginLoading());
-    try {
-      final response = await apiRepository.chargeWallet(data);
-      emit(LoginSuccess(response));
-    } catch (e) {
-      emit(LoginError(e.toString()));
-    }
-  }
 
 }

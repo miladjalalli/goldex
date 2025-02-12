@@ -13,14 +13,10 @@ class LoginSuccess extends LoginState {
   final Response response;
   LoginSuccess(this.response);
 
-  @override
-  List<Object?> get props => [response];
 }
 
 class LoginError extends LoginState {
   final String message;
   LoginError(this.message);
 
-  @override
-  List<Object?> get props => [message];
 }

@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 
 abstract class ApiRepository {
 
+  Future<Response> register(Map<String, dynamic> data);
+
   Future<Response> chargeWallet(Map<String, dynamic> data);
 
   Future<Response> buyGoldByWeight(Map<String, dynamic> data);

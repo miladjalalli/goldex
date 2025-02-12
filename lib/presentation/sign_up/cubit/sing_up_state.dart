@@ -15,4 +15,19 @@ class SingUpInitial extends SingUpState {
 }
 
 class SelectedValue extends SingUpState {}
-class ChangeContent extends SingUpState {}
+
+
+class SingUpLoading extends SingUpState {}
+
+class SingUpSuccess extends SingUpState {
+  final Response response;
+  SingUpSuccess(this.response);
+
+}
+
+class SingUpError extends SingUpState {
+  final String message;
+  SingUpError(this.message);
+
+}
+

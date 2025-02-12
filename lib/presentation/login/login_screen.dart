@@ -197,9 +197,9 @@ class LoginScreen extends StatelessWidget {
                       borderColor: Theme.of(context).colorScheme.surface,
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return BlocProvider<SingUpCubit>(
-                            create: (context) => SingUpCubit(),
-                            child: const SignUpScreen(),
+                          return BlocProvider(
+                              create: (context) => sl<SingUpCubit>(),
+                              child: const SignUpScreen(),
                           );
                         }));
                       },
