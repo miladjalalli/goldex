@@ -351,7 +351,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 50),
+            SizedBox(height: 30),
             TextButton(
               onPressed: () {},
               child: Text(

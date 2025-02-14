@@ -161,6 +161,7 @@ class _GiveGoldCardScreenState extends State<GiveGoldCardScreen> {
                 child: CustomButton(
                   text: context.translate('continue'),
                   backgroundColorStart: Theme.of(context).primaryColor,
+                  backgroundColorEnd: Theme.of(context).colorScheme.secondary,
                   textColor: Theme.of(context).colorScheme.surface,
                   height: 50,
                   width: 300,

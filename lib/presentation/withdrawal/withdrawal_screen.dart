@@ -225,6 +225,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                                 CustomButton(
                                   text: context.translate('confirm'),
                                   backgroundColorStart: Theme.of(context).primaryColor,
+                                  backgroundColorEnd: Theme.of(context).colorScheme.secondary,
                                   textColor: Theme.of(context).colorScheme.surface,
                                   height: 50,
                                   width: 121,

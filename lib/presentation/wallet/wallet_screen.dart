@@ -60,6 +60,7 @@ class _WalletScreenState extends State<WalletScreen> {
                     child: CustomButton(
                       text: context.translate('deposit'),
                       backgroundColorStart: Theme.of(context).primaryColor,
+                      backgroundColorEnd: Theme.of(context).colorScheme.secondary,
                       textColor: Theme.of(context).colorScheme.surface,
                       height: 50,
                       width: 180,

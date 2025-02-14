@@ -121,7 +121,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                   children: [
                     Text(
                       context.translate('didntReceiveCode'),
-                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18, color: Theme.of(context).colorScheme.onPrimary),
+                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: Theme.of(context).colorScheme.onPrimary),
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -146,6 +146,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
           child: CustomButton(
             text: context.translate('confirm'),
             backgroundColorStart: Theme.of(context).primaryColor,
+            backgroundColorEnd: Theme.of(context).colorScheme.secondary,
             textColor: Theme.of(context).colorScheme.surface,
             height: 50,
             width: 300,
@@ -269,10 +270,11 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
               padding: EdgeInsets.only(bottom: widget.showGotItBottom ? 11.0 : 32),
               child: CustomButton(
                 text: context.translate('saveGallery'),
+                backgroundColorStart: Theme.of(context).primaryColor,
+                backgroundColorEnd: Theme.of(context).colorScheme.secondary,
+                textColor: Theme.of(context).colorScheme.surface,
                 isIconEnabled: true,
                 icon: Asset.download,
-                backgroundColorStart: Theme.of(context).primaryColor,
-                textColor: Theme.of(context).colorScheme.surface,
                 height: 50,
                 width: 300,
                 borderColor: Theme.of(context).primaryColor,

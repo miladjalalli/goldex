@@ -114,7 +114,7 @@ class GiftCardOrderSummaryScreen extends StatelessWidget {
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400,
-                                    color: Theme.of(context).colorScheme.surface
+                                    color: Theme.of(context).colorScheme.onSurface
                                 ),
                               ),
                             ],
@@ -171,6 +171,7 @@ class GiftCardOrderSummaryScreen extends StatelessWidget {
                       CustomButton(
                         text: context.translate('continue'),
                         backgroundColorStart: Theme.of(context).primaryColor,
+                        backgroundColorEnd: Theme.of(context).colorScheme.secondary,
                         textColor: Theme.of(context).colorScheme.surface,
                         height: 50,
                         width: 300,

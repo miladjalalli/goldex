@@ -129,7 +129,7 @@ class LoginScreen extends StatelessWidget {
                                     ),
                                     Text(
                                       context.translate('rememberMe'),
-                                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+                                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14, color: Theme.of(context).colorScheme.onPrimaryContainer),
                                     ),
                                   ],
                                 ),
@@ -139,7 +139,7 @@ class LoginScreen extends StatelessWidget {
                                   },
                                   child: Text(
                                     context.translate('forgotPassword'),
-                                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: Theme.of(context).primaryColor),
+                                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14, color: Theme.of(context).primaryColor),
                                   ),
                                 ),
                               ],
