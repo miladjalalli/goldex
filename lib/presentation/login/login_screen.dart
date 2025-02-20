@@ -228,9 +228,12 @@ class LoginScreen extends StatelessWidget {
                                     textColor: Theme.of(context).colorScheme.surface,
                                     height: 50,
                                     width: 300,
+                                    isLoading: state is LoginLoading,
                                     borderColor: Theme.of(context).primaryColor,
                                     onPressed: () {
-                                      cubit.login(context);
+                                      if(state is! LoginLoading) {
+                                        cubit.login(context);
+                                      }
                                     },
                                   ),
                                 ),
