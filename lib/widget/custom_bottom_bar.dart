@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goldex/core/theme/theme.dart';
 
-import '../presentation/assets.dart';
+import '../core/assets.dart';
 
 class CustomBottomBar extends StatefulWidget {
   final Function(int) onItemSelected;

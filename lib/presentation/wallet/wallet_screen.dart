@@ -5,7 +5,7 @@ import 'package:goldex/core/app_localizations.dart';
 import 'package:goldex/core/theme/theme.dart';
 import '../../widget/card_widget.dart';
 import '../../widget/custom_button.dart';
-import '../assets.dart';
+import '../../core/assets.dart';
 import '../deposit/cubit/deposit_cubit.dart';
 import '../deposit/deposit_screen.dart';
 import '../withdrawal/cubit/withdrawal_cubit.dart';

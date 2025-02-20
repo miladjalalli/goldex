@@ -5,7 +5,7 @@ import 'package:goldex/core/app_localizations.dart';
 
 import '../../core/theme/theme.dart';
 import '../../widget/custom_button.dart';
-import '../assets.dart';
+import '../../core/assets.dart';
 
 class ConfirmationScreen extends StatefulWidget {
 

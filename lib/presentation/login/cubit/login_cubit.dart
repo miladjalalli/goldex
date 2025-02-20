@@ -4,13 +4,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:goldex/core/app_localizations.dart';
 import 'package:goldex/domain/entity/response/login_response.dart';
 import 'package:goldex/domain/repository/api_repository.dart';
+import 'package:goldex/domain/repository/secure_storage_service.dart';
 
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   ApiRepository apiRepository;
+  SecureStorageService secureStorageService;
 
-  LoginCubit({required this.apiRepository}) : super(LoginInitial());
+  LoginCubit({required this.apiRepository,required this.secureStorageService}) : super(LoginInitial());
 
   TextEditingController numberOrEmailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -44,6 +46,7 @@ class LoginCubit extends Cubit<LoginState> {
         final res = await apiRepository.login(data);
         LoginResponse response = LoginResponse.fromJson(res.data);
         if (response.status == "Ok") {
+          await secureStorageService.writeToken(response.data!.token!);
           emit(LoginSuccess(response.data!));
         } else {
           emit(LoginError(response.error!));

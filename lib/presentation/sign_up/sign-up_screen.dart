@@ -6,7 +6,7 @@ import 'package:goldex/core/app_localizations.dart';
 import 'package:goldex/widget/goldex_text_form_field.dart';
 
 import '../../widget/custom_button.dart';
-import '../assets.dart';
+import '../../core/assets.dart';
 import 'cubit/sing_up_cubit.dart';
 
 class SignUpScreen extends StatefulWidget {

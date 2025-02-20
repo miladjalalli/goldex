@@ -8,7 +8,7 @@ import '../../core/theme/theme.dart';
 import '../../widget/card_buy_or_sell_details.dart';
 import '../../widget/card_gift-card_order_details.dart';
 import '../../widget/custom_button.dart';
-import '../assets.dart';
+import '../../core/assets.dart';
 import '../confirmation/confirmation_screen.dart';
 import '../order_summary/cubit/order_summary_cubit.dart';
 import 'cubit/gift_card_cubit.dart';

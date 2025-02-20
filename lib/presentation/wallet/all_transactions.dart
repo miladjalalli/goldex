@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goldex/core/app_localizations.dart';
 import '../../core/theme/theme.dart';
-import '../assets.dart';
+import '../../core/assets.dart';
 import 'cubit/wallet_cubit.dart';
 
 double width = 0;

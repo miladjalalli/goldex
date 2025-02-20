@@ -5,7 +5,7 @@ import 'package:goldex/core/app_localizations.dart';
 import 'package:goldex/core/theme/theme.dart';
 import 'package:goldex/widget/custom_button.dart';
 
-import '../assets.dart';
+import '../../core/assets.dart';
 import 'cubit/profile_cubit.dart';
 import 'edit_profile.dart';
 

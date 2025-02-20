@@ -4,7 +4,7 @@ import 'package:goldex/core/app_localizations.dart';
 import 'package:goldex/core/theme/theme.dart';
 import 'package:goldex/widget/card_widget.dart';
 import '../../widget/custom_button.dart';
-import '../assets.dart';
+import '../../core/assets.dart';
 import '../order_summary/order_summary_screen.dart';
 
 class BuyScreen extends StatefulWidget {

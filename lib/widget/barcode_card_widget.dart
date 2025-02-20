@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goldex/core/app_localizations.dart';
 
-import '../presentation/assets.dart';
+import '../core/assets.dart';
 import '../core/theme/theme.dart';
 
 class CardWidget extends StatelessWidget {

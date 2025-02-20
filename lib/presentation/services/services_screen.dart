@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:goldex/core/app_localizations.dart';
 
 import '../../core/theme/theme.dart';
-import '../assets.dart';
+import '../../core/assets.dart';
 import '../get-gold/cubit/give_gold_cubit.dart';
 import '../get-gold/give-gold_screen.dart';
 import '../gift-card/cubit/gift_card_cubit.dart';

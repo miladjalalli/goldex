@@ -6,7 +6,7 @@ import 'package:goldex/core/app_localizations.dart';
 import '../../core/theme/theme.dart';
 import '../../widget/card_gift-card_order_details.dart';
 import '../../widget/custom_button.dart';
-import '../assets.dart';
+import '../../core/assets.dart';
 import '../confirmation/confirmation_screen.dart';
 import 'cubit/give_gold_cubit.dart';
 

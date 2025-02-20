@@ -7,7 +7,7 @@ import 'package:goldex/presentation/gift-card/give-gift_receiving_method.dart';
 import 'package:goldex/core/theme/theme.dart';
 import 'package:goldex/widget/custom_button.dart';
 import '../../widget/counter_widget.dart';
-import '../assets.dart';
+import '../../core/assets.dart';
 import 'cubit/gift_card_cubit.dart';
 
 class GiveGiftCardScreen extends StatefulWidget {

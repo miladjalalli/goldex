@@ -6,7 +6,7 @@ import 'package:goldex/core/app_localizations.dart';
 import 'package:goldex/presentation/confirmation/confirmation_screen.dart';
 import 'package:goldex/core/theme/theme.dart';
 import '../../widget/custom_button.dart';
-import '../assets.dart';
+import '../../core/assets.dart';
 import 'cubit/withdrawal_cubit.dart';
 
 class WithdrawalScreen extends StatefulWidget {

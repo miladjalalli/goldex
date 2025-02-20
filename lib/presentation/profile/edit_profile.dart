@@ -6,7 +6,7 @@ import 'package:goldex/core/app_localizations.dart';
 import '../../core/theme/theme.dart';
 import '../../widget/custom_button.dart';
 import '../../widget/profile_complete_widget.dart';
-import '../assets.dart';
+import '../../core/assets.dart';
 import 'cubit/profile_cubit.dart';
 
 class EditProfileScreen extends StatelessWidget {

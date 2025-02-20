@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goldex/core/app_localizations.dart';
 import '../../widget/modal_dialog.dart';
-import '../assets.dart';
+import '../../core/assets.dart';
 
 class TransactionScreen extends StatefulWidget {
   const TransactionScreen({super.key});

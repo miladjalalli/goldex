@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../assets.dart';
+import '../../../core/assets.dart';
 
 part 'give_gold_state.dart';
 

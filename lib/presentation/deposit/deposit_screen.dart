@@ -7,7 +7,7 @@ import 'package:goldex/presentation/confirmation/confirmation_screen.dart';
 import 'package:goldex/presentation/services/services_screen.dart';
 import 'package:goldex/core/theme/theme.dart';
 import '../../widget/custom_button.dart';
-import '../assets.dart';
+import '../../core/assets.dart';
 import 'cubit/deposit_cubit.dart';
 
 class DepositScreen extends StatefulWidget {

@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:goldex/core/app_localizations.dart';
 import 'package:goldex/core/theme/theme.dart';
 import 'package:goldex/widget/custom_button.dart';
-import '../assets.dart';
+import '../../core/assets.dart';
 import '../order_summary/cubit/order_summary_cubit.dart';
 import 'gift-card_order_summary_screen.dart';
 import 'cubit/gift_card_cubit.dart';

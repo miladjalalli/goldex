@@ -6,7 +6,7 @@ import 'package:goldex/core/app_localizations.dart';
 import '../../core/theme/theme.dart';
 import '../../widget/card_buy_or_sell_details.dart';
 import '../../widget/custom_button.dart';
-import '../assets.dart';
+import '../../core/assets.dart';
 import '../confirmation/confirmation_screen.dart';
 
 class OrderSummaryScreen extends StatelessWidget {

@@ -1,18 +1,16 @@
 import 'package:dio/dio.dart';
+import 'package:goldex/domain/repository/secure_storage_service.dart';
 
 class ApiClient {
   final Dio _dio;
+  SecureStorageService secureStorageService;
 
-  ApiClient({Dio? dio}) : _dio = dio ?? Dio() {
+  ApiClient({Dio? dio, required this.secureStorageService}) : _dio = dio ?? Dio() {
     _dio.options
       ..baseUrl = 'http://app.goldex.me/api/v1/' // آدرس وب سرویس
       ..connectTimeout = const Duration(seconds: 20)
       ..receiveTimeout = const Duration(seconds: 20)
-      ..headers = {
-        'accept': 'application/json',
-        'Client': 'U-1.3.2',
-        'Content-Type': 'application/json'
-    };
+      ..headers = {'accept': 'application/json', 'Client': 'U-1.3.2', 'Content-Type': 'application/json'};
 
     // اضافه کردن لاگر و احراز هویت
     _dio.interceptors.addAll([
@@ -24,9 +22,8 @@ class ApiClient {
       ),
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          // گرفتن توکن از حافظه (مثلاً از SharedPreferences)
-          final token = "YOUR_ACCESS_TOKEN";
-          if (token.isNotEmpty) {
+          String? token = await secureStorageService.readToken();
+          if (token != null && token.isNotEmpty) {
             options.headers['Authorization'] = 'Bearer $token';
           }
           return handler.next(options);
@@ -70,13 +67,16 @@ class ApiClient {
       throw _handleError(e);
     }
   }
+
 // Error handling
   String _handleError(DioException error) {
     if (error.response != null) {
       final statusCode = error.response?.statusCode;
-      final errorMessage = error.response?.data["message"] ?? "Unknown error";
+      final errorMessage = error.response?.data["Message"] ?? "Unknown error";
 
-      if (statusCode == 401) {
+      if (errorMessage != null) {
+        return errorMessage;
+      } else if (statusCode == 401) {
         return "Authentication failed! Please log in again.";
       } else if (statusCode == 403) {
         return "You do not have permission to access this section.";
@@ -84,8 +84,6 @@ class ApiClient {
         return "The requested item was not found.";
       } else if (statusCode == 500) {
         return "Server error! Please try again later.";
-      } else {
-        return errorMessage;
       }
     }
     switch (error.type) {
@@ -102,5 +100,4 @@ class ApiClient {
         return "An unknown error occurred.";
     }
   }
-
 }

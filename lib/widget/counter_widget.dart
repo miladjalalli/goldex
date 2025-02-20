@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goldex/core/theme/theme.dart';
-import '../presentation/assets.dart';
+import '../core/assets.dart';
 
 class CounterWidget extends StatefulWidget {
   final Function(int) onQuantityChanged;

@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
-import '../../assets.dart';
+import '../../../core/assets.dart';
 
 part 'deposit_state.dart';
 
