@@ -300,7 +300,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                            padding: EdgeInsets.fromLTRB(cubit.resendTimerInSecond == 0?10:0, 0, 0, 0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [

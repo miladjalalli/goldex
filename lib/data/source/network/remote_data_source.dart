@@ -6,8 +6,11 @@ import 'package:goldex/data/client/api_client.dart';
 
   RemoteDataSource({required this.apiClient});
 
-  Future<Response> register(Map<String, dynamic> data) async {
+  Future<Response> login(Map<String, dynamic> data) async {
     return await apiClient.postRequest('user/register', data: data);
+  }
+  Future<Response> register(Map<String, dynamic> data) async {
+    return await apiClient.postRequest('user/login', data: data);
   }
   Future<Response> chargeWallet(Map<String, dynamic> data) async {
     return await apiClient.postRequest('wallet/charge-card/', data: data);
