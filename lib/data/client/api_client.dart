@@ -6,9 +6,13 @@ class ApiClient {
   ApiClient({Dio? dio}) : _dio = dio ?? Dio() {
     _dio.options
       ..baseUrl = 'http://app.goldex.me/api/v1/' // آدرس وب سرویس
-      ..connectTimeout = const Duration(seconds: 10)
-      ..receiveTimeout = const Duration(seconds: 10)
-      ..headers = {'Content-Type': 'application/json'};
+      ..connectTimeout = const Duration(seconds: 20)
+      ..receiveTimeout = const Duration(seconds: 20)
+      ..headers = {
+        'accept': 'application/json',
+        'Client': 'U-1.3.2',
+        'Content-Type': 'application/json'
+    };
 
     // اضافه کردن لاگر و احراز هویت
     _dio.interceptors.addAll([
@@ -66,37 +70,37 @@ class ApiClient {
       throw _handleError(e);
     }
   }
-
-  // مدیریت خطاها
+// Error handling
   String _handleError(DioException error) {
     if (error.response != null) {
       final statusCode = error.response?.statusCode;
-      final errorMessage = error.response?.data["message"] ?? "خطای نامشخص";
+      final errorMessage = error.response?.data["message"] ?? "Unknown error";
 
       if (statusCode == 401) {
-        return "احراز هویت ناموفق! لطفاً دوباره وارد شوید.";
+        return "Authentication failed! Please log in again.";
       } else if (statusCode == 403) {
-        return "شما اجازه دسترسی به این بخش را ندارید.";
+        return "You do not have permission to access this section.";
       } else if (statusCode == 404) {
-        return "آیتم مورد نظر یافت نشد.";
+        return "The requested item was not found.";
       } else if (statusCode == 500) {
-        return "خطای سرور! لطفاً بعداً تلاش کنید.";
+        return "Server error! Please try again later.";
       } else {
         return errorMessage;
       }
     }
     switch (error.type) {
       case DioExceptionType.connectionTimeout:
-        return "اتصال به سرور برقرار نشد.";
+        return "Failed to connect to the server.";
       case DioExceptionType.sendTimeout:
-        return "ارسال اطلاعات زمان‌بر شد.";
+        return "Sending data took too long.";
       case DioExceptionType.receiveTimeout:
-        return "دریافت اطلاعات زمان‌بر شد.";
+        return "Receiving data took too long.";
       case DioExceptionType.cancel:
-        return "درخواست لغو شد.";
+        return "The request was canceled.";
       case DioExceptionType.unknown:
       default:
-        return "خطای نامشخص رخ داد.";
+        return "An unknown error occurred.";
     }
   }
+
 }

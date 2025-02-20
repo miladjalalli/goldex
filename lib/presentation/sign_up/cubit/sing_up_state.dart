@@ -11,23 +11,22 @@ abstract class SingUpState extends Equatable {
   List<Object> get props => [];
 }
 
-class SingUpInitial extends SingUpState {
-}
+class SingUpInitial extends SingUpState {}
 
 class SelectedValue extends SingUpState {}
 
+class Register extends SingUpState {}
 
-class SingUpLoading extends SingUpState {}
+class RegisterLoading extends Register {}
 
-class SingUpSuccess extends SingUpState {
-  final Response response;
-  SingUpSuccess(this.response);
+class RegisterSuccess extends Register {
+  final RegisterResponseData response;
 
+  RegisterSuccess(this.response);
 }
 
-class SingUpError extends SingUpState {
+class RegisterError extends Register {
   final String message;
-  SingUpError(this.message);
 
+  RegisterError(this.message);
 }
-

@@ -45,7 +45,7 @@ dependencies:
   badges:
   country_codes:
   otp_text_field:
-
+  flutter_spinkit: ^5.2.1
 
 dev_dependencies:
   flutter_test:

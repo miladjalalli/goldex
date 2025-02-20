@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:goldex/core/app_localizations.dart';
+import 'package:goldex/domain/entity/response/register_response.dart';
 import 'package:goldex/domain/repository/api_repository.dart';
 
 part 'sing_up_state.dart';
@@ -11,13 +14,21 @@ class SingUpCubit extends Cubit<SingUpState> {
 
   ApiRepository apiRepository;
 
-  int currentIndex = 0;
+  //step 1
+  GlobalKey<FormState> enterNumberForm = GlobalKey<FormState>();
+  List<String> countryCodes = ['+1', '+44', '+49', '+91', '+98', '+33', '+61', '+81'];
+  String selectedCountryCode = '+1';
+  TextEditingController numberOrEmailController = TextEditingController();
+  bool numberOrEmailControllerHasError = true;
+  bool tosChecked = false;
   bool otpIsShowing = false;
+  int resendTimerInSecond =  120;
+
+
+  int currentIndex = 0;
   bool isFormValid = false;
 
   final PageController pageController = PageController();
-  List<String> countryCodes = ['+1', '+44', '+49', '+91', '+98', '+33', '+61', '+81'];
-  String selectedCountryCodes = "";
 
   final List<Map<String, String>> items = [
     {'value': 'passport', 'label': 'passport'},
@@ -42,12 +53,17 @@ class SingUpCubit extends Cubit<SingUpState> {
     emit(SelectedValue());
   }
 
+  void showOtpWidget() {
+    otpIsShowing = true;
+    emit(SingUpInitial());
+  }
+
   void goToNextPage() {
     if (currentIndex < 2) {
       currentIndex++;
       pageController.animateToPage(currentIndex, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
     }
-    emit(state);
+    emit(SingUpInitial());
   }
 
   void goToPreviousPage() {
@@ -62,17 +78,56 @@ class SingUpCubit extends Cubit<SingUpState> {
     emit(state);
   }
 
-  Future<void> singUp() async {
-    emit(SingUpLoading());
-    try {
+  changeTosCheckStatus(bool value) {
+    tosChecked = value;
+    emit(SingUpInitial());
+  }
 
-      var data = {
-        "phone":"09365857579",
-      };
-      final response = await apiRepository.register(data);
-      emit(SingUpSuccess(response));
-    } catch (e) {
-      emit(SingUpError(e.toString()));
+  void setTNumberOrEmailControllerHasError(bool value) {
+    numberOrEmailControllerHasError = value;
+    emit(SingUpInitial());
+  }
+
+
+  Future<void> register(BuildContext context) async {
+    // bool isValidate = enterNumberForm.currentState!.validate();
+
+    if (numberOrEmailControllerHasError) {
+      emit(RegisterError(context.translate('EnterAValidEmailOrMobileNumber')));
+      return;
+    } else if (!tosChecked) {
+      emit(RegisterError(context.translate('pleaseAcceptTheTermsOfService')));
+      return;
+    } else {
+      emit(RegisterLoading());
+      try {
+        var data = {
+          "field": "${selectedCountryCode.replaceFirst('+', '')}${numberOrEmailController.text.trim()}",
+        };
+        final res = await apiRepository.register(data);
+        RegisterResponse response = RegisterResponse.fromJson(res.data);
+        if (response.status == "Ok") {
+          resendTimerInSecond = response.data?.codeExpire??120;
+          startCountdown();
+          emit(RegisterSuccess(response.data!));
+        } else {
+          emit(RegisterError(response.error!));
+        }
+      } catch (e) {
+        emit(RegisterError(e.toString()));
+      }
     }
   }
+
+  void startCountdown() {
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      if (resendTimerInSecond > 0) {
+        resendTimerInSecond--;
+        emit(SingUpInitial());
+      } else {
+        timer.cancel(); // متوقف کردن تایمر
+      }
+    });
+  }
+
 }

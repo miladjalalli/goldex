@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 
 class CustomButton extends StatelessWidget {
@@ -10,6 +11,7 @@ class CustomButton extends StatelessWidget {
   final double width;
   final Color borderColor;
   final VoidCallback onPressed;
+  bool isLoading;
   final String? icon;
   final bool isIconEnabled;
 
@@ -23,6 +25,7 @@ class CustomButton extends StatelessWidget {
     required this.width,
     required this.borderColor,
     required this.onPressed,
+    this.isLoading = false,
     this.icon,
     this.isIconEnabled = false,
   }) {
@@ -58,11 +61,16 @@ class CustomButton extends StatelessWidget {
           ),
           child: InkWell(
             borderRadius: const BorderRadius.all(Radius.circular(25.0)),
-            onTap: onPressed,
+            onTap: isLoading?(){}:onPressed,
             splashColor: Theme.of(context).colorScheme.surface.withOpacity(0.3),
             highlightColor: Theme.of(context).colorScheme.surface.withOpacity(0.1),
             child: Center(
-              child: Row(
+              child: isLoading?Center(
+                child: SpinKitThreeBounce(
+                  color: Theme.of(context).colorScheme.primary,
+                  size: height/3,
+                ),
+              ):Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
