@@ -19,14 +19,47 @@ class Register extends SingUpState {}
 
 class RegisterLoading extends Register {}
 
-class RegisterSuccess extends Register {
-  final RegisterResponseData response;
-
-  RegisterSuccess(this.response);
-}
+class RegisterSuccess extends Register {}
 
 class RegisterError extends Register {
   final String message;
 
   RegisterError(this.message);
+}
+
+
+class ConfirmRegister extends SingUpState {}
+
+class ConfirmRegisterLoading extends Register {}
+
+class ConfirmRegisterSuccess extends Register {}
+
+class ConfirmRegisterError extends Register {
+  final String message;
+
+  ConfirmRegisterError(this.message);
+}
+
+class SignUp extends SingUpState {}
+
+class SignUpLoading extends Register {}
+
+class SignUpSuccess extends Register {}
+
+class SignUpError extends Register {
+  final String message;
+
+  SignUpError(this.message);
+}
+
+class SetPassword extends SingUpState {}
+
+class SetPasswordLoading extends Register {}
+
+class SetPasswordSuccess extends Register {}
+
+class SetPasswordError extends Register {
+  final String message;
+
+  SetPasswordError(this.message);
 }

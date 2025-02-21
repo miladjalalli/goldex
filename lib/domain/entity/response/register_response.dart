@@ -1,14 +1,16 @@
 class RegisterResponse {
   String? status;
   String? error;
+  String? message;
   RegisterResponseData? data;
 
-  RegisterResponse({this.status, this.error, this.data});
+  RegisterResponse({this.status, this.error, this.data, this.message});
 
   RegisterResponse.fromJson(Map<String, dynamic> json) {
     status = json['Status'];
     error = json['Error'];
     data = json['Data'] != null ? new RegisterResponseData.fromJson(json['Data']) : null;
+    message = json['Message'];
   }
 
   Map<String, dynamic> toJson() {
@@ -18,6 +20,7 @@ class RegisterResponse {
     if (this.data != null) {
       data['Data'] = this.data!.toJson();
     }
+    data['Message'] = this.message;
     return data;
   }
 }

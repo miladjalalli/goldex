@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:goldex/core/dependency_injection.dart';
 import 'package:goldex/presentation/home/home_screen.dart';
+import 'package:goldex/presentation/splash/cubit/splash_cubit.dart';
 import 'package:goldex/presentation/splash/splash_screen.dart';
 import 'package:goldex/core/theme/theme.dart';
 import 'package:goldex/core/theme/theme_cubit.dart';
@@ -50,7 +51,9 @@ class MyApp extends StatelessWidget {
             themeMode: themeMode == AppThemeMode.light
                 ? ThemeMode.light
                 : ThemeMode.dark,
-            home: SplashScreen(),
+            home: BlocProvider(
+          create: (context) => sl<SplashCubit>()..checkIsLoggedIn(),
+          child:SplashScreen()),
           );
         },
       ),

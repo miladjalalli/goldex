@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:goldex/core/theme/theme.dart';
+import 'package:goldex/presentation/home/home_screen.dart';
+import 'package:goldex/presentation/splash/cubit/splash_cubit.dart';
 import 'dart:async';
 import '../../core/assets.dart';
+import '../../core/dependency_injection.dart';
 import '../login/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -15,71 +19,93 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
-      );
-    });
+
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      body: Stack(
-        children: [
-          // Up
-          Positioned(
-            top: -250,
-            left: -100,
-            child: CustomPaint(
-              size: const Size(250, 250),
-              painter: SemiCircleUpPainter(),
-            ),
-          ),
-          // First Bottom
-          Positioned(
-            bottom: 0,
-            right: 10,
-            child: CustomPaint(
-              size: const Size(250, 250),
-              painter: SemiCircleFirstBottomPainter(),
-            ),
-          ),
-          // Second Bottom
-          Positioned(
-            bottom: 0,
-            right: 90,
-            child: CustomPaint(
-              size: const Size(250, 250),
-              painter: SemiCircleSecondBottomPainter(),
-            ),
-          ),
-          // Logo
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  Asset.logo,
-                  width: 150,
-                  height: 150,
-                ),
-                const SizedBox(height: 20),
-                const Text(
-                  'Goldex App',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w900,
+
+    return  BlocConsumer<SplashCubit, SplashState>(
+          listener: (context, state)  {
+            SplashCubit cubit = context.read<SplashCubit>();
+
+            if(state is SplashLoggedIn){
+              Timer(const Duration(seconds: 3), () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                );
+              });
+            }
+            if(state is SplashDontLoggedIn){
+              Timer(const Duration(seconds: 3), () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
+              });
+            }
+          },
+          builder: (context, state) {
+            SplashCubit cubit = context.read<SplashCubit>();
+            return Scaffold(
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              body: Stack(
+                children: [
+                  // Up
+                  Positioned(
+                    top: -250,
+                    left: -100,
+                    child: CustomPaint(
+                      size: const Size(250, 250),
+                      painter: SemiCircleUpPainter(),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+                  // First Bottom
+                  Positioned(
+                    bottom: 0,
+                    right: 10,
+                    child: CustomPaint(
+                      size: const Size(250, 250),
+                      painter: SemiCircleFirstBottomPainter(),
+                    ),
+                  ),
+                  // Second Bottom
+                  Positioned(
+                    bottom: 0,
+                    right: 90,
+                    child: CustomPaint(
+                      size: const Size(250, 250),
+                      painter: SemiCircleSecondBottomPainter(),
+                    ),
+                  ),
+                  // Logo
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          Asset.logo,
+                          width: 150,
+                          height: 150,
+                        ),
+                        const SizedBox(height: 20),
+                        const Text(
+                          'Goldex App',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+
   }
 }
 

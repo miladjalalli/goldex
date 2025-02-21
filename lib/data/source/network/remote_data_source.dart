@@ -9,9 +9,24 @@ import 'package:goldex/data/client/api_client.dart';
   Future<Response> login(Map<String, dynamic> data) async {
     return await apiClient.postRequest('user/login', data: data);
   }
+
   Future<Response> register(Map<String, dynamic> data) async {
-    return await apiClient.postRequest('user/login', data: data);
+    return await apiClient.postRequest('user/register', data: data);
   }
+
+  Future<Response> confirmRegister(Map<String, dynamic> data) async {
+    return await apiClient.postRequest('user/register/confirm', data: data);
+  }
+
+  Future<Response> signUp(Map<String, dynamic> data) async {
+    return await apiClient.postRequest('user/signup', data: data);
+  }
+
+
+  Future<Response> setPassword(Map<String, dynamic> data) async {
+    return await apiClient.postRequest('user/password', data: data);
+  }
+
   Future<Response> chargeWallet(Map<String, dynamic> data) async {
     return await apiClient.postRequest('wallet/charge-card/', data: data);
   }

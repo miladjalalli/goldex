@@ -8,6 +8,7 @@ import 'package:goldex/domain/repository/secure_storage_service.dart';
 import 'package:goldex/core/assets.dart';
 import 'package:goldex/presentation/home/home_screen.dart';
 import 'package:goldex/presentation/login/cubit/login_cubit.dart';
+import 'package:goldex/presentation/sign_up/cubit/sing_up_cubit.dart';
 import 'package:goldex/presentation/sign_up/sign-up_screen.dart';
 import 'package:goldex/widget/custom_button.dart';
 import 'package:goldex/widget/goldex_text_form_field.dart';
@@ -116,7 +117,7 @@ class LoginScreen extends StatelessWidget {
                                     final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
 
                                     // Regex for a 10-digit mobile number (without country code)
-                                    final mobileRegex = RegExp(r'^\d{10}$');
+                                    final mobileRegex = RegExp(r'^\d{12}$');
 
                                     if (!emailRegex.hasMatch(value) && !mobileRegex.hasMatch(value)) {
                                       cubit.setTNumberOrEmailControllerHasError(true);
@@ -179,10 +180,12 @@ class LoginScreen extends StatelessWidget {
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
                                           Transform.scale(
-                                            scale: 19 / 19,
+                                            scale: 1,
                                             child: Checkbox(
-                                              value: false,
-                                              onChanged: (val) {},
+                                              value: cubit.rememberMe,
+                                              onChanged: (val) {
+                                                cubit.setRememberMe(val!);
+                                              },
                                               shape: RoundedRectangleBorder(
                                                 borderRadius: BorderRadius.circular(5), // Set border radius
                                               ),
@@ -237,19 +240,28 @@ class LoginScreen extends StatelessWidget {
                                     },
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-                                  child: Text(
-                                    context.translate("useYourFingerprint"),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14,
-                                        color: Theme.of(context).colorScheme.onSurface),
+                                InkWell(
+                                  onTap: (){
+                                    cubit.loginWithFingerPrint(context);
+                                  },
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                                        child: Text(
+                                          context.translate("useYourFingerprint"),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 14,
+                                              color: Theme.of(context).colorScheme.onSurface),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                        child: SvgPicture.asset(Asset.fingerPrint),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                                  child: SvgPicture.asset(Asset.fingerPrint),
                                 ),
                               ],
                             ),
@@ -273,7 +285,7 @@ class LoginScreen extends StatelessWidget {
                             onPressed: () {
                               Navigator.push(context, MaterialPageRoute(builder: (context) {
                                 return BlocProvider(
-                                  create: (context) => sl<LoginCubit>(),
+                                  create: (context) => sl<SingUpCubit>(),
                                   child: const SignUpScreen(),
                                 );
                               }));

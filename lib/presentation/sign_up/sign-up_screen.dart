@@ -5,8 +5,9 @@ import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:goldex/core/app_localizations.dart';
 import 'package:goldex/widget/goldex_text_form_field.dart';
 
-import '../../widget/custom_button.dart';
 import '../../core/assets.dart';
+import '../../widget/custom_button.dart';
+import '../home/home_screen.dart';
 import 'cubit/sing_up_cubit.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -30,8 +31,48 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           );
         }
+        if (state is ConfirmRegisterError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+        if (state is SignUpError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+        if (state is SetPasswordError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+
         if (state is RegisterSuccess) {
           cubit.showOtpWidget();
+        }
+
+        if (state is ConfirmRegisterSuccess) {
+          cubit.goToNextPage();
+        }
+
+        if (state is SignUpSuccess) {
+          cubit.goToNextPage();
+        }
+
+        if (state is SetPasswordSuccess) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+          );
         }
       },
       builder: (context, state) {
@@ -61,8 +102,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         physics: NeverScrollableScrollPhysics(),
                         children: [
                           _buildPhoneNumberStep(state),
-                          _buildSignUpStep(),
-                          _buildSetPasswordStep(),
+                          _buildSignUpStep(state),
+                          _buildSetPasswordStep(state),
                         ],
                       ),
                     ),
@@ -273,13 +314,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               keyboardType: TextInputType.number,
                               underlineColor: Colors.transparent,
                               fillColor: Colors.grey[200],
-                              itemSize: 50,
+                              itemSize: 42,
                               cursorColor: Colors.green,
                               fullBorder: true,
                               underlineWidth: 0,
-                              length: 5,
+                              length: 6,
                               onCompleted: (String value) {
-                                setState(() {});
+                                cubit.confirmCodeRecieved(value);
                               },
                               onEditing: (bool value) {
                                 setState(() {});
@@ -300,7 +341,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.fromLTRB(cubit.resendTimerInSecond == 0?10:0, 0, 0, 0),
+                            padding: EdgeInsets.fromLTRB(cubit.resendTimerInSecond == 0 ? 10 : 0, 0, 0, 0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
@@ -398,11 +439,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         textColor: Theme.of(context).colorScheme.surface,
                         height: 50,
                         width: 300,
-                        isLoading: state is RegisterLoading,
+                        isLoading: state is RegisterLoading || state is ConfirmRegisterLoading,
                         borderColor: Theme.of(context).primaryColor,
                         onPressed: () {
                           if (cubit.otpIsShowing) {
-                            cubit.goToNextPage();
+                            cubit.confirmRegister(context);
                           } else {
                             cubit.register(context);
                           }
@@ -440,7 +481,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Widget _buildSignUpStep() {
+  Widget _buildSignUpStep(SingUpState state) {
     SingUpCubit cubit = context.read<SingUpCubit>();
 
     return Padding(
@@ -469,7 +510,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Column(
                     children: [
                       GoldexTextFormField(
+                        controller: cubit.nameController,
                         title: context.translate("firstName"),
+                        onChanged: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            cubit.setNameControllerHasError(true);
+                          }
+                          cubit.setNameControllerHasError(false);
+                        },
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.name,
                       ),
@@ -477,7 +525,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 8,
                       ),
                       GoldexTextFormField(
+                        controller: cubit.familyController,
                         title: context.translate("lastName"),
+                        onChanged: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            cubit.setFamilyControllerHasError(true);
+                          }
+                          cubit.setFamilyControllerHasError(false);
+                        },
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.name,
                       ),
@@ -485,6 +540,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 8,
                       ),
                       GoldexTextFormField(
+                        controller: cubit.invitationCodeController,
                         title: context.translate("invitationCode"),
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.text,
@@ -499,9 +555,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     textColor: Theme.of(context).colorScheme.surface,
                     height: 50,
                     width: 300,
+                    isLoading: state is SignUpLoading,
                     borderColor: Theme.of(context).primaryColor,
                     onPressed: () {
-                      cubit.goToNextPage();
+                      cubit.signUp(context);
                     },
                   )
                 ],
@@ -513,7 +570,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Widget _buildSetPasswordStep() {
+  Widget _buildSetPasswordStep(SingUpState state) {
     SingUpCubit cubit = context.read<SingUpCubit>();
 
     return Padding(
@@ -540,14 +597,94 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Column(
                 children: [
                   GoldexTextFormField(
+                    controller: cubit.passwordController,
                     title: context.translate("password"),
                     keyboardType: TextInputType.visiblePassword,
+                    obscureText: !cubit.showPassword,
                     textInputAction: TextInputAction.next,
+                    onChanged: (value) {
+                      final RegExp _passwordRegex = RegExp(r'^[a-zA-Z0-9_@]{6,10}$');
+
+                     cubit.atLeast8Characters = value.length >= 8;
+                     cubit.upperAndLowerCaseLetters = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])').hasMatch(value);
+                     cubit.numbers = RegExp(r'(?=.*[0-9])').hasMatch(value);
+
+                      if (value.isEmpty) {
+                        cubit.setPasswordControllerHasError(true);
+                      } else if (!_passwordRegex.hasMatch(value)) {
+                        if (value.length < 8) {
+                          cubit.setPasswordControllerHasError(true);
+                        } else if (value.length > 10) {
+                          cubit.setPasswordControllerHasError(true);
+                        } else {
+                          cubit.setPasswordControllerHasError(true);
+                        }
+                      } else {
+                        cubit.setPasswordControllerHasError(false);
+                      }
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0,8,0,8),
+                    child: Row(
+                      children: [
+                        Icon(Icons.check, color: cubit.atLeast8Characters?Colors.green:Theme.of(context).colorScheme.tertiary.withOpacity(0.3),size: 16,),
+                        SizedBox(width: 2,),
+                        Text(
+                          context.translate('atLeast8Characters'),
+                          textAlign: TextAlign.justify,
+                          textDirection: TextDirection.ltr,
+                          style: TextStyle(
+                              fontSize: 12,  color: cubit.atLeast8Characters?Colors.green:Theme.of(context).colorScheme.tertiary.withOpacity(0.3)),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0,8,0,8),
+                    child: Row(
+                      children: [
+                        Icon(Icons.check, color: cubit.upperAndLowerCaseLetters?Colors.green:Theme.of(context).colorScheme.tertiary.withOpacity(0.3),size: 16,),
+                        SizedBox(width: 2,),
+                        Text(
+                          context.translate('upperAndLowerCaseLetters'),
+                          textAlign: TextAlign.justify,
+                          textDirection: TextDirection.ltr,
+                          style: TextStyle(
+                              fontSize: 12,  color: cubit.upperAndLowerCaseLetters?Colors.green:Theme.of(context).colorScheme.tertiary.withOpacity(0.3)),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0,8,0,8),
+                    child: Row(
+                      children: [
+                        Icon(Icons.check, color: cubit.numbers?Colors.green:Theme.of(context).colorScheme.tertiary.withOpacity(0.3),size: 16,),
+                        SizedBox(width: 2,),
+                        Text(
+                          context.translate('numbers'),
+                          textAlign: TextAlign.justify,
+                          textDirection: TextDirection.ltr,
+                          style: TextStyle(
+                              fontSize: 12,  color: cubit.numbers?Colors.green:Theme.of(context).colorScheme.tertiary.withOpacity(0.3)),
+                        ),
+                      ],
+                    ),
                   ),
                   GoldexTextFormField(
+                    controller: cubit.passwordConfirmController,
                     title: context.translate("repeatPassword"),
                     keyboardType: TextInputType.visiblePassword,
+                    obscureText: !cubit.showPassword,
                     textInputAction: TextInputAction.done,
+                    onChanged: (value) {
+                      if (value != cubit.passwordController.text.trim()) {
+                        cubit.setPasswordConfirmControllerHasError(true);
+                      } else {
+                        cubit.setPasswordConfirmControllerHasError(false);
+                      }
+                    },
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 11),
@@ -556,8 +693,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Transform.scale(
                           scale: 19 / 19,
                           child: Checkbox(
-                            value: false,
-                            onChanged: (val) {},
+                            value: cubit.showPassword,
+                            onChanged: (val) {
+                              cubit.showHidePassword();
+                            },
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5),
                             ),
@@ -592,7 +731,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     width: 300,
                     borderColor: Theme.of(context).primaryColor,
                     onPressed: () {
-                      cubit.goToPreviousPage();
+                      cubit.setPassword(context);
                     },
                   )
                 ],

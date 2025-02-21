@@ -6,6 +6,12 @@ abstract class ApiRepository {
 
   Future<Response> register(Map<String, dynamic> data);
 
+  Future<Response> confirmRegister(Map<String, dynamic> data);
+
+  Future<Response> signUp(Map<String, dynamic> data);
+
+  Future<Response> setPassword(Map<String, dynamic> data);
+
   Future<Response> chargeWallet(Map<String, dynamic> data);
 
   Future<Response> buyGoldByWeight(Map<String, dynamic> data);

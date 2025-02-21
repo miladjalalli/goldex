@@ -1,14 +1,16 @@
 class LoginResponse {
   String? status;
   String? error;
+  String? message;
   LoginResponseData? data;
 
-  LoginResponse({this.status, this.error, this.data});
+  LoginResponse({this.status, this.error, this.data, this.message});
 
   LoginResponse.fromJson(Map<String, dynamic> json) {
     status = json['Status'];
     error = json['Error'];
     data = json['Data'] != null ? new LoginResponseData.fromJson(json['Data']) : null;
+    message = json['Message'];
   }
 
   Map<String, dynamic> toJson() {
@@ -18,6 +20,7 @@ class LoginResponse {
     if (this.data != null) {
       data['Data'] = this.data!.toJson();
     }
+    data['Message']= this.message ;
     return data;
   }
 }

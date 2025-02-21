@@ -72,7 +72,7 @@ class ApiClient {
   String _handleError(DioException error) {
     if (error.response != null) {
       final statusCode = error.response?.statusCode;
-      final errorMessage = error.response?.data["Message"] ?? "Unknown error";
+      final errorMessage = error.response?.data["Message"] ??error.response?.data["message"]?? "Unknown error";
 
       if (errorMessage != null) {
         return errorMessage;

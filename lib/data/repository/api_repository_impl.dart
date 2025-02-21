@@ -14,6 +14,15 @@ class ApiRepositoryImpl extends ApiRepository {
   Future<Response> register(Map<String, dynamic> data) => remoteDataSource.register(data);
 
   @override
+  Future<Response> confirmRegister(Map<String, dynamic> data) => remoteDataSource.confirmRegister(data);
+
+  @override
+  Future<Response> signUp(Map<String, dynamic> data) => remoteDataSource.signUp(data);
+
+  @override
+  Future<Response> setPassword(Map<String, dynamic> data) => remoteDataSource.setPassword(data);
+
+  @override
   Future<Response> chargeWallet(Map<String, dynamic> data) => remoteDataSource.chargeWallet(data);
 
   @override
