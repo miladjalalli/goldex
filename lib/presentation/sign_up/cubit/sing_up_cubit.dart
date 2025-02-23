@@ -179,6 +179,8 @@ class SingUpCubit extends Cubit<SingUpState> {
         LoginResponse response = LoginResponse.fromJson(res.data);
         if (response.status == "Ok") {
           await secureStorageService.writeToken(response.data!.token!);
+          await secureStorageService.writeName(response.data!.user!.name);
+          await secureStorageService.writeFamily(response.data!.user!.lastname);
           emit(ConfirmRegisterSuccess());
         } else {
           emit(ConfirmRegisterError(response.message!));

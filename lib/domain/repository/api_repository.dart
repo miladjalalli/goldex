@@ -29,4 +29,8 @@ abstract class ApiRepository {
   Future<Response> transferGold(Map<String, dynamic> data);
 
   Future<Response> transferCurrency(Map<String, dynamic> data);
+
+  Future<Response> goldCalc(Map<String, dynamic> data);
+
+  Future<Response> livePrice();
 }

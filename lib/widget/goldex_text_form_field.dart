@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class GoldexTextFormField extends StatelessWidget {
   final String? title;
@@ -10,9 +11,11 @@ class GoldexTextFormField extends StatelessWidget {
   final bool? obscureText;
   final int? maxLines;
   final TextStyle? style;
+  final Widget? suffix;
   final Widget? suffixIcon;
   final FormFieldValidator<String>? validator;
   final ValueChanged<String>? onChanged;
+  final bool isLoading;
 
   const GoldexTextFormField({
     Key? key,
@@ -25,9 +28,11 @@ class GoldexTextFormField extends StatelessWidget {
     this.obscureText,
     this.maxLines,
     this.style,
+    this.suffix,
     this.suffixIcon,
     this.validator,
     this.onChanged,
+    this.isLoading = false,
   }) : super(key: key);
 
   @override
@@ -53,6 +58,7 @@ class GoldexTextFormField extends StatelessWidget {
             keyboardType: keyboardType,
             textInputAction: textInputAction,
             obscureText: obscureText ?? false,
+            cursorColor: Theme.of(context).primaryColor,
             maxLines: maxLines ?? 1,
             style: style ?? TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: Theme.of(context).colorScheme.onSurface),
             validator: validator,
@@ -60,6 +66,10 @@ class GoldexTextFormField extends StatelessWidget {
             decoration: InputDecoration(
               hintText: hintText,
               labelText: labelText,
+              suffix: isLoading ? SpinKitThreeBounce(
+                color: Theme.of(context).primaryColor,
+                size: 20,
+              ) : suffix,
               suffixIcon: suffixIcon,
               contentPadding: EdgeInsets.fromLTRB(16, 0, 16, 16),
               border: OutlineInputBorder(
@@ -68,11 +78,11 @@ class GoldexTextFormField extends StatelessWidget {
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(25),
-                borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary, width: 1),
+                borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary.withAlpha(95), width: 1),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(25),
-                borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary.withAlpha(95), width: 1),
+                borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary, width: 1),
               ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(25),

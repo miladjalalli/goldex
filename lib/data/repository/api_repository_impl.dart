@@ -48,4 +48,10 @@ class ApiRepositoryImpl extends ApiRepository {
 
   @override
   Future<Response> transferCurrency(Map<String, dynamic> data) => remoteDataSource.transferCurrency(data);
+
+  @override
+  Future<Response> goldCalc(Map<String, dynamic> data) => remoteDataSource.goldCalc(data);
+
+  @override
+  Future<Response> livePrice() => remoteDataSource.livePrice();
 }

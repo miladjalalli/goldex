@@ -62,4 +62,12 @@ import 'package:goldex/data/client/api_client.dart';
   Future<Response> transferCurrency(Map<String, dynamic> data) async {
     return await apiClient.postRequest('transfer-currency/', data: data);
   }
+
+  Future<Response> goldCalc(Map<String, dynamic> data) async {
+    return await apiClient.postRequest('gold-calc/', data: data);
   }
+
+  Future<Response> livePrice() async {
+    return await apiClient.getRequest('live-price-18k/');
+  }
+}
