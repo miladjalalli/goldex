@@ -51,10 +51,23 @@ class LoginScreen extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage(Asset.login),
+                          image: AssetImage(Asset.background),
                           fit: BoxFit.cover,
                         ),
                       ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 44.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          Asset.goldexLogo,
+                          width: 93,
+                          height: 73,
+                        ),
+                      ],
                     ),
                   ),
                   Align(

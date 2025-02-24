@@ -12,7 +12,7 @@ part 'login_state.dart';
 class LoginCubit extends Cubit<LoginState> {
   ApiRepository apiRepository;
   SecureStorageService secureStorageService;
-  LocalAuthentication _auth = LocalAuthentication();
+  final LocalAuthentication _auth = LocalAuthentication();
 
   LoginCubit({required this.apiRepository, required this.secureStorageService}) : super(LoginInitial());
 
@@ -45,6 +45,13 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   loginWithFingerPrint(BuildContext context) async {
+    bool canAuthenticate = await _auth.canCheckBiometrics;
+    bool isDeviceSupported = await _auth.isDeviceSupported();
+
+    if (!canAuthenticate || !isDeviceSupported) {
+      emit(LoginError(context.translate('yourDeviceDoesNotSupportFingerprintLogin')));
+      return;
+    }
     try {
       bool authenticated = await _auth.authenticate(localizedReason: 'Touch your finger on the sensor to login');
 
@@ -78,6 +85,8 @@ class LoginCubit extends Cubit<LoginState> {
         LoginResponse response = LoginResponse.fromJson(res.data);
         if (response.status == "Ok") {
           await secureStorageService.writeToken(response.data!.token!);
+          await secureStorageService.writeName(response.data!.user!.name);
+          await secureStorageService.writeFamily(response.data!.user!.lastname);
           await secureStorageService.writeMobile(numberOrEmailController.text.trim());
           await secureStorageService.writePassword(passwordController.text.trim());
           emit(LoginSuccess());

@@ -4,3 +4,6 @@ part of 'profile_cubit.dart';
 abstract class ProfileState {}
 
 class ProfileInitial extends ProfileState {}
+
+class UpdateUserData extends ProfileState{}
+class LogoutUserData extends ProfileState{}

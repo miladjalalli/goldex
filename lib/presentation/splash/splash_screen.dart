@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goldex/core/theme/theme.dart';
 import 'package:goldex/presentation/home/home_screen.dart';
 import 'package:goldex/presentation/splash/cubit/splash_cubit.dart';
@@ -52,52 +53,10 @@ class _SplashScreenState extends State<SplashScreen> {
               backgroundColor: Theme.of(context).colorScheme.surface,
               body: Stack(
                 children: [
-                  // Up
-                  Positioned(
-                    top: -250,
-                    left: -100,
-                    child: CustomPaint(
-                      size: const Size(250, 250),
-                      painter: SemiCircleUpPainter(),
-                    ),
-                  ),
-                  // First Bottom
-                  Positioned(
-                    bottom: 0,
-                    right: 10,
-                    child: CustomPaint(
-                      size: const Size(250, 250),
-                      painter: SemiCircleFirstBottomPainter(),
-                    ),
-                  ),
-                  // Second Bottom
-                  Positioned(
-                    bottom: 0,
-                    right: 90,
-                    child: CustomPaint(
-                      size: const Size(250, 250),
-                      painter: SemiCircleSecondBottomPainter(),
-                    ),
-                  ),
-                  // Logo
-                  Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          Asset.logo,
-                          width: 150,
-                          height: 150,
-                        ),
-                        const SizedBox(height: 20),
-                        const Text(
-                          'Goldex App',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w900,
-                          ),
-                        ),
-                      ],
+                  Positioned.fill(
+                    child: SvgPicture.asset(
+                      Asset.splash, // مسیر فایل SVG شما
+                      fit: BoxFit.cover, // یا BoxFit.fill بسته به نیاز شما
                     ),
                   ),
                 ],

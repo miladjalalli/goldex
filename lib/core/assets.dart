@@ -17,7 +17,6 @@ class Asset {
   static const String genericAvatar = '$_img/generic-avatar.png';
   static const String giftCard = '$_img/gift-card.png';
   static const String headerLogo = '$_img/header-logo.png';
-  static const String logo = '$_img/logo.png';
   static const String person = '$_img/person.png';
   static const String sellingGold = '$_img/selling-gold.png';
   static const String background = '$_img/background.png';
@@ -53,6 +52,9 @@ class Asset {
   static const String trailingUp = '$_icons/trailingUp.svg';
   static const String barcode = '$_icons/barcode.svg';
   static const String scan = '$_icons/scan.svg';
+  static const String logo = '$_icons/logo.svg';
+  static const String splash = '$_icons/splash.svg';
+  static const String goldexLogo = '$_icons/goldex-logo.svg';
 
   static const String applePay = '$_iconsPay/apple-pay.svg';
   static const String googlePay = '$_iconsPay/google-pay.svg';
