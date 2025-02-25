@@ -54,4 +54,10 @@ class ApiRepositoryImpl extends ApiRepository {
 
   @override
   Future<Response> livePrice() => remoteDataSource.livePrice();
+
+  @override
+  Future<Response> goldBalance() => remoteDataSource.goldBalance();
+
+  @override
+  Future<Response> currencyBalance() => remoteDataSource.currencyBalance();
 }

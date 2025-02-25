@@ -76,12 +76,12 @@ class _BuyScreenState extends State<BuyScreen> {
                           children: [
                             TextSpan(text: '${context.translate('liveGoldPrice')}  '),
                             TextSpan(
-                              text: (cubit.livePrice18kResponse?.pricePerGram18K ?? 0).toString() ?? '---',
+                              text: (cubit.livePrice18kResponse?.data?.pricePerGram18k ?? 0).toString() ?? '---',
                               style: TextStyle(color: colorGold, fontSize: 34, fontWeight: FontWeight.w800),
                             ),
                             TextSpan(
                               // text: '  ${context.translate('perGram')}',
-                              text: '  ${(cubit.livePrice18kResponse?.unit ?? context.translate('perGram'))}',
+                              text: '  ${(cubit.livePrice18kResponse?.data?.unit ?? context.translate('perGram'))}',
                               style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w600,

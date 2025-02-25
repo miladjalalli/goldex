@@ -7,6 +7,7 @@ import 'package:goldex/core/app_localizations.dart';
 import 'package:goldex/presentation/sell/sell_screen.dart';
 import 'package:goldex/core/theme/theme.dart';
 import '../core/assets.dart';
+import '../core/dependency_injection.dart';
 import '../presentation/buy/buy_screen.dart';
 import '../presentation/transfer/cubit/transfer_cubit.dart';
 import '../presentation/transfer/transfer_screen.dart';
@@ -114,7 +115,7 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => BlocProvider(
-                                              create: (context) => TransferCubit(),
+                                              create: (context) => sl<TransferCubit>()..getGoldBalance()..getCurrencyBalance(),
                                               child: TransferScreen(),
                                             )),
                                   );

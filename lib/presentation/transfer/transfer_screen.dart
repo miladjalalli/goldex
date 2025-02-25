@@ -82,6 +82,7 @@ class _TransferScreenState extends State<TransferScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           DropdownButtonFormField<String>(
+                            value: cubit.selectedItem,
                             items: cubit.items.map((item) {
                               return DropdownMenuItem(
                                 value: item['value'],
@@ -138,7 +139,7 @@ class _TransferScreenState extends State<TransferScreen> {
                             child: TextField(
                               textAlign: TextAlign.left,
                               textAlignVertical: TextAlignVertical.center,
-                              controller: cubit.cardNumberController,
+                              controller: cubit.cardOrMobileNumberController,
                               keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
                               inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))],
                               decoration: InputDecoration(
@@ -191,7 +192,7 @@ class _TransferScreenState extends State<TransferScreen> {
                                 filled: true,
                                 fillColor: Theme.of(context).colorScheme.surface,
                                 suffix: Text(
-                                  cubit.suffix1,
+                                  cubit.selectedSuffix,
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,

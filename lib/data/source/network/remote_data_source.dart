@@ -70,4 +70,12 @@ import 'package:goldex/data/client/api_client.dart';
   Future<Response> livePrice() async {
     return await apiClient.getRequest('live-price-18k/');
   }
+
+  Future<Response> goldBalance() async {
+    return await apiClient.getRequest('gold-balance/');
+  }
+
+  Future<Response> currencyBalance() async {
+    return await apiClient.getRequest('currency-balance/');
+  }
 }

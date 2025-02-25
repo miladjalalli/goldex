@@ -9,6 +9,7 @@ import 'package:goldex/domain/repository/secure_storage_service.dart';
 import 'package:goldex/presentation/login/cubit/login_cubit.dart';
 import 'package:goldex/presentation/sign_up/cubit/sing_up_cubit.dart';
 import 'package:goldex/presentation/splash/cubit/splash_cubit.dart';
+import 'package:goldex/presentation/transfer/cubit/transfer_cubit.dart';
 
 import '../presentation/buy/cubit/buy_cubit.dart';
 import '../presentation/profile/cubit/profile_cubit.dart';
@@ -41,5 +42,6 @@ void init() {
   sl.registerFactory(() => SingUpCubit(apiRepository: sl(),secureStorageService: sl()));
   sl.registerFactory(() => BuyCubit(apiRepository: sl(),secureStorageService: sl()));
   sl.registerFactory(() => TransactionCubit(apiRepository: sl(),secureStorageService: sl()));
+  sl.registerFactory(() => TransferCubit(apiRepository: sl()));
   sl.registerFactory(() => ProfileCubit(apiRepository: sl(),secureStorageService: sl()));
 }

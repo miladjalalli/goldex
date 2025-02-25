@@ -1,17 +1,23 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:meta/meta.dart';
+import 'package:goldex/domain/entity/response/currency_balance_response.dart';
+import 'package:goldex/domain/entity/response/gold_balance_response.dart';
+import 'package:goldex/domain/repository/api_repository.dart';
 
 import '../../../core/assets.dart';
 
 part 'transfer_state.dart';
 
 class TransferCubit extends Cubit<TransferState> {
-  TransferCubit() : super(TransferInitial());
+  TransferCubit({required this.apiRepository}) : super(TransferInitial());
 
-  TextEditingController cardNumberController = TextEditingController();
-  TextEditingController amountController = TextEditingController(text: '250');
-  String suffix1 = '';
+  ApiRepository apiRepository;
+  TextEditingController cardOrMobileNumberController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
+  String selectedItem = 'Gold';
+  String selectedSuffix = '';
+  double? goldBalanceMg;
+  double? currencyBalanceUSD;
 
   final List<Map<String, String>> items = [
     {'value': 'Gold', 'icon': Asset.gold, 'label': 'gold', 'suffix': 'gram'},
@@ -19,12 +25,51 @@ class TransferCubit extends Cubit<TransferState> {
   ];
 
   void selectValue(String value, String Function(String) translate) {
+    selectedItem = value;
     if (value == 'Gold') {
-      suffix1 = translate('gram');
+      selectedSuffix = translate('gram');
+      getGoldBalance();
     }
     if (value == 'Dollar') {
-      suffix1 = translate('USD');
+      selectedSuffix = translate('USD');
+      getCurrencyBalance();
     }
-    emit(SelectedValue(suffix1));
+    emit(SelectedValue(selectedSuffix));
+  }
+
+  //gold-balance
+
+  Future<void> getGoldBalance() async {
+    emit(GoldBalanceLoading());
+    try {
+      final res = await apiRepository.goldBalance();
+      GoldBalanceResponse response = GoldBalanceResponse.fromJson(res.data);
+      if (res.statusCode == 200) {
+        goldBalanceMg = response.data!.goldBalanceMg;
+        amountController.text = ((goldBalanceMg??0)/1000).toString();
+        emit(GoldBalanceLoaded());
+      } else {
+        emit(GoldBalanceError('Error on get your balance'));
+      }
+    } catch (e) {
+      emit(GoldBalanceError(e.toString()));
+    }
+  }
+
+  Future<void> getCurrencyBalance() async {
+    emit(GoldBalanceLoading());
+    try {
+      final res = await apiRepository.currencyBalance();
+      CurrencyBalanceResponse response = CurrencyBalanceResponse.fromJson(res.data);
+      if (res.statusCode == 200) {
+        currencyBalanceUSD = response.data!.currencyBalance;
+        amountController.text = ((goldBalanceMg??0)/1000).toString();
+        emit(GoldBalanceLoaded());
+      } else {
+        emit(GoldBalanceError('Error on get your balance'));
+      }
+    } catch (e) {
+      emit(GoldBalanceError(e.toString()));
+    }
   }
 }

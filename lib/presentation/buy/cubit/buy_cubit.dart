@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:goldex/core/app_localizations.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:meta/meta.dart';
 
 import '../../../domain/entity/response/get_calc_response.dart';
 import '../../../domain/entity/response/live_price_18k_response.dart';
@@ -66,17 +65,14 @@ class BuyCubit extends Cubit<BuyState> {
     } else {
       emit(ConfirmLoading());
       try {
-          Map<String, dynamic> data;
-          weightController.text.isNotEmpty ?
-          data = {
-            "weight_in_mg": weightController.text
-          } :
-          data = {
-            "fiat_amount": weightController.text
-          };
+        Map<String, dynamic> data;
+        weightController.text.isNotEmpty
+            ? data = {"weight_in_mg": weightController.text}
+            : data = {"fiat_amount": weightController.text};
 
-        final res = weightController.text.isNotEmpty ? await apiRepository.buyGoldByWeight(data) :
-          await apiRepository.buyGoldByAmount(data);
+        final res = weightController.text.isNotEmpty
+            ? await apiRepository.buyGoldByWeight(data)
+            : await apiRepository.buyGoldByAmount(data);
         // SignUpResponse response = SignUpResponse.fromJson(res.data);
         if (res.statusCode == 200) {
           emit(ConfirmSuccess());
@@ -90,32 +86,32 @@ class BuyCubit extends Cubit<BuyState> {
   }
 
   Future<void> _goldCalc(double usdAmount, double goldWeight) async {
-      emit(GoldCalcLoading());
-      try {
-        var data = {
-          "gold_weight_mg": goldWeight,
-          "fiat_amount": usdAmount,
-        };
-        final res = await apiRepository.goldCalc(data);
-        GetCalcResponse response = GetCalcResponse.fromJson(res.data);
-        if (res.statusCode == 200) {
-          if (usdAmount != 0) {
-            weightController.removeListener(_onWeightTextChanged);
-            weightController.text = response.estimatedGoldGrams.toString();
-            weightController.addListener(_onWeightTextChanged);
-          } else {
-            usdController.removeListener(_onUsdTextChanged);
-            usdController.text = response.totalCostUsd.toString();
-            usdController.addListener(_onUsdTextChanged);
-          }
-
-          emit(GoldCalcSuccess());
+    emit(GoldCalcLoading());
+    try {
+      var data = {
+        "gold_weight_mg": goldWeight,
+        "fiat_amount": usdAmount,
+      };
+      final res = await apiRepository.goldCalc(data);
+      GetCalcResponse response = GetCalcResponse.fromJson(res.data);
+      if (res.statusCode == 200) {
+        if (usdAmount != 0) {
+          weightController.removeListener(_onWeightTextChanged);
+          weightController.text = response.data!.estimatedGoldGrams.toString();
+          weightController.addListener(_onWeightTextChanged);
         } else {
-          emit(GoldCalcError('Error on get calc'));
+          usdController.removeListener(_onUsdTextChanged);
+          usdController.text = response.data!.totalCostUsd.toString();
+          usdController.addListener(_onUsdTextChanged);
         }
-      } catch (e) {
-        emit(GoldCalcError(e.toString()));
+
+        emit(GoldCalcSuccess());
+      } else {
+        emit(GoldCalcError('Error on get calc'));
       }
+    } catch (e) {
+      emit(GoldCalcError(e.toString()));
+    }
   }
 
   Future<void> livePrice18K() async {
