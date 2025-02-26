@@ -27,3 +27,7 @@ class LivePriceError extends BuyState {
   final String message;
   LivePriceError(this.message);
 }
+
+//---- get name and family
+class UpdateUserDataLoading extends BuyState{}
+class UpdateUserDataSuccess extends BuyState{}

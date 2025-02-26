@@ -20,10 +20,16 @@ class BuyCubit extends Cubit<BuyState> {
     weightController.addListener(_onWeightTextChanged);
   }
 
+  String? name;
+  String? family;
+
   String suffix1 = 'USD';
   String suffix2 = 'Gram';
   double? previousUsdValue;
   double? previousWeightValue;
+  bool isWeightControllerSelecter = false;
+  bool isUSDControllerSelected = false;
+
   LivePrice18KResponse? livePrice18kResponse;
 
   final TextEditingController usdController = TextEditingController();
@@ -47,30 +53,34 @@ class BuyCubit extends Cubit<BuyState> {
 
   void setUsdControllerHasError(bool value) {
     usdControllerHasError = value;
+    isWeightControllerSelecter = false;
+    isUSDControllerSelected = true;
     emit(BuyInitial());
   }
 
   void setWeightControllerHasError(bool value) {
     weightControllerHasError = value;
+    isUSDControllerSelected = false;
+    isWeightControllerSelecter = true;
     emit(BuyInitial());
   }
 
   Future<void> confirm(BuildContext context) async {
-    if (usdControllerHasError) {
-      emit(ConfirmError(context.translate('EnterYourFirstName')));
+    if (usdControllerHasError && isUSDControllerSelected) {
+      emit(ConfirmError(context.translate('EnterUSD')));
       return;
-    } else if (weightControllerHasError) {
-      emit(ConfirmError(context.translate('EnterYourLastName')));
+    } else if (weightControllerHasError && isWeightControllerSelecter) {
+      emit(ConfirmError(context.translate('EnterWeight')));
       return;
     } else {
       emit(ConfirmLoading());
       try {
         Map<String, dynamic> data;
-        weightController.text.isNotEmpty
+        isWeightControllerSelecter
             ? data = {"weight_in_mg": weightController.text}
-            : data = {"fiat_amount": weightController.text};
+            : data = {"fiat_amount": usdController.text};
 
-        final res = weightController.text.isNotEmpty
+        final res = isWeightControllerSelecter
             ? await apiRepository.buyGoldByWeight(data)
             : await apiRepository.buyGoldByAmount(data);
         // SignUpResponse response = SignUpResponse.fromJson(res.data);
@@ -128,6 +138,13 @@ class BuyCubit extends Cubit<BuyState> {
     } catch (e) {
       emit(LivePriceError(e.toString()));
     }
+  }
+
+  Future<void> loadUserData() async {
+    emit(UpdateUserDataLoading());
+    name = await secureStorageService.readName();
+    family = await secureStorageService.readFamily();
+    emit(UpdateUserDataSuccess());
   }
 
   @override

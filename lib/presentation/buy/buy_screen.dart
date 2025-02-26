@@ -24,9 +24,14 @@ class _BuyScreenState extends State<BuyScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<BuyCubit>()..livePrice18K(),
+      create: (context) => sl<BuyCubit>()..livePrice18K()..loadUserData(),
       child: BlocConsumer<BuyCubit, BuyState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          BuyCubit cubit = context.read<BuyCubit>();
+          if (state is UpdateUserDataSuccess) {
+            cubit.livePrice18K();
+          }
+        },
         builder: (context, state) {
           BuyCubit cubit = context.read<BuyCubit>();
           return Scaffold(
@@ -61,7 +66,13 @@ class _BuyScreenState extends State<BuyScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CardWidget(name: 'Scott Williams', balance: '\$1430.5', cardNumber: '2020-1821-1530-2401', goldAmount: '123.4 ', type: context.translate('gr'), onDeposit: () => {}),
+                  CardWidget(
+                      name: '${cubit.name} ${cubit.family}',
+                      balance: '\$1430.5',
+                      cardNumber: '2020-1821-1530-2401',
+                      goldAmount: '123.4 ',
+                      type: context.translate('gr'),
+                      onDeposit: () => {}),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
                     child: Center(
@@ -123,7 +134,6 @@ class _BuyScreenState extends State<BuyScreen> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              isLoading: state is GoldCalcLoading,
                               controller: cubit.usdController,
                               title: context.translate("iWantToSpend"),
                               onChanged: (value) {
@@ -151,7 +161,6 @@ class _BuyScreenState extends State<BuyScreen> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              isLoading: state is GoldCalcLoading,
                               title: context.translate("iWillReceive"),
                               onChanged: (value) {
                                 if (value == null || value.trim().isEmpty) {
@@ -168,7 +177,9 @@ class _BuyScreenState extends State<BuyScreen> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
                                     child: Text(
                                       context.translate('cancel'),
                                       style: TextStyle(fontSize: 14, color: Colors.grey),
@@ -184,29 +195,29 @@ class _BuyScreenState extends State<BuyScreen> {
                                     width: 121,
                                     borderColor: Theme.of(context).primaryColor,
                                     onPressed: () {
-
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => OrderSummaryScreen(
-                                                  title: 'Order Summary',
-                                                  totalAmount: '102.68',
-                                                  totalAmountType: '\$',
-                                                  firstText: 'Live Gold price per gram',
-                                                  firstTextAmount: "68.21",
-                                                  firstTextAmountType: '\$',
-                                                  secondText: 'Total Gold receive',
-                                                  secondTextAmount: '1.5',
-                                                  secondTextAmountType: 'gr',
-                                                  thirdText: 'Net Gold price',
-                                                  thirdTextAmount: '102',
-                                                  thirdTextAmountType: '\$',
-                                                  forthText: 'Fee',
-                                                  forthPercent: '1',
-                                                  forthTextAmount: '0.68',
-                                                  forthTextAmountType: '\$',
-                                                )),
-                                      );
+                                      cubit.confirm(context);
+                                      // Navigator.push(
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //       builder: (context) => OrderSummaryScreen(
+                                      //             title: 'Order Summary',
+                                      //             totalAmount: '102.68',
+                                      //             totalAmountType: '\$',
+                                      //             firstText: 'Live Gold price per gram',
+                                      //             firstTextAmount: "68.21",
+                                      //             firstTextAmountType: '\$',
+                                      //             secondText: 'Total Gold receive',
+                                      //             secondTextAmount: '1.5',
+                                      //             secondTextAmountType: 'gr',
+                                      //             thirdText: 'Net Gold price',
+                                      //             thirdTextAmount: '102',
+                                      //             thirdTextAmountType: '\$',
+                                      //             forthText: 'Fee',
+                                      //             forthPercent: '1',
+                                      //             forthTextAmount: '0.68',
+                                      //             forthTextAmountType: '\$',
+                                      //           )),
+                                      // );
                                     },
                                   )
                                 ],

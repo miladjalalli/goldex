@@ -66,9 +66,12 @@ class GoldexTextFormField extends StatelessWidget {
             decoration: InputDecoration(
               hintText: hintText,
               labelText: labelText,
-              suffix: isLoading ? SpinKitThreeBounce(
-                color: Theme.of(context).primaryColor,
-                size: 20,
+              suffix: isLoading ? Padding(
+                padding: EdgeInsets.only(top: 15.0),
+                child: SpinKitThreeBounce(
+                  color: Theme.of(context).primaryColor,
+                  size: 20,
+                ),
               ) : suffix,
               suffixIcon: suffixIcon,
               contentPadding: EdgeInsets.fromLTRB(16, 0, 16, 16),
