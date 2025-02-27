@@ -25,7 +25,7 @@ class BuyCubit extends Cubit<BuyState> {
   String? family;
 
   String suffix1 = 'USD';
-  String suffix2 = 'Gram';
+  String suffix2 = 'MilliGram';
   double? previousUsdValue;
   double? previousWeightValue;
   bool isWeightControllerSelected = false;
@@ -41,14 +41,16 @@ class BuyCubit extends Cubit<BuyState> {
   bool weightControllerHasError = true;
 
   void _onUsdTextChanged() {
-    if (usdController.text.isNotEmpty && (double.parse(usdController.text) != previousUsdValue)) {
+    if (usdController.text.isNotEmpty && (double.parse(usdController.text) != previousUsdValue) && (double.parse(usdController.text)>0)) {
+      weightController.text = '';
       previousUsdValue = double.parse(usdController.text);
       _goldCalc(double.parse(usdController.text), 0);
     }
   }
 
   void _onWeightTextChanged() {
-    if (weightController.text.isNotEmpty && (double.parse(weightController.text) != previousWeightValue)) {
+    if (weightController.text.isNotEmpty && (double.parse(weightController.text) != previousWeightValue) && double.parse(weightController.text)>0) {
+      usdController.text = '';
       previousWeightValue = double.parse(weightController.text);
       _goldCalc(0, double.parse(weightController.text));
     }

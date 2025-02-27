@@ -37,4 +37,6 @@ abstract class ApiRepository {
   Future<Response> goldBalance();
 
   Future<Response> currencyBalance();
+
+  Future<Response> transferCurrencyWithMobile();
 }

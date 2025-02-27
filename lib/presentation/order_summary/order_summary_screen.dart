@@ -135,7 +135,8 @@ class OrderSummaryScreen extends StatelessWidget {
                         width: 300,
                         borderColor: Theme.of(context).primaryColor,
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmationScreen()));
+                          Navigator.pop(context);
+                          Navigator.pop(context);
                         },
                       ),
                     ],

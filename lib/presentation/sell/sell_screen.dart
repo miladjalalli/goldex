@@ -45,9 +45,9 @@ class _SellScreenState extends State<SellScreen> {
                     totalGoldOrUSDReceiveAmountType: '\$',
 
                     netGoldPriceOrSellAmount: cubit.sellGoldResponse?.data?.goldSoldMg.toString() ?? '--',
-                    netGoldPriceOrSellAmountType: 'gr',
+                    netGoldPriceOrSellAmountType: 'mg',
 
-                    feePercent: '1',
+                    feePercent: '${(cubit.sellGoldResponse!.data!.fee)! / (cubit.sellGoldResponse!.data!.basePrice!)}',
                     feeAmount: cubit.sellGoldResponse?.data?.fee.toString() ?? '--',
                     feeAmountType: '\$'
                   )),

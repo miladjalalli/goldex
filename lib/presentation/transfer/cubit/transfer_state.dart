@@ -18,3 +18,12 @@ class GoldBalanceError extends TransferState{
   GoldBalanceError(this.error);
 }
 
+
+class GoldOrMoneyTransferLoading extends TransferState{}
+class GoldOrMoneyTransferSuccess extends TransferState{}
+class GoldOrMoneyTransferError extends TransferState{
+  String error;
+
+  GoldOrMoneyTransferError(this.error);
+}
+

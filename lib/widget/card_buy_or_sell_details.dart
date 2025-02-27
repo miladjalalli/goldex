@@ -67,9 +67,9 @@ class CardBuyOrSellDetails extends StatelessWidget {
 
   String _formatAmount(String? type, String? amount) {
     if(type == '\$') {
-      return '$type$amount';
-    } else if (type == 'gr') {
-      return '$amount$type';
+      return '$amount $type';
+    } else if (type == 'mg') {
+      return '$amount $type';
     } else {
       return amount!;
     }

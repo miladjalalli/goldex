@@ -135,32 +135,30 @@ class _TransferScreenState extends State<TransferScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(
-                            child: TextField(
-                              textAlign: TextAlign.left,
-                              textAlignVertical: TextAlignVertical.center,
-                              controller: cubit.cardOrMobileNumberController,
-                              keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
-                              inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))],
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                    borderSide: BorderSide(color: Theme.of(context).colorScheme.primaryContainer, width: 1),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                    borderSide: BorderSide(color: Theme.of(context).colorScheme.primaryContainer, width: 1),
-                                  ),
-                                  // Increased horizontal padding
-                                  filled: true,
-                                  fillColor: Theme.of(context).colorScheme.surface,
-                                  hintText: context.translate('receiverCardNumber'),
-                                  hintStyle: TextStyle(fontSize: 16, color: Theme.of(context).colorScheme.primaryContainer)),
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w700,
-                              ),
+                          TextField(
+                            textAlign: TextAlign.left,
+                            textAlignVertical: TextAlignVertical.center,
+                            controller: cubit.mobileNumberController,
+                            keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
+                            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))],
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(25),
+                                  borderSide: BorderSide(color: Theme.of(context).colorScheme.primaryContainer, width: 1),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(25),
+                                  borderSide: BorderSide(color: Theme.of(context).colorScheme.primaryContainer, width: 1),
+                                ),
+                                // Increased horizontal padding
+                                filled: true,
+                                fillColor: Theme.of(context).colorScheme.surface,
+                                hintText: context.translate('receiverMobileNumber'),
+                                hintStyle: TextStyle(fontSize: 16, color: Theme.of(context).colorScheme.primaryContainer)),
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
                           Padding(
@@ -248,7 +246,7 @@ class _TransferScreenState extends State<TransferScreen> {
                                         totalAmount: '5',
                                         totalAmountType: 'gr',
                                         totalGoldOrUSDReceiveAmount: '5',
-                                        totalGoldOrUSDReceiveAmountType: 'gr',
+                                        totalGoldOrUSDReceiveAmountType: 'milligram',
                                         netGoldPriceOrSellAmount: null,
                                         netGoldPriceOrSellAmountType: null,
                                         feePercent: '1',

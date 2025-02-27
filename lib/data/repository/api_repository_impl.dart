@@ -60,4 +60,7 @@ class ApiRepositoryImpl extends ApiRepository {
 
   @override
   Future<Response> currencyBalance() => remoteDataSource.currencyBalance();
+
+  @override
+  Future<Response> transferCurrencyWithMobile() => remoteDataSource.transferCurrencyWithMobile();
 }
