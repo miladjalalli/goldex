@@ -6,6 +6,7 @@ import 'package:goldex/core/app_localizations.dart';
 import 'package:goldex/core/theme/theme.dart';
 import 'package:goldex/widget/custom_button.dart';
 import '../../core/assets.dart';
+import '../../core/dependency_injection.dart';
 import '../order_summary/cubit/order_summary_cubit.dart';
 import 'gift-card_order_summary_screen.dart';
 import 'cubit/gift_card_cubit.dart';
@@ -18,73 +19,72 @@ class GiveGiftReceivingMethodScreen extends StatefulWidget {
 }
 
 class _GiveGiftReceivingMethodScreenState extends State<GiveGiftReceivingMethodScreen> {
-
   @override
   Widget build(BuildContext context) {
-    GiftCardCubit cubit = context.read<GiftCardCubit>();
-    return BlocConsumer<GiftCardCubit, GiftCardState>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        return Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          appBar: AppBar(
-            leading: TextButton(
-              style: ButtonStyle(
-                padding: WidgetStateProperty.all(EdgeInsets.only(left: 20)),
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: SvgPicture.asset(
-                Asset.back,
-              ),
-            ),
+    return BlocProvider(
+      create: (context) => sl<GiftCardCubit>(),
+      child: BlocConsumer<GiftCardCubit, GiftCardState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          GiftCardCubit cubit = context.read<GiftCardCubit>();
+          return Scaffold(
             backgroundColor: Theme.of(context).colorScheme.surface,
-            elevation: 0,
-            forceMaterialTransparency: true,
-            centerTitle: true,
-            title: Text(
-              context.translate('receivingMethod'),
-            ),
-            titleTextStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Theme.of(context).colorScheme.onPrimary),
-          ),
-          body: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 34, 20, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                expandableList(cubit)
-              ],
-            ),
-          ),
-          bottomNavigationBar: Padding(
-              padding: EdgeInsets.fromLTRB(64,0,64,32),
-              child: CustomButton(
-                text: context.translate('continue'),
-                backgroundColorStart: Theme.of(context).primaryColor,
-                backgroundColorEnd: Theme.of(context).colorScheme.secondary,
-                textColor: Theme.of(context).colorScheme.surface,
-                height: 50,
-                width: 300,
-                borderColor: Theme.of(context).primaryColor,
+            appBar: AppBar(
+              leading: TextButton(
+                style: ButtonStyle(
+                  padding: WidgetStateProperty.all(EdgeInsets.only(left: 20)),
+                ),
                 onPressed: () {
-                  Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => BlocProvider(
-                    create: (context) => GiftCardCubit(),
-                    child: GiftCardOrderSummaryScreen(
-                    title: '',
-                    totalAmount: '210.5',
-                    totalAmountType: 'mg',
-                  ),
-                  )),
-                  );
+                  Navigator.pop(context);
                 },
-              )
-          ),
-        );
-      },
+                child: SvgPicture.asset(
+                  Asset.back,
+                ),
+              ),
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              elevation: 0,
+              forceMaterialTransparency: true,
+              centerTitle: true,
+              title: Text(
+                context.translate('receivingMethod'),
+              ),
+              titleTextStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Theme.of(context).colorScheme.onPrimary),
+            ),
+            body: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 34, 20, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [expandableList(cubit)],
+              ),
+            ),
+            bottomNavigationBar: Padding(
+                padding: EdgeInsets.fromLTRB(64, 0, 64, 32),
+                child: CustomButton(
+                  text: context.translate('continue'),
+                  backgroundColorStart: Theme.of(context).primaryColor,
+                  backgroundColorEnd: Theme.of(context).colorScheme.secondary,
+                  textColor: Theme.of(context).colorScheme.surface,
+                  height: 50,
+                  width: 300,
+                  borderColor: Theme.of(context).primaryColor,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => GiftCardOrderSummaryScreen(
+                                title: '',
+                                totalAmount: '210.5',
+                                totalAmountType: 'mg',
+                              )),
+                    );
+                  },
+                )),
+          );
+        },
+      ),
     );
   }
+
   Widget expandableList(GiftCardCubit cubit) {
     var items = cubit.items;
     return Padding(
@@ -110,8 +110,9 @@ class _GiveGiftReceivingMethodScreenState extends State<GiveGiftReceivingMethodS
                     child: InkWell(
                       onTap: items[index]['active']
                           ? () {
-                        cubit.toggleExpanded(index);
-                      } : null,
+                              cubit.toggleExpanded(index);
+                            }
+                          : null,
                       child: ListTile(
                         leading: SvgPicture.asset(
                           items[index]['icon'],
@@ -121,16 +122,11 @@ class _GiveGiftReceivingMethodScreenState extends State<GiveGiftReceivingMethodS
                         ),
                         title: Text(
                           items[index]['title'],
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: items[index]['active']
-                                  ? Theme.of(context).colorScheme.onSurface : Colors.grey
-                          ),
+                          style: TextStyle(fontSize: 16, color: items[index]['active'] ? Theme.of(context).colorScheme.onSurface : Colors.grey),
                         ),
                         trailing: SvgPicture.asset(
                           cubit.expandedState[index] ? Asset.trailingUp : Asset.trailingDown,
-                          color: items[index]['active']
-                              ? Theme.of(context).colorScheme.onSurface : Colors.grey,
+                          color: items[index]['active'] ? Theme.of(context).colorScheme.onSurface : Colors.grey,
                           width: 11,
                           height: 6,
                         ),
@@ -191,21 +187,21 @@ class _GiveGiftReceivingMethodScreenState extends State<GiveGiftReceivingMethodS
                                                 shape: BoxShape.circle,
                                                 border: Border.all(
                                                   color: cubit.selectedDay == day['day']! ? Theme.of(context).primaryColor : Theme.of(context).colorScheme.primaryContainer,
-                                                  width: cubit.selectedDay == day['day']! ?  5 : 3,
+                                                  width: cubit.selectedDay == day['day']! ? 5 : 3,
                                                 ),
                                                 color: Colors.transparent, // Remove internal color
                                               ),
                                               child: cubit.selectedDay == day['day']!
                                                   ? Center(
-                                                child: Container(
-                                                  width: 10,
-                                                  height: 10,
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: Colors.transparent, // No color for the inner circle
-                                                  ),
-                                                ),
-                                              )
+                                                      child: Container(
+                                                        width: 10,
+                                                        height: 10,
+                                                        decoration: BoxDecoration(
+                                                          shape: BoxShape.circle,
+                                                          color: Colors.transparent, // No color for the inner circle
+                                                        ),
+                                                      ),
+                                                    )
                                                   : null, // No inner circle when not selected
                                             ),
                                           ),
@@ -214,7 +210,7 @@ class _GiveGiftReceivingMethodScreenState extends State<GiveGiftReceivingMethodS
                                           day['day']!,
                                           style: TextStyle(
                                             fontSize: 18,
-                                            fontWeight: cubit.selectedDay == day['day']! ? FontWeight.w700 :FontWeight.w500,
+                                            fontWeight: cubit.selectedDay == day['day']! ? FontWeight.w700 : FontWeight.w500,
                                             color: Theme.of(context).colorScheme.onTertiaryContainer,
                                           ),
                                         ),
@@ -223,7 +219,7 @@ class _GiveGiftReceivingMethodScreenState extends State<GiveGiftReceivingMethodS
                                           '(${day['hour']})',
                                           style: TextStyle(
                                             fontSize: 16,
-                                            fontWeight: cubit.selectedDay == day['day']! ? FontWeight.w700 :FontWeight.w500,
+                                            fontWeight: cubit.selectedDay == day['day']! ? FontWeight.w700 : FontWeight.w500,
                                             color: Theme.of(context).colorScheme.onTertiaryContainer,
                                           ),
                                         ),
@@ -235,7 +231,7 @@ class _GiveGiftReceivingMethodScreenState extends State<GiveGiftReceivingMethodS
                                         day['date']!,
                                         style: TextStyle(
                                           fontSize: 16,
-                                          fontWeight: cubit.selectedDay == day['day']! ? FontWeight.w700 :FontWeight.w500,
+                                          fontWeight: cubit.selectedDay == day['day']! ? FontWeight.w700 : FontWeight.w500,
                                           color: Theme.of(context).colorScheme.onTertiaryContainer,
                                         ),
                                       ),
@@ -269,5 +265,3 @@ class _GiveGiftReceivingMethodScreenState extends State<GiveGiftReceivingMethodS
     );
   }
 }
-
-

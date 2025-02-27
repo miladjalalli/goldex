@@ -73,7 +73,6 @@ class TransferCubit extends Cubit<TransferState> {
     }
   }
 
-
   Future<void> transferCurrency() async {
     emit(GoldOrMoneyTransferLoading());
     // try {

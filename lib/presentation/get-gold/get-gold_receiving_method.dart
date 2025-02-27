@@ -6,6 +6,7 @@ import 'package:goldex/core/app_localizations.dart';
 import 'package:goldex/core/theme/theme.dart';
 import 'package:goldex/widget/custom_button.dart';
 import '../../core/assets.dart';
+import '../../core/dependency_injection.dart';
 import '../order_summary/cubit/order_summary_cubit.dart';
 import '../gift-card/gift-card_order_summary_screen.dart';
 
@@ -24,7 +25,9 @@ class _GetGoldReceivingMethodScreenState extends State<GetGoldReceivingMethodScr
   @override
   Widget build(BuildContext context) {
     GiveGoldCubit cubit = context.read<GiveGoldCubit>();
-    return BlocConsumer<GiveGoldCubit, GiveGoldState>(
+    return BlocProvider(
+      create: (context) => sl<GiveGoldCubit>(),
+  child: BlocConsumer<GiveGoldCubit, GiveGoldState>(
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
@@ -71,21 +74,19 @@ class _GetGoldReceivingMethodScreenState extends State<GetGoldReceivingMethodScr
                 borderColor: Theme.of(context).primaryColor,
                 onPressed: () {
                   Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => BlocProvider(
-                    create: (context) => GiveGoldCubit(),
-                    child: GetGoldOrderSummaryScreen(
-                    title: '',
-                    totalAmount: '36.95',
-                    totalAmountType: 'g',
-                  ),
-                  )),
+                  MaterialPageRoute(builder: (context) => GetGoldOrderSummaryScreen(
+                  title: '',
+                  totalAmount: '36.95',
+                  totalAmountType: 'g',
+                                    )),
                   );
                 },
               )
           ),
         );
       },
-    );
+    ),
+);
   }
   Widget expandableList(GiveGoldCubit cubit) {
     var items = cubit.items;

@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:goldex/presentation/buy/cubit/buy_cubit.dart';
 import 'package:meta/meta.dart';
 import '../../../domain/repository/api_repository.dart';
 import '../../../domain/repository/secure_storage_service.dart';
@@ -17,9 +18,10 @@ class ProfileCubit extends Cubit<ProfileState> {
   String? family;
 
   Future<void> loadUserData() async {
+    emit(UpdateUserDataLoading());
     name = await secureStorageService.readName();
     family = await secureStorageService.readFamily();
-    emit(UpdateUserData());
+    emit(UpdateUserDataSuccess());
   }
 
   Future<void> logout() async {

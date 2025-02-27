@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goldex/core/app_localizations.dart';
 import 'package:goldex/core/theme/theme.dart';
+import '../../core/dependency_injection.dart';
 import '../../widget/card_widget.dart';
 import '../../widget/custom_button.dart';
 import '../../core/assets.dart';
@@ -24,131 +26,138 @@ class WalletScreen extends StatefulWidget {
 }
 
 class _WalletScreenState extends State<WalletScreen> {
-
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        elevation: 0,
-        forceMaterialTransparency: true,
-        toolbarHeight: 8,
-      ),
-      body: Container(
-        padding: const EdgeInsets.fromLTRB(28, 0, 28, 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CardWidget(
-                name: 'Scott Williams',
-                balance: '\$1430.5',
-                cardNumber: '2020-1821-1530-2401',
-                goldAmount: '123.4 ',
-                type: context.translate('gr'),
-                onDeposit: () => {}
+    return BlocProvider(
+      create: (context) => sl<WalletCubit>()..loadUserData(),
+      child: BlocConsumer<WalletCubit, WalletState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          WalletCubit cubit = context.read<WalletCubit>();
+          return Scaffold(
+            backgroundColor: Theme.of(context).colorScheme.surface,
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              elevation: 0,
+              forceMaterialTransparency: true,
+              toolbarHeight: 8,
             ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(2, 20, 2, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            body: Container(
+              padding: const EdgeInsets.fromLTRB(28, 0, 28, 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: CustomButton(
-                      text: context.translate('deposit'),
-                      backgroundColorStart: Theme.of(context).primaryColor,
-                      backgroundColorEnd: Theme.of(context).colorScheme.secondary,
-                      textColor: Theme.of(context).colorScheme.surface,
-                      height: 50,
-                      width: 180,
-                      borderColor: Theme.of(context).primaryColor,
-                      isIconEnabled: true,
-                      icon: Asset.deposit,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => BlocProvider(
-                            create: (context) => DepositCubit(),
-                            child: DepositScreen(),
-                          )),
-                        );
-                      },
+                  (state is UpdateUserDataLoading)
+                      ? SpinKitThreeBounce(
+                          color: Theme.of(context).primaryColor,
+                          size: 20,
+                        )
+                      : CardWidget(
+                          name: '${cubit.name} ${cubit.family}',
+                          balance: '\$ ${cubit.currencyBalanceUSD?.toStringAsFixed(2) ?? '0.0'}',
+                          cardNumber: '2020-1821-1530-2401',
+                          goldAmount: cubit.goldBalanceMg?.toStringAsFixed(2) ?? '0.0',
+                          type: context.translate('mg'),
+                          onDeposit: () => {}
+                      ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(2, 20, 2, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: CustomButton(
+                            text: context.translate('deposit'),
+                            backgroundColorStart: Theme.of(context).primaryColor,
+                            backgroundColorEnd: Theme.of(context).colorScheme.secondary,
+                            textColor: Theme.of(context).colorScheme.surface,
+                            height: 50,
+                            width: 180,
+                            borderColor: Theme.of(context).primaryColor,
+                            isIconEnabled: true,
+                            icon: Asset.deposit,
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => DepositScreen()),
+                              );
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: 13,
+                        ),
+                        Expanded(
+                          child: CustomButton(
+                            text: context.translate('withdrawal'),
+                            backgroundColorStart: Theme.of(context).colorScheme.surface,
+                            textColor: Theme.of(context).primaryColor,
+                            height: 50,
+                            width: 180,
+                            borderColor: Theme.of(context).primaryColor,
+                            isIconEnabled: true,
+                            icon: Asset.withdrawal,
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => WithdrawalScreen()),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  SizedBox(
-                    width: 13,
-                  ),
+                  Container(
+                      padding: EdgeInsets.fromLTRB(2, 20, 5, 0),
+                      child: Row(
+                        children: [
+                          Text(context.translate('transactions'), style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18, color: Theme.of(context).colorScheme.onPrimary)),
+                          SizedBox(
+                            width: 13,
+                          ),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AllTransactionsScreen()),
+                                );
+                              },
+                              child: Text(context.translate('seeAll'), style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Theme.of(context).primaryColor))),
+                        ],
+                      )),
                   Expanded(
-                    child: CustomButton(
-                      text: context.translate('withdrawal'),
-                      backgroundColorStart: Theme.of(context).colorScheme.surface,
-                      textColor: Theme.of(context).primaryColor,
-                      height: 50,
-                      width: 180,
-                      borderColor: Theme.of(context).primaryColor,
-                      isIconEnabled: true,
-                      icon: Asset.withdrawal,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => BlocProvider(
-                            create: (context) => WithdrawalCubit(),
-                            child: WithdrawalScreen(),
-                          )),
-                        );
+                    child: ShaderMask(
+                      blendMode: BlendMode.dstIn,
+                      shaderCallback: (Rect bounds) {
+                        return LinearGradient(
+                          end: Alignment.topCenter,
+                          begin: Alignment.bottomCenter,
+                          colors: [Colors.transparent, Theme.of(context).colorScheme.onSurface],
+                          stops: [0.1, 0.8],
+                        ).createShader(bounds);
                       },
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: context.read<WalletCubit>().transactions.length,
+                        itemBuilder: (context, index) {
+                          final transaction = context.read<WalletCubit>().transactions[index];
+                          return cardView(transaction);
+                        },
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-            Container(
-                padding: EdgeInsets.fromLTRB(2, 20, 5, 0),
-                child: Row(
-                  children: [
-                    Text(context.translate('transactions'), style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18, color: Theme.of(context).colorScheme.onPrimary)),
-                    SizedBox(
-                      width: 13,
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => BlocProvider(
-                              create: (context) => WalletCubit(),
-                              child: AllTransactionsScreen(),
-                            )),
-                          );
-                        },
-                        child: Text(context.translate('seeAll'), style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400 ,color: Theme.of(context).primaryColor))),
-                  ],
-                )),
-            Expanded(
-              child: ShaderMask(
-                blendMode: BlendMode.dstIn,
-                shaderCallback: (Rect bounds) {
-                  return LinearGradient(
-                    end: Alignment.topCenter,
-                    begin: Alignment.bottomCenter,
-                    colors: [Colors.transparent, Theme.of(context).colorScheme.onSurface],
-                    stops: [0.1, 0.8],
-                  ).createShader(bounds);
-                },
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: context.read<WalletCubit>().transactions.length,
-                  itemBuilder: (context, index) {
-                    final transaction = context.read<WalletCubit>().transactions[index];
-                    return cardView(transaction);
-                  },
-                ),
-              ),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -225,17 +234,21 @@ class _WalletScreenState extends State<WalletScreen> {
                       color: transaction['status'] == 'Done'
                           ? Theme.of(context).primaryColor
                           : transaction['status'] == 'Failed'
-                          ? colorFailed
-                          : colorPending,
+                              ? colorFailed
+                              : colorPending,
                       fontWeight: FontWeight.w900,
                       fontSize: 11,
                     ),
                     textAlign: TextAlign.end,
                   ),
-                  SizedBox(width: 12,),
-                  SvgPicture.asset(Asset.attention,
+                  SizedBox(
+                    width: 12,
+                  ),
+                  SvgPicture.asset(
+                    Asset.attention,
                     width: 13,
-                    height: 15,)
+                    height: 15,
+                  )
                 ],
               ),
             ),

@@ -35,22 +35,18 @@ class _SellScreenState extends State<SellScreen> {
               context,
               MaterialPageRoute(
                   builder: (context) => OrderSummaryScreen(
-                    buyPage: false,
-                    sellPage: true,
-                    sendPage: false,
-                    totalAmount: cubit.sellGoldResponse?.data?.fiatReceived.toString() ?? '--',
-                    totalAmountType: '\$',
-
-                    totalGoldOrUSDReceiveAmount: cubit.sellGoldResponse?.data?.fiatReceived.toString() ?? '--',
-                    totalGoldOrUSDReceiveAmountType: '\$',
-
-                    netGoldPriceOrSellAmount: cubit.sellGoldResponse?.data?.goldSoldMg.toString() ?? '--',
-                    netGoldPriceOrSellAmountType: 'mg',
-
-                    feePercent: '${(cubit.sellGoldResponse!.data!.fee)! / (cubit.sellGoldResponse!.data!.basePrice!)}',
-                    feeAmount: cubit.sellGoldResponse?.data?.fee.toString() ?? '--',
-                    feeAmountType: '\$'
-                  )),
+                      buyPage: false,
+                      sellPage: true,
+                      sendPage: false,
+                      totalAmount: cubit.sellGoldResponse?.data?.fiatReceived.toString() ?? '--',
+                      totalAmountType: '\$',
+                      totalGoldOrUSDReceiveAmount: cubit.sellGoldResponse?.data?.fiatReceived.toString() ?? '--',
+                      totalGoldOrUSDReceiveAmountType: '\$',
+                      netGoldPriceOrSellAmount: cubit.sellGoldResponse?.data?.goldSoldMg.toString() ?? '--',
+                      netGoldPriceOrSellAmountType: 'mg',
+                      feePercent: '${(cubit.sellGoldResponse!.data!.fee)! / (cubit.sellGoldResponse!.data!.basePrice!)}',
+                      feeAmount: cubit.sellGoldResponse?.data?.fee.toString() ?? '--',
+                      feeAmountType: '\$')),
             );
           }
           if (state is ConfirmError) {
@@ -104,36 +100,50 @@ class _SellScreenState extends State<SellScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CardWidget(name: '${cubit.name} ${cubit.family}', balance: '\$1430.5', cardNumber: '2020-1821-1530-2401', goldAmount: '123.4 ', type: context.translate('gr'), onDeposit: () => {}),
+                  (state is UpdateUserDataLoading)
+                      ? SpinKitThreeBounce(
+                          color: Theme.of(context).primaryColor,
+                          size: 20,
+                        )
+                      : CardWidget(
+                          name: '${cubit.name} ${cubit.family}',
+                          balance: '\$ ${cubit.currencyBalanceUSD?.toStringAsFixed(2) ?? '0.0'}',
+                          cardNumber: '2020-1821-1530-2401',
+                          goldAmount: cubit.goldBalanceMg?.toStringAsFixed(2) ?? '0.0',
+                          type: context.translate('mg'),
+                          onDeposit: () => {}
+                      ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
                     child: Center(
-                      child: (state is LivePriceLoading) ? SpinKitThreeBounce(
-                        color: Theme.of(context).primaryColor,
-                        size: 20,
-                      ) : RichText(
-                        textAlign: TextAlign.justify,
-                        textDirection: TextDirection.ltr,
-                        text: TextSpan(
-                          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 18, fontWeight: FontWeight.w400),
-                          children: [
-                            TextSpan(text: '${context.translate('liveGoldPrice')}  '),
-                            TextSpan(
-                              text: (cubit.livePrice18kResponse?.data?.pricePerGram18k ?? 0).toString() ?? '---',
-                              style: TextStyle(color: colorGold, fontSize: 34, fontWeight: FontWeight.w800),
-                            ),
-                            TextSpan(
-                              // text: '  ${context.translate('perGram')}',
-                              text: '  ${(cubit.livePrice18kResponse?.data?.unit ?? context.translate('perGram'))}',
-                              style: TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w600,
-                                color: Theme.of(context).colorScheme.primaryContainer,
+                      child: (state is LivePriceLoading)
+                          ? SpinKitThreeBounce(
+                              color: Theme.of(context).primaryColor,
+                              size: 20,
+                            )
+                          : RichText(
+                              textAlign: TextAlign.justify,
+                              textDirection: TextDirection.ltr,
+                              text: TextSpan(
+                                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 18, fontWeight: FontWeight.w400),
+                                children: [
+                                  TextSpan(text: '${context.translate('liveGoldPrice')}  '),
+                                  TextSpan(
+                                    text: (cubit.livePrice18kResponse?.data?.pricePerGram18k ?? 0).toString() ?? '---',
+                                    style: TextStyle(color: colorGold, fontSize: 34, fontWeight: FontWeight.w800),
+                                  ),
+                                  TextSpan(
+                                    // text: '  ${context.translate('perGram')}',
+                                    text: '  ${(cubit.livePrice18kResponse?.data?.unit ?? context.translate('perGram'))}',
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w600,
+                                      color: Theme.of(context).colorScheme.primaryContainer,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ],
-                        ),
-                      ),
                     ),
                   ),
                   Padding(

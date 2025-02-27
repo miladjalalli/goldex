@@ -98,18 +98,23 @@ class CardWidget extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "${context.translate('balance')}: ",
-                          style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 16, fontWeight: FontWeight.w600),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          Text(
+                            "${context.translate('balance')}: ",
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.surface,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600
+                            ),
+                          ),
+                        SizedBox(height: 10),
+                        SizedBox(
                           child: Text(
                             balance,
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.surface,
                               fontSize: 36,
                               fontWeight: FontWeight.w700,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ),
@@ -128,9 +133,17 @@ class CardWidget extends StatelessWidget {
                                 SizedBox(
                                   width: 5,
                                 ),
-                                Text(
-                                  goldAmount + type,
-                                  style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 18, fontWeight: FontWeight.w400),
+                                SizedBox(
+                                  width: 150,
+                                  child: Text(
+                                    goldAmount + type,
+                                    style: TextStyle(
+                                      color: Theme.of(context).colorScheme.surface,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w400,
+                                      overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
                                 ),
                               ],
                             ),

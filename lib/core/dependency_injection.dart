@@ -11,11 +11,16 @@ import 'package:goldex/presentation/sell/cubit/sell_cubit.dart';
 import 'package:goldex/presentation/sign_up/cubit/sing_up_cubit.dart';
 import 'package:goldex/presentation/splash/cubit/splash_cubit.dart';
 import 'package:goldex/presentation/transfer/cubit/transfer_cubit.dart';
+import 'package:goldex/presentation/wallet/cubit/wallet_cubit.dart';
 
 import '../presentation/buy/cubit/buy_cubit.dart';
+import '../presentation/deposit/cubit/deposit_cubit.dart';
+import '../presentation/get-gold/cubit/give_gold_cubit.dart';
+import '../presentation/gift-card/cubit/gift_card_cubit.dart';
 import '../presentation/order_summary/cubit/order_summary_cubit.dart';
 import '../presentation/profile/cubit/profile_cubit.dart';
 import '../presentation/transaction/cubit/transaction_cubit.dart';
+import '../presentation/withdrawal/cubit/withdrawal_cubit.dart';
 
 
 final sl = GetIt.instance;
@@ -48,4 +53,9 @@ void init() {
   sl.registerFactory(() => TransferCubit(apiRepository: sl()));
   sl.registerFactory(() => ProfileCubit(apiRepository: sl(),secureStorageService: sl()));
   sl.registerFactory(() => OrderSummaryCubit(apiRepository: sl(),secureStorageService: sl()));
+  sl.registerFactory(() => WalletCubit(apiRepository: sl(),secureStorageService: sl()));
+  sl.registerFactory(() => DepositCubit(apiRepository: sl(),secureStorageService: sl()));
+  sl.registerFactory(() => WithdrawalCubit(apiRepository: sl(),secureStorageService: sl()));
+  sl.registerFactory(() => GiveGoldCubit(apiRepository: sl(),secureStorageService: sl()));
+  sl.registerFactory(() => GiftCardCubit(apiRepository: sl(),secureStorageService: sl()));
 }

@@ -142,10 +142,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => BlocProvider(
-                                    create: (context) => GiveGoldCubit(),
-                                    child: GiveGoldCardScreen(),
-                                  )),
+                                  MaterialPageRoute(builder: (context) => GiveGoldCardScreen()),
                                 );
                               },
                               child: ListTile(
@@ -173,10 +170,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => BlocProvider(
-                                    create: (context) => GiftCardCubit(),
-                                    child: GiftCardScreen(),
-                                  )),
+                                  MaterialPageRoute(builder: (context) => GiftCardScreen()),
                                 );
                               },
                               child: ListTile(

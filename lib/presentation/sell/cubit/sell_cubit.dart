@@ -4,7 +4,9 @@ import 'package:goldex/core/app_localizations.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:meta/meta.dart';
 
+import '../../../domain/entity/response/currency_balance_response.dart';
 import '../../../domain/entity/response/get_calc_response.dart';
+import '../../../domain/entity/response/gold_balance_response.dart';
 import '../../../domain/entity/response/live_price_18k_response.dart';
 import '../../../domain/entity/response/sell_gold_reponse.dart';
 import '../../../domain/repository/api_repository.dart';
@@ -23,6 +25,8 @@ class SellCubit extends Cubit<SellState> {
   }
   String? name;
   String? family;
+  double? goldBalanceMg;
+  double? currencyBalanceUSD;
 
   String suffix1 = 'Gram';
   String suffix2 = 'USD';
@@ -33,7 +37,6 @@ class SellCubit extends Cubit<SellState> {
   bool isUSDControllerSelected = false;
 
   SellGoldResponse? sellGoldResponse;
-
   LivePrice18KResponse? livePrice18kResponse;
 
   TextEditingController weightController = TextEditingController();
@@ -115,13 +118,6 @@ class SellCubit extends Cubit<SellState> {
     }
   }
 
-  Future<void> loadUserData() async {
-    emit(UpdateUserDataLoading());
-    name = await secureStorageService.readName();
-    family = await secureStorageService.readFamily();
-    emit(UpdateUserDataSuccess());
-  }
-
   Future<void> confirm(BuildContext context) async {
     if (usdControllerHasError && isUSDControllerSelected) {
       emit(ConfirmError(context.translate('EnterUSD')));
@@ -146,6 +142,43 @@ class SellCubit extends Cubit<SellState> {
       } catch (e) {
         emit(ConfirmError(e.toString()));
       }
+    }
+  }
+
+  Future<void> loadUserData() async {
+    emit(UpdateUserDataLoading());
+    name = await secureStorageService.readName();
+    family = await secureStorageService.readFamily();
+    await getGoldBalance();
+    await getCurrencyBalance();
+    emit(UpdateUserDataSuccess());
+  }
+
+  Future<void> getGoldBalance() async {
+    try {
+      final res = await apiRepository.goldBalance();
+      if (res.statusCode == 200) {
+        GoldBalanceResponse response = GoldBalanceResponse.fromJson(res.data);
+        goldBalanceMg = response.data!.goldBalanceMg;
+      } else {
+        emit(UpdateUserDataError('Error on get your balance'));
+      }
+    } catch (e) {
+      emit(UpdateUserDataError(e.toString()));
+    }
+  }
+
+  Future<void> getCurrencyBalance() async {
+    try {
+      final res = await apiRepository.currencyBalance();
+      if (res.statusCode == 200) {
+        CurrencyBalanceResponse response = CurrencyBalanceResponse.fromJson(res.data);
+        currencyBalanceUSD = response.data!.currencyBalance;
+      } else {
+        emit(UpdateUserDataError('Error on get your balance'));
+      }
+    } catch (e) {
+      emit(UpdateUserDataError(e.toString()));
     }
   }
 

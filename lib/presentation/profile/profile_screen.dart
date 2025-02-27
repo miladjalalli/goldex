@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goldex/core/app_localizations.dart';
 import 'package:goldex/core/theme/theme.dart';
@@ -80,7 +81,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('${cubit.name} ${cubit.family}', style: TextStyle(fontWeight: FontWeight.w900, fontSize: 24, color: Theme.of(context).colorScheme.onPrimary)),
+                      (state is UpdateUserDataLoading)
+                          ? SpinKitThreeBounce(
+                        color: Theme.of(context).primaryColor,
+                        size: 20,
+                      ) : Text('${cubit.name} ${cubit.family}', style: TextStyle(fontWeight: FontWeight.w900, fontSize: 24, color: Theme.of(context).colorScheme.onPrimary)),
                       Text(context.translate('notVerified'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16, color: colorRedLight)),
                       Padding(
                         padding: const EdgeInsets.only(top: 24, bottom: 24.0),

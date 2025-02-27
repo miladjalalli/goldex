@@ -30,3 +30,7 @@ class LivePriceError extends SellState {
 //---- get name and family
 class UpdateUserDataLoading extends SellState{}
 class UpdateUserDataSuccess extends SellState{}
+class UpdateUserDataError extends SellState{
+  final String message;
+  UpdateUserDataError(this.message);
+}

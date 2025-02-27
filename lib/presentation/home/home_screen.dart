@@ -25,10 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
       create: (context) => ServicesCubit(),
       child: ServicesScreen(),
     ),
-    BlocProvider(
-      create: (context) => WalletCubit(),
-      child: WalletScreen(),
-    ),
+    WalletScreen(),
     TransactionScreen(),
   ];
 

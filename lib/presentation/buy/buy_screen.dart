@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:goldex/core/app_localizations.dart';
 import 'package:goldex/core/theme/theme.dart';
 import 'package:goldex/widget/card_widget.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../core/dependency_injection.dart';
 import '../../widget/custom_button.dart';
 import '../../core/assets.dart';
@@ -20,7 +21,6 @@ class BuyScreen extends StatefulWidget {
 }
 
 class _BuyScreenState extends State<BuyScreen> {
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -103,42 +103,49 @@ class _BuyScreenState extends State<BuyScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CardWidget(
-                      name: '${cubit.name} ${cubit.family}',
-                      balance: '\$1430.5',
-                      cardNumber: '2020-1821-1530-2401',
-                      goldAmount: '123.4 ',
-                      type: context.translate('gr'),
-                      onDeposit: () => {}),
+                  (state is UpdateUserDataLoading)
+                      ? SpinKitThreeBounce(
+                          color: Theme.of(context).primaryColor,
+                          size: 20,
+                        )
+                      : CardWidget(
+                          name: '${cubit.name} ${cubit.family}',
+                          balance: '\$ ${cubit.currencyBalanceUSD?.toStringAsFixed(2) ?? '0.0'}',
+                          cardNumber: '2020-1821-1530-2401',
+                          goldAmount: cubit.goldBalanceMg?.toStringAsFixed(2) ?? '0.0',
+                          type: context.translate('mg'),
+                          onDeposit: () => {}),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
                     child: Center(
-                      child: (state is LivePriceLoading) ? SpinKitThreeBounce(
-                        color: Theme.of(context).primaryColor,
-                        size: 20,
-                      ) : RichText(
-                        textAlign: TextAlign.justify,
-                        textDirection: TextDirection.ltr,
-                        text: TextSpan(
-                          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 18, fontWeight: FontWeight.w400),
-                          children: [
-                            TextSpan(text: '${context.translate('liveGoldPrice')}  '),
-                            TextSpan(
-                              text: (cubit.livePrice18kResponse?.data?.pricePerGram18k ?? 0).toString() ?? '---',
-                              style: TextStyle(color: colorGold, fontSize: 34, fontWeight: FontWeight.w800),
-                            ),
-                            TextSpan(
-                              // text: '  ${context.translate('perGram')}',
-                              text: '  ${(cubit.livePrice18kResponse?.data?.unit ?? context.translate('perGram'))}',
-                              style: TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w600,
-                                color: Theme.of(context).colorScheme.primaryContainer,
+                      child: (state is LivePriceLoading)
+                          ? SpinKitThreeBounce(
+                              color: Theme.of(context).primaryColor,
+                              size: 20,
+                            )
+                          : RichText(
+                              textAlign: TextAlign.justify,
+                              textDirection: TextDirection.ltr,
+                              text: TextSpan(
+                                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 18, fontWeight: FontWeight.w400),
+                                children: [
+                                  TextSpan(text: '${context.translate('liveGoldPrice')}  '),
+                                  TextSpan(
+                                    text: (cubit.livePrice18kResponse?.data?.pricePerGram18k ?? 0).toString() ?? '---',
+                                    style: TextStyle(color: colorGold, fontSize: 34, fontWeight: FontWeight.w800),
+                                  ),
+                                  TextSpan(
+                                    // text: '  ${context.translate('perGram')}',
+                                    text: '  ${(cubit.livePrice18kResponse?.data?.unit ?? context.translate('perGram'))}',
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w600,
+                                      color: Theme.of(context).colorScheme.primaryContainer,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ],
-                        ),
-                      ),
                     ),
                   ),
                   Padding(

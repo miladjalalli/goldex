@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goldex/core/app_localizations.dart';
 
+import '../../core/dependency_injection.dart';
 import '../../core/theme/theme.dart';
 import '../../widget/card_buy_or_sell_details.dart';
 import '../../widget/card_gift-card_order_details.dart';
@@ -23,132 +24,142 @@ class BarcodeScannerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GiftCardCubit cubit = context.read<GiftCardCubit>();
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      appBar: AppBar(
-        leading: TextButton(
-          style: ButtonStyle(
-            padding: WidgetStateProperty.all(EdgeInsets.only(left: 20)),
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: SvgPicture.asset(
-            Asset.back,
-          ),
-        ),
-        centerTitle: true,
-        titleTextStyle: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w700,
-          color: Theme.of(context).colorScheme.onPrimaryContainer,
-        ),
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        elevation: 0,
-        forceMaterialTransparency: true,
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 31.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                cardView(context, cubit),
-              ],
-            ),
-          ),
-          Padding(
-              padding: EdgeInsets.fromLTRB(64,18,64,32),
-              child: CustomButton(
-                text: context.translate('scanYourCard'),
-                backgroundColorStart: Theme.of(context).primaryColor,
-                textColor: Theme.of(context).colorScheme.surface,
-                height: 50,
-                width: 300,
-                borderColor: Theme.of(context).primaryColor,
-                isIconEnabled: true,
-                icon: Asset.scan,
+    return BlocProvider(
+      create: (context) => sl<GiftCardCubit>(),
+      child: BlocConsumer<GiftCardCubit, GiftCardState>(
+        listener: (context, state) {
+          // TODO: implement listener
+        },
+        builder: (context, state) {
+          GiftCardCubit cubit = context.read<GiftCardCubit>();
+          return Scaffold(
+            backgroundColor: Theme.of(context).colorScheme.surface,
+            appBar: AppBar(
+              leading: TextButton(
+                style: ButtonStyle(
+                  padding: WidgetStateProperty.all(EdgeInsets.only(left: 20)),
+                ),
                 onPressed: () {
-                  // Navigator.push(context,
-                  //   MaterialPageRoute(builder: (context) => BlocProvider(
-                  //     create: (context) => GiftCardCubit(),
-                  //     child: GiftCardOrderSummaryScreen(
-                  //       title: '',
-                  //       totalAmount: '210.5',
-                  //       totalAmountType: 'mg',
-                  //     ),
-                  //   )),
-                  // );
+                  Navigator.pop(context);
                 },
-              )
-          ),
-          Text(context.translate('or'), style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Theme.of(context).colorScheme.onSurface),),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(80, 21, 0, 7),
-            child: Row(
-              children: [
-                Text(
-                  context.translate("enterSerialCode"),
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(64,10,64,10),
-            child: SizedBox(
-              child: TextField(
-                textAlign: TextAlign.left,
-                controller: cubit.serialCode,
-                keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25),
-                    borderSide: BorderSide(color: Theme.of(context).colorScheme.primaryContainer, width: 1),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25),
-                    borderSide: BorderSide(color: Theme.of(context).colorScheme.primaryContainer, width: 1),
-                  ),
-                  filled: true,
-                  fillColor: Theme.of(context).colorScheme.surface,
-                ),
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700,
+                child: SvgPicture.asset(
+                  Asset.back,
                 ),
               ),
+              centerTitle: true,
+              titleTextStyle: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+              ),
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              elevation: 0,
+              forceMaterialTransparency: true,
             ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: Padding(
-          padding: EdgeInsets.fromLTRB(64,0,64,32),
-          child: CustomButton(
-            text: context.translate('continue'),
-            backgroundColorStart: Theme.of(context).primaryColor,
-            backgroundColorEnd: Theme.of(context).colorScheme.secondary,
-            textColor: Theme.of(context).colorScheme.surface,
-            height: 50,
-            width: 300,
-            borderColor: Theme.of(context).primaryColor,
-            onPressed: () {
-              Navigator.push(context,
-                MaterialPageRoute(builder: (context) => BlocProvider(
-                  create: (context) => GiftCardCubit(),
-                  child: ConfirmationScreen(
-                    showGotItBottom: true,
-                    showSaveToGalleryBottom: false,
-                    showShareBottom: false,
-                    showTextMessage: true,
+            body: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 31.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      cardView(context, cubit),
+                    ],
                   ),
+                ),
+                Padding(
+                    padding: EdgeInsets.fromLTRB(64, 18, 64, 32),
+                    child: CustomButton(
+                      text: context.translate('scanYourCard'),
+                      backgroundColorStart: Theme.of(context).primaryColor,
+                      textColor: Theme.of(context).colorScheme.surface,
+                      height: 50,
+                      width: 300,
+                      borderColor: Theme.of(context).primaryColor,
+                      isIconEnabled: true,
+                      icon: Asset.scan,
+                      onPressed: () {
+                        // Navigator.push(context,
+                        //   MaterialPageRoute(builder: (context) => BlocProvider(
+                        //     create: (context) => GiftCardCubit(),
+                        //     child: GiftCardOrderSummaryScreen(
+                        //       title: '',
+                        //       totalAmount: '210.5',
+                        //       totalAmountType: 'mg',
+                        //     ),
+                        //   )),
+                        // );
+                      },
+                    )),
+                Text(
+                  context.translate('or'),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Theme.of(context).colorScheme.onSurface),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(80, 21, 0, 7),
+                  child: Row(
+                    children: [
+                      Text(
+                        context.translate("enterSerialCode"),
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(64, 10, 64, 10),
+                  child: SizedBox(
+                    child: TextField(
+                      textAlign: TextAlign.left,
+                      controller: cubit.serialCode,
+                      keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: BorderSide(color: Theme.of(context).colorScheme.primaryContainer, width: 1),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25),
+                          borderSide: BorderSide(color: Theme.of(context).colorScheme.primaryContainer, width: 1),
+                        ),
+                        filled: true,
+                        fillColor: Theme.of(context).colorScheme.surface,
+                      ),
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            bottomNavigationBar: Padding(
+                padding: EdgeInsets.fromLTRB(64, 0, 64, 32),
+                child: CustomButton(
+                  text: context.translate('continue'),
+                  backgroundColorStart: Theme.of(context).primaryColor,
+                  backgroundColorEnd: Theme.of(context).colorScheme.secondary,
+                  textColor: Theme.of(context).colorScheme.surface,
+                  height: 50,
+                  width: 300,
+                  borderColor: Theme.of(context).primaryColor,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ConfirmationScreen(
+                                showGotItBottom: true,
+                                showSaveToGalleryBottom: false,
+                                showShareBottom: false,
+                                showTextMessage: true,
+                              )),
+                    );
+                  },
                 )),
-              );
-            },
-          )
+          );
+        },
       ),
     );
   }
@@ -186,8 +197,6 @@ class BarcodeScannerScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-
-
               ],
             ),
             Align(
@@ -198,13 +207,13 @@ class BarcodeScannerScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Container(
-                      width: 130,
-                      height: 130,
-                      decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surface,
-                        borderRadius: BorderRadius.circular(13),
+                        width: 130,
+                        height: 130,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.surface,
+                          borderRadius: BorderRadius.circular(13),
                         ),
-                      child: SvgPicture.asset(Asset.barcode))
+                        child: SvgPicture.asset(Asset.barcode))
                   ],
                 ),
               ),

@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goldex/core/app_localizations.dart';
 import 'package:goldex/presentation/gift-card/give-gift_receiving_method.dart';
-import 'package:goldex/core/theme/theme.dart';
 import 'package:goldex/widget/custom_button.dart';
+import '../../core/dependency_injection.dart';
 import '../../widget/counter_widget.dart';
 import '../../core/assets.dart';
 import 'cubit/gift_card_cubit.dart';
@@ -18,118 +18,113 @@ class GiveGiftCardScreen extends StatefulWidget {
 }
 
 class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
-
   @override
   Widget build(BuildContext context) {
-    GiftCardCubit cubit = context.read<GiftCardCubit>();
-    return BlocConsumer<GiftCardCubit, GiftCardState>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        return Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          appBar: AppBar(
-            leading: TextButton(
-              style: ButtonStyle(
-                padding: WidgetStateProperty.all(EdgeInsets.only(left: 20)),
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: SvgPicture.asset(
-                Asset.back,
-              ),
-            ),
+    return BlocProvider(
+      create: (context) => sl<GiftCardCubit>(),
+      child: BlocConsumer<GiftCardCubit, GiftCardState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          GiftCardCubit cubit = context.read<GiftCardCubit>();
+          return Scaffold(
             backgroundColor: Theme.of(context).colorScheme.surface,
-            elevation: 0,
-            forceMaterialTransparency: true,
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: 16.0),
-                child: badges.Badge(
-                  showBadge: cubit.totalQuantity > 0,
-                  badgeContent: Text(
-                    cubit.totalQuantity.toString(),
-                    style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 14),
-                  ),
-                  badgeStyle: badges.BadgeStyle(
-                    badgeColor: Theme.of(context).primaryColor,
-                  ),
-                  child: SvgPicture.asset(
-                    Asset.buy,
-                    width: 27,
-                    height: 27,
-                  ),
+            appBar: AppBar(
+              leading: TextButton(
+                style: ButtonStyle(
+                  padding: WidgetStateProperty.all(EdgeInsets.only(left: 20)),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: SvgPicture.asset(
+                  Asset.back,
                 ),
               ),
-            ],
-            centerTitle: true,
-            title: Text(
-              context.translate('giftCard'),
-            ),
-            titleTextStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Theme.of(context).colorScheme.onPrimary),
-          ),
-          body: Padding(
-            padding: const EdgeInsets.fromLTRB(28, 34, 28, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: ShaderMask(
-                    blendMode: BlendMode.dstIn,
-                    shaderCallback: (Rect bounds) {
-                      return LinearGradient(
-                        end: Alignment.topCenter,
-                        begin: Alignment.bottomCenter,
-                        colors: [Colors.transparent, Theme.of(context).colorScheme.onSurface],
-                        stops: [0.01, 0.1],
-                      ).createShader(bounds);
-                    },
-                    child: ListView.builder(
-                      itemCount: cubit.giftCards.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            print('${cubit.giftCards[index]['amount']} selected');
-                          },
-                          child: Padding(
-                              padding: EdgeInsets.only(bottom: 29),
-                              child: cardView(cubit, index)
-                          ),
-                        );
-                      },
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              elevation: 0,
+              forceMaterialTransparency: true,
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: badges.Badge(
+                    showBadge: cubit.totalQuantity > 0,
+                    badgeContent: Text(
+                      cubit.totalQuantity.toString(),
+                      style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 14),
+                    ),
+                    badgeStyle: badges.BadgeStyle(
+                      badgeColor: Theme.of(context).primaryColor,
+                    ),
+                    child: SvgPicture.asset(
+                      Asset.buy,
+                      width: 27,
+                      height: 27,
                     ),
                   ),
                 ),
               ],
+              centerTitle: true,
+              title: Text(
+                context.translate('giftCard'),
+              ),
+              titleTextStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Theme.of(context).colorScheme.onPrimary),
             ),
-          ),
-          bottomNavigationBar: Visibility(
-            visible: cubit.totalQuantity > 0,
-            child: Padding(
-                padding: EdgeInsets.fromLTRB(64, 0, 64, 32),
-                child: CustomButton(
-                  text: context.translate('continue'),
-                  backgroundColorStart: Theme.of(context).primaryColor,
-                  backgroundColorEnd: Theme.of(context).colorScheme.secondary,
-                  textColor: Theme.of(context).colorScheme.surface,
-                  height: 50,
-                  width: 300,
-                  borderColor: Theme.of(context).primaryColor,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) =>
-                          BlocProvider(
-                            create: (context) => GiftCardCubit(),
-                            child: GiveGiftReceivingMethodScreen(),
-                          )),
-                    );
-                  },
-                )
+            body: Padding(
+              padding: const EdgeInsets.fromLTRB(28, 34, 28, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: ShaderMask(
+                      blendMode: BlendMode.dstIn,
+                      shaderCallback: (Rect bounds) {
+                        return LinearGradient(
+                          end: Alignment.topCenter,
+                          begin: Alignment.bottomCenter,
+                          colors: [Colors.transparent, Theme.of(context).colorScheme.onSurface],
+                          stops: [0.01, 0.1],
+                        ).createShader(bounds);
+                      },
+                      child: ListView.builder(
+                        itemCount: cubit.giftCards.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              print('${cubit.giftCards[index]['amount']} selected');
+                            },
+                            child: Padding(padding: EdgeInsets.only(bottom: 29), child: cardView(cubit, index)),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      },
+            bottomNavigationBar: Visibility(
+              visible: cubit.totalQuantity > 0,
+              child: Padding(
+                  padding: EdgeInsets.fromLTRB(64, 0, 64, 32),
+                  child: CustomButton(
+                    text: context.translate('continue'),
+                    backgroundColorStart: Theme.of(context).primaryColor,
+                    backgroundColorEnd: Theme.of(context).colorScheme.secondary,
+                    textColor: Theme.of(context).colorScheme.surface,
+                    height: 50,
+                    width: 300,
+                    borderColor: Theme.of(context).primaryColor,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => GiveGiftReceivingMethodScreen()),
+                      );
+                    },
+                  )),
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -180,7 +175,9 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
                           color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
-                      SizedBox(width: 5,),
+                      SizedBox(
+                        width: 5,
+                      ),
                       Text(
                         cubit.giftCards[index]['type']!,
                         style: TextStyle(
@@ -192,7 +189,6 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
                     ],
                   ),
                 ),
-
               ],
             ),
             Align(
@@ -214,7 +210,3 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
     );
   }
 }
-
-
-
-

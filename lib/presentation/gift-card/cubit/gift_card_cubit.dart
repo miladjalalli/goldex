@@ -1,13 +1,17 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:meta/meta.dart';
-
 import '../../../core/assets.dart';
-
+import '../../../domain/repository/api_repository.dart';
+import '../../../domain/repository/secure_storage_service.dart';
 part 'gift_card_state.dart';
 
 class GiftCardCubit extends Cubit<GiftCardState> {
-  GiftCardCubit() : super(GiftCardInitial());
+  ApiRepository apiRepository;
+  SecureStorageService secureStorageService;
+  LocalAuthentication _auth = LocalAuthentication();
+  GiftCardCubit({required this.apiRepository, required this.secureStorageService}) : super(GiftCardInitial());
 
   Map<int, int> quantities = {};
   List<bool> expandedState = List.generate(2, (index) => false);

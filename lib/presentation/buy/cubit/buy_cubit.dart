@@ -4,7 +4,9 @@ import 'package:goldex/core/app_localizations.dart';
 import 'package:local_auth/local_auth.dart';
 
 import '../../../domain/entity/response/buy_gold_by_amount_response.dart';
+import '../../../domain/entity/response/currency_balance_response.dart';
 import '../../../domain/entity/response/get_calc_response.dart';
+import '../../../domain/entity/response/gold_balance_response.dart';
 import '../../../domain/entity/response/live_price_18k_response.dart';
 import '../../../domain/repository/api_repository.dart';
 import '../../../domain/repository/secure_storage_service.dart';
@@ -23,6 +25,8 @@ class BuyCubit extends Cubit<BuyState> {
 
   String? name;
   String? family;
+  double? goldBalanceMg;
+  double? currencyBalanceUSD;
 
   String suffix1 = 'USD';
   String suffix2 = 'MilliGram';
@@ -30,6 +34,7 @@ class BuyCubit extends Cubit<BuyState> {
   double? previousWeightValue;
   bool isWeightControllerSelected = false;
   bool isUSDControllerSelected = false;
+
 
   BuyGoldByAmountAndWeightResponse? buyGoldByAmountAndWeightResponse;
 
@@ -151,7 +156,37 @@ class BuyCubit extends Cubit<BuyState> {
     emit(UpdateUserDataLoading());
     name = await secureStorageService.readName();
     family = await secureStorageService.readFamily();
+    await getGoldBalance();
+    await getCurrencyBalance();
     emit(UpdateUserDataSuccess());
+  }
+
+  Future<void> getGoldBalance() async {
+    try {
+      final res = await apiRepository.goldBalance();
+      if (res.statusCode == 200) {
+        GoldBalanceResponse response = GoldBalanceResponse.fromJson(res.data);
+        goldBalanceMg = response.data!.goldBalanceMg;
+      } else {
+        emit(UpdateUserDataError('Error on get your balance'));
+      }
+    } catch (e) {
+      emit(UpdateUserDataError(e.toString()));
+    }
+  }
+
+  Future<void> getCurrencyBalance() async {
+    try {
+      final res = await apiRepository.currencyBalance();
+      if (res.statusCode == 200) {
+        CurrencyBalanceResponse response = CurrencyBalanceResponse.fromJson(res.data);
+        currencyBalanceUSD = response.data!.currencyBalance;
+      } else {
+        emit(UpdateUserDataError('Error on get your balance'));
+      }
+    } catch (e) {
+      emit(UpdateUserDataError(e.toString()));
+    }
   }
 
   @override

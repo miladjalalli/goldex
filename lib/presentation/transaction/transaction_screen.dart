@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goldex/core/app_localizations.dart';
 import '../../core/dependency_injection.dart';
@@ -65,14 +66,18 @@ class _TransactionScreenState extends State<TransactionScreen> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    '${context.translate('hey')} ${cubit.name}',
-                                    style: TextStyle(
-                                      color: Theme.of(context).colorScheme.surface,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w900,
-                                    ),
-                                  ),
+                                  (state is UpdateUserDataLoading)
+                                      ? SpinKitThreeBounce(
+                                          color: Theme.of(context).primaryColor,
+                                          size: 20,
+                                        ) : Text(
+                                          '${context.translate('hey')} ${cubit.name}',
+                                          style: TextStyle(
+                                            color: Theme.of(context).colorScheme.surface,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w900,
+                                          ),
+                                        ),
                                   Text(
                                     context.translate('welcomeBack'),
                                     style: TextStyle(
@@ -101,25 +106,30 @@ class _TransactionScreenState extends State<TransactionScreen> {
                   left: 20,
                   right: 20,
                   child: Center(
-                    child: Column(
-                      children: [
-                        Text(
-                          '1430.5',
-                          style: TextStyle(fontSize: 42, fontWeight: FontWeight.bold, color: Colors.white),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(Asset.gold),
-                            SizedBox(width: 5),
-                            Text(
-                              '123.4 gr',
-                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                    child: (state is UpdateUserDataLoading)
+                        ? SpinKitThreeBounce(
+                            color: Theme.of(context).primaryColor,
+                            size: 20,
+                          )
+                        : Column(
+                            children: [
+                              Text(
+                                '\$ ${cubit.currencyBalanceUSD?.toStringAsFixed(2) ?? '0.0'}',
+                                style: TextStyle(fontSize: 42, fontWeight: FontWeight.bold, color: Colors.white),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(Asset.gold),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    '${cubit.goldBalanceMg?.toStringAsFixed(2) ?? '0.0'} mg',
+                                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                   ),
                 ),
                 DraggableModalDialog(
