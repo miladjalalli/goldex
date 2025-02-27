@@ -115,7 +115,7 @@ class _GiveGoldCardScreenState extends State<GiveGoldCardScreen> {
                                       size: 20,
                                     )
                                   : Text(
-                                      '431.1 ${context.translate('gr')}',
+                                      '${cubit.currencyBalanceUSD?.toStringAsFixed(2).toString() ?? 0.0} ${context.translate('USD')}',
                                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface),
                                     ),
                             ],

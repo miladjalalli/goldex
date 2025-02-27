@@ -27,7 +27,12 @@ class _GiftCardScreenState extends State<GiftCardScreen> {
       create: (context) => sl<GiftCardCubit>(),
       child: BlocConsumer<GiftCardCubit, GiftCardState>(
         listener: (context, state) {
-          // TODO: implement listener
+          if (state is GiftCardsSuccess && state.res.giftCards!.isNotEmpty) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => GiveGiftCardScreen(state.res)),
+            );
+          }
         },
         builder: (context, state) {
           GiftCardCubit cubit = context.read<GiftCardCubit>();
@@ -83,11 +88,9 @@ class _GiftCardScreenState extends State<GiftCardScreen> {
                           height: 50,
                           width: 300,
                           borderColor: Theme.of(context).primaryColor,
+                          isLoading: state is GiftCardsLoading,
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => GiveGiftCardScreen()),
-                            );
+                            cubit.giftCardsRequest();
                           },
                         ),
                       ),

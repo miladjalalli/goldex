@@ -63,4 +63,7 @@ class ApiRepositoryImpl extends ApiRepository {
 
   @override
   Future<Response> transferCurrencyWithMobile() => remoteDataSource.transferCurrencyWithMobile();
+
+  @override
+  Future<Response> giftCards() => remoteDataSource.giftCards();
 }

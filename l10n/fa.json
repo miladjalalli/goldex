@@ -142,5 +142,6 @@
   "totalGoldReceive": "Total Gold receive",
   "totalUSDReceive": "Total USD receive",
   "sellAmount": "Sell Amount",
-  "sendAmount": "Send Amount"
+  "sendAmount": "Send Amount",
+  "mg": "mg"
 }

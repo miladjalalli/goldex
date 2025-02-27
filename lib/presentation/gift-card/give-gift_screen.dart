@@ -1,8 +1,10 @@
 import 'package:badges/badges.dart' as badges;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goldex/core/app_localizations.dart';
+import 'package:goldex/domain/entity/response/gift_cards_response.dart';
 import 'package:goldex/presentation/gift-card/give-gift_receiving_method.dart';
 import 'package:goldex/widget/custom_button.dart';
 import '../../core/dependency_injection.dart';
@@ -11,7 +13,10 @@ import '../../core/assets.dart';
 import 'cubit/gift_card_cubit.dart';
 
 class GiveGiftCardScreen extends StatefulWidget {
-  const GiveGiftCardScreen({super.key});
+
+  GiftCardsResponseData giftCardsResponseData;
+
+  GiveGiftCardScreen( this.giftCardsResponseData, {super.key});
 
   @override
   _GiveGiftCardScreenState createState() => _GiveGiftCardScreenState();
@@ -86,14 +91,11 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
                         ).createShader(bounds);
                       },
                       child: ListView.builder(
-                        itemCount: cubit.giftCards.length,
+                        itemCount: widget.giftCardsResponseData.giftCards?.length ?? 0,
                         itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              print('${cubit.giftCards[index]['amount']} selected');
-                            },
-                            child: Padding(padding: EdgeInsets.only(bottom: 29), child: cardView(cubit, index)),
-                          );
+                          return Padding(
+                              padding: EdgeInsets.only(bottom: 29),
+                              child: cardView(cubit, widget.giftCardsResponseData.giftCards![index], index));
                         },
                       ),
                     ),
@@ -128,7 +130,7 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
     );
   }
 
-  Widget cardView(GiftCardCubit cubit, int index) {
+  Widget cardView(GiftCardCubit cubit,GiftCard item, int index) {
     return Card(
       color: Theme.of(context).colorScheme.primaryContainer,
       elevation: 5,
@@ -150,7 +152,7 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      '${cubit.giftCards[index]['title']!.split(' ').first}\n${cubit.giftCards[index]['title']!.split(' ').last} ',
+                      '${context.translate('giftCard').split(' ').first}\n${context.translate('giftCard').split(' ').last} ',
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.surface,
                         fontSize: 48,
@@ -168,7 +170,7 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        cubit.giftCards[index]['amount']!,
+                        item.goldAmount.toString(),
                         style: TextStyle(
                           fontSize: 40,
                           fontWeight: FontWeight.w900,
@@ -179,7 +181,7 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
                         width: 5,
                       ),
                       Text(
-                        cubit.giftCards[index]['type']!,
+                        context.translate('mg'),
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w900,
@@ -191,17 +193,20 @@ class _GiveGiftCardScreenState extends State<GiveGiftCardScreen> {
                 ),
               ],
             ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  CounterWidget(
-                    onQuantityChanged: (quantity) {
-                      cubit.updateQuantity(index, quantity);
-                    },
-                  ),
-                ],
+            Visibility(
+              visible: item.status == 'unused',
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    CounterWidget(
+                      onQuantityChanged: (quantity) {
+                        cubit.updateQuantity(item.cardCode!, quantity);
+                      },
+                    ),
+                  ],
+                ),
               ),
             )
           ],

@@ -39,4 +39,6 @@ abstract class ApiRepository {
   Future<Response> currencyBalance();
 
   Future<Response> transferCurrencyWithMobile();
+
+  Future<Response> giftCards();
 }

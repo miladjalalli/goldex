@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:meta/meta.dart';
 import '../../../core/assets.dart';
+import '../../../domain/entity/response/gift_cards_response.dart';
 import '../../../domain/repository/api_repository.dart';
 import '../../../domain/repository/secure_storage_service.dart';
 part 'gift_card_state.dart';
@@ -13,15 +14,11 @@ class GiftCardCubit extends Cubit<GiftCardState> {
   LocalAuthentication _auth = LocalAuthentication();
   GiftCardCubit({required this.apiRepository, required this.secureStorageService}) : super(GiftCardInitial());
 
-  Map<int, int> quantities = {};
+  GiftCardsResponse? giftCardsResponse;
+  Map<String, int> quantities = {};
   List<bool> expandedState = List.generate(2, (index) => false);
   String? selectedDay;
   TextEditingController serialCode = TextEditingController();
-  final List<Map<String, String>> giftCards = [
-    {'title': 'GIFT CARD', 'amount': '50', 'type' : 'mg'},
-    {'title': 'GIFT CARD', 'amount': '100', 'type' : 'mg'},
-    {'title': 'GIFT CARD', 'amount': '200', 'type' : 'mg'},
-  ];
 
   List<Map<String, dynamic>> items = [
     { 'title': 'In Person', 'icon': Asset.inPerson,'content': 'Here is the content for "Get your Gold"', "active": true},
@@ -41,8 +38,8 @@ class GiftCardCubit extends Cubit<GiftCardState> {
     {"giftCardAmount": '100', "giftCardType": 'mg', "giftCardTitle": 'gift card', "number": '2', "issuanceFee": '3', "issuanceAmount": '3', "issuanceType": 'mg', "miniCardAmount": '100', "miniCardType": 'mg'},
   ];
 
-  void updateQuantity(int index, int quantity) {
-    quantities[index] = quantity;
+  void updateQuantity(String giftCardCode, int quantity) {
+    quantities[giftCardCode] = quantity;
     emit(UpdateQuantity());
   }
 
@@ -63,5 +60,21 @@ class GiftCardCubit extends Cubit<GiftCardState> {
   void updateSelectedDay(String day) {
     selectedDay = day;
     emit(UpdateSelectedDay()); // Emit a new state to rebuild UI
+  }
+
+  Future<void> giftCardsRequest() async {
+    emit(GiftCardsLoading());
+    try {
+      final res = await apiRepository.giftCards();
+      if (res.statusCode == 200) {
+        GiftCardsResponse response = GiftCardsResponse.fromJson(res.data);
+        emit(GiftCardsSuccess(response.data!));
+      } else {
+        var result = GiftCardsResponse.fromJson(res.data);
+        emit(GiftCardsError(result.message ??'Error on get live price'));
+      }
+    } catch (e) {
+      emit(GiftCardsError(e.toString()));
+    }
   }
 }
