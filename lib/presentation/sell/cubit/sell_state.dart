@@ -12,6 +12,13 @@ class GoldCalcError extends SellState {
   GoldCalcError(this.message);
 }
 
+class ConfirmLoading extends SellState {}
+class ConfirmSuccess extends SellState {}
+class ConfirmError extends SellState {
+  final String message;
+  ConfirmError(this.message);
+}
+
 //---- get live price
 class LivePriceLoading extends SellState {}
 class LivePriceSuccess extends SellState {}

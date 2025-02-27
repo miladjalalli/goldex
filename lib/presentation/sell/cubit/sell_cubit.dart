@@ -1,10 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:goldex/core/app_localizations.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:meta/meta.dart';
 
 import '../../../domain/entity/response/get_calc_response.dart';
 import '../../../domain/entity/response/live_price_18k_response.dart';
+import '../../../domain/entity/response/sell_gold_reponse.dart';
 import '../../../domain/repository/api_repository.dart';
 import '../../../domain/repository/secure_storage_service.dart';
 
@@ -26,6 +28,12 @@ class SellCubit extends Cubit<SellState> {
   String suffix2 = 'USD';
   double? previousWeightValue;
   double? previousUsdValue;
+
+  bool isWeightControllerSelected = false;
+  bool isUSDControllerSelected = false;
+
+  SellGoldResponse? sellGoldResponse;
+
   LivePrice18KResponse? livePrice18kResponse;
 
   TextEditingController weightController = TextEditingController();
@@ -49,11 +57,15 @@ class SellCubit extends Cubit<SellState> {
 
   void setUsdControllerHasError(bool value) {
     usdControllerHasError = value;
+    isWeightControllerSelected = false;
+    isUSDControllerSelected = true;
     emit(SellInitial());
   }
 
   void setWeightControllerHasError(bool value) {
     weightControllerHasError = value;
+    isWeightControllerSelected = true;
+    isUSDControllerSelected = false;
     emit(SellInitial());
   }
 
@@ -65,8 +77,8 @@ class SellCubit extends Cubit<SellState> {
         "fiat_amount": usdAmount,
       };
       final res = await apiRepository.goldCalc(data);
-      GetCalcResponse response = GetCalcResponse.fromJson(res.data);
       if (res.statusCode == 200) {
+        GetCalcResponse response = GetCalcResponse.fromJson(res.data);
         if (usdAmount != 0) {
           weightController.removeListener(_onWeightTextChanged);
           weightController.text = response.data!.estimatedGoldGrams.toString();
@@ -76,10 +88,10 @@ class SellCubit extends Cubit<SellState> {
           usdController.text = response.data!.totalCostUsd.toString();
           usdController.addListener(_onUsdTextChanged);
         }
-
         emit(GoldCalcSuccess());
       } else {
-        emit(GoldCalcError('Error on get calc'));
+        var result = GetCalcResponse.fromJson(res.data);
+        emit(GoldCalcError( result.message ??'Error on get calc'));
       }
     } catch (e) {
       emit(GoldCalcError(e.toString()));
@@ -90,12 +102,13 @@ class SellCubit extends Cubit<SellState> {
     emit(LivePriceLoading());
     try {
       final res = await apiRepository.livePrice();
-      LivePrice18KResponse response = LivePrice18KResponse.fromJson(res.data);
       if (res.statusCode == 200) {
+        LivePrice18KResponse response = LivePrice18KResponse.fromJson(res.data);
         livePrice18kResponse = response;
         emit(LivePriceSuccess());
       } else {
-        emit(LivePriceError('Error on get live price'));
+        var result = LivePrice18KResponse.fromJson(res.data);
+        emit(LivePriceError(result.message ??'Error on get live price'));
       }
     } catch (e) {
       emit(LivePriceError(e.toString()));
@@ -108,4 +121,32 @@ class SellCubit extends Cubit<SellState> {
     family = await secureStorageService.readFamily();
     emit(UpdateUserDataSuccess());
   }
+
+  Future<void> confirm(BuildContext context) async {
+    if (usdControllerHasError && isUSDControllerSelected) {
+      emit(ConfirmError(context.translate('EnterUSD')));
+      return;
+    } else if (weightControllerHasError && isWeightControllerSelected) {
+      emit(ConfirmError(context.translate('EnterWeight')));
+      return;
+    } else {
+      emit(ConfirmLoading());
+      try {
+        Map<String, dynamic> data;
+        data = {"weight_in_mg": weightController.text};
+
+        final res = await apiRepository.sellGold(data);
+        if (res.statusCode == 200) {
+          sellGoldResponse = SellGoldResponse.fromJson(res.data);
+          emit(ConfirmSuccess());
+        } else {
+          var result = SellGoldResponse.fromJson(res.data);
+          emit(ConfirmError(result.message ?? 'Error on confirm data'));
+        }
+      } catch (e) {
+        emit(ConfirmError(e.toString()));
+      }
+    }
+  }
+
 }

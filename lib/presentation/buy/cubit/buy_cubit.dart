@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:goldex/core/app_localizations.dart';
 import 'package:local_auth/local_auth.dart';
 
+import '../../../domain/entity/response/buy_gold_by_amount_response.dart';
 import '../../../domain/entity/response/get_calc_response.dart';
 import '../../../domain/entity/response/live_price_18k_response.dart';
 import '../../../domain/repository/api_repository.dart';
@@ -27,8 +28,10 @@ class BuyCubit extends Cubit<BuyState> {
   String suffix2 = 'Gram';
   double? previousUsdValue;
   double? previousWeightValue;
-  bool isWeightControllerSelecter = false;
+  bool isWeightControllerSelected = false;
   bool isUSDControllerSelected = false;
+
+  BuyGoldByAmountAndWeightResponse? buyGoldByAmountAndWeightResponse;
 
   LivePrice18KResponse? livePrice18kResponse;
 
@@ -53,7 +56,7 @@ class BuyCubit extends Cubit<BuyState> {
 
   void setUsdControllerHasError(bool value) {
     usdControllerHasError = value;
-    isWeightControllerSelecter = false;
+    isWeightControllerSelected = false;
     isUSDControllerSelected = true;
     emit(BuyInitial());
   }
@@ -61,7 +64,7 @@ class BuyCubit extends Cubit<BuyState> {
   void setWeightControllerHasError(bool value) {
     weightControllerHasError = value;
     isUSDControllerSelected = false;
-    isWeightControllerSelecter = true;
+    isWeightControllerSelected = true;
     emit(BuyInitial());
   }
 
@@ -69,25 +72,26 @@ class BuyCubit extends Cubit<BuyState> {
     if (usdControllerHasError && isUSDControllerSelected) {
       emit(ConfirmError(context.translate('EnterUSD')));
       return;
-    } else if (weightControllerHasError && isWeightControllerSelecter) {
+    } else if (weightControllerHasError && isWeightControllerSelected) {
       emit(ConfirmError(context.translate('EnterWeight')));
       return;
     } else {
       emit(ConfirmLoading());
       try {
         Map<String, dynamic> data;
-        isWeightControllerSelecter
+        isWeightControllerSelected
             ? data = {"weight_in_mg": weightController.text}
             : data = {"fiat_amount": usdController.text};
 
-        final res = isWeightControllerSelecter
+        final res = isWeightControllerSelected
             ? await apiRepository.buyGoldByWeight(data)
             : await apiRepository.buyGoldByAmount(data);
-        // SignUpResponse response = SignUpResponse.fromJson(res.data);
         if (res.statusCode == 200) {
+          buyGoldByAmountAndWeightResponse = BuyGoldByAmountAndWeightResponse.fromJson(res.data);
           emit(ConfirmSuccess());
         } else {
-          emit(ConfirmError('Error on Confirm Data'));
+          var result = BuyGoldByAmountAndWeightResponse.fromJson(res.data);
+          emit(ConfirmError(result.message ?? 'Error on confirm data'));
         }
       } catch (e) {
         emit(ConfirmError(e.toString()));
@@ -103,8 +107,8 @@ class BuyCubit extends Cubit<BuyState> {
         "fiat_amount": usdAmount,
       };
       final res = await apiRepository.goldCalc(data);
-      GetCalcResponse response = GetCalcResponse.fromJson(res.data);
       if (res.statusCode == 200) {
+        GetCalcResponse response = GetCalcResponse.fromJson(res.data);
         if (usdAmount != 0) {
           weightController.removeListener(_onWeightTextChanged);
           weightController.text = response.data!.estimatedGoldGrams.toString();
@@ -114,10 +118,10 @@ class BuyCubit extends Cubit<BuyState> {
           usdController.text = response.data!.totalCostUsd.toString();
           usdController.addListener(_onUsdTextChanged);
         }
-
         emit(GoldCalcSuccess());
       } else {
-        emit(GoldCalcError('Error on get calc'));
+        var result = GetCalcResponse.fromJson(res.data);
+        emit(GoldCalcError(result.message ??'Error on get calc'));
       }
     } catch (e) {
       emit(GoldCalcError(e.toString()));
@@ -128,12 +132,13 @@ class BuyCubit extends Cubit<BuyState> {
     emit(LivePriceLoading());
     try {
       final res = await apiRepository.livePrice();
-      LivePrice18KResponse response = LivePrice18KResponse.fromJson(res.data);
       if (res.statusCode == 200) {
+        LivePrice18KResponse response = LivePrice18KResponse.fromJson(res.data);
         livePrice18kResponse = response;
         emit(LivePriceSuccess());
       } else {
-        emit(LivePriceError('Error on get live price'));
+        var result = LivePrice18KResponse.fromJson(res.data);
+        emit(LivePriceError(result.message ?? 'Error on get live price'));
       }
     } catch (e) {
       emit(LivePriceError(e.toString()));

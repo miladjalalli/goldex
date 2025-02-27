@@ -30,6 +30,45 @@ class _SellScreenState extends State<SellScreen> {
           if (state is UpdateUserDataSuccess) {
             cubit.livePrice18K();
           }
+          if (state is ConfirmSuccess) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => OrderSummaryScreen(
+                    buyPage: false,
+                    sellPage: true,
+                    sendPage: false,
+                    totalAmount: cubit.sellGoldResponse?.data?.fiatReceived.toString() ?? '--',
+                    totalAmountType: '\$',
+
+                    totalGoldOrUSDReceiveAmount: cubit.sellGoldResponse?.data?.fiatReceived.toString() ?? '--',
+                    totalGoldOrUSDReceiveAmountType: '\$',
+
+                    netGoldPriceOrSellAmount: cubit.sellGoldResponse?.data?.goldSoldMg.toString() ?? '--',
+                    netGoldPriceOrSellAmountType: 'gr',
+
+                    feePercent: '1',
+                    feeAmount: cubit.sellGoldResponse?.data?.fee.toString() ?? '--',
+                    feeAmountType: '\$'
+                  )),
+            );
+          }
+          if (state is ConfirmError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+          if (state is GoldCalcError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
         },
         builder: (context, state) {
           SellCubit cubit = context.read<SellCubit>();
@@ -129,7 +168,7 @@ class _SellScreenState extends State<SellScreen> {
                                 ),
                               ),
                               isLoading: state is GoldCalcLoading,
-                              controller: cubit.usdController,
+                              controller: cubit.weightController,
                               title: context.translate("iWantToSell"),
                               onChanged: (value) {
                                 if (value == null || value.trim().isEmpty) {
@@ -148,7 +187,7 @@ class _SellScreenState extends State<SellScreen> {
                                 fontSize: 24,
                                 fontWeight: FontWeight.w700,
                               ),
-                              controller: cubit.weightController,
+                              controller: cubit.usdController,
                               suffix: Text(
                                 cubit.suffix2,
                                 style: const TextStyle(
@@ -190,29 +229,9 @@ class _SellScreenState extends State<SellScreen> {
                                     height: 50,
                                     width: 121,
                                     borderColor: Theme.of(context).primaryColor,
+                                    isLoading: (state is ConfirmLoading),
                                     onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => OrderSummaryScreen(
-                                                  title: 'Order Summary',
-                                                  totalAmount: '86.36',
-                                                  totalAmountType: '\$',
-                                                  firstText: 'Live Gold price per gram',
-                                                  firstTextAmount: "68.21",
-                                                  firstTextAmountType: '\$',
-                                                  secondText: 'Total USD receive',
-                                                  secondTextAmount: '87.23',
-                                                  secondTextAmountType: '\$',
-                                                  thirdText: 'Sell amount',
-                                                  thirdTextAmount: '1.5',
-                                                  thirdTextAmountType: 'gr',
-                                                  forthText: 'Fee',
-                                                  forthPercent: '1',
-                                                  forthTextAmount: '0.87',
-                                                  forthTextAmountType: '\$',
-                                                )),
-                                      );
+                                      cubit.confirm(context);
                                     },
                                   )
                                 ],

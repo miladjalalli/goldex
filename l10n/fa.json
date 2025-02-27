@@ -134,5 +134,11 @@
   "or": "Or",
   "scanYourCard": "Scan your Card",
   "gotIt": "Got it!",
-  "youHaveGotMessage": "You’ve Got 50mg Gift\nfrom scott williams"
+  "youHaveGotMessage": "You’ve Got 50mg Gift\nfrom scott williams",
+  "fee": "Fee",
+  "netGoldPrice": "Net Gold price",
+  "totalGoldReceive": "Total Gold receive",
+  "totalUSDReceive": "Total USD receive",
+  "sellAmount": "Sell Amount",
+  "sendAmount": "Send Amount"
 }

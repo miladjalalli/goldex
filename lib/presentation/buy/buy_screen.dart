@@ -24,12 +24,49 @@ class _BuyScreenState extends State<BuyScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<BuyCubit>()..livePrice18K()..loadUserData(),
+      create: (context) => sl<BuyCubit>()..loadUserData(),
       child: BlocConsumer<BuyCubit, BuyState>(
         listener: (context, state) {
           BuyCubit cubit = context.read<BuyCubit>();
           if (state is UpdateUserDataSuccess) {
             cubit.livePrice18K();
+          }
+          if (state is ConfirmSuccess) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => OrderSummaryScreen(
+                        buyPage: true,
+                        sellPage: false,
+                        sendPage: false,
+                        totalAmount: cubit.buyGoldByAmountAndWeightResponse?.data?.totalAmount.toString() ?? '--',
+                        totalAmountType: '\$',
+                        liveGoldPriceAmount: cubit.livePrice18kResponse?.data?.pricePerGram18k.toString() ?? '-',
+                        totalGoldOrUSDReceiveAmount: cubit.buyGoldByAmountAndWeightResponse?.data?.goldPurchasedMg.toString() ?? '--',
+                        totalGoldOrUSDReceiveAmountType: 'gr',
+                        netGoldPriceOrSellAmount: cubit.buyGoldByAmountAndWeightResponse?.data?.basePrice.toString() ?? '--',
+                        netGoldPriceOrSellAmountType: '\$',
+                        feePercent: '1',
+                        feeAmount: cubit.buyGoldByAmountAndWeightResponse?.data?.fee.toString() ?? '--',
+                        feeAmountType: '\$',
+                      )),
+            );
+          }
+          if (state is ConfirmError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+          if (state is GoldCalcError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: Colors.red,
+              ),
+            );
           }
         },
         builder: (context, state) {
@@ -194,30 +231,9 @@ class _BuyScreenState extends State<BuyScreen> {
                                     height: 50,
                                     width: 121,
                                     borderColor: Theme.of(context).primaryColor,
+                                    isLoading: (state is ConfirmLoading),
                                     onPressed: () {
                                       cubit.confirm(context);
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //       builder: (context) => OrderSummaryScreen(
-                                      //             title: 'Order Summary',
-                                      //             totalAmount: '102.68',
-                                      //             totalAmountType: '\$',
-                                      //             firstText: 'Live Gold price per gram',
-                                      //             firstTextAmount: "68.21",
-                                      //             firstTextAmountType: '\$',
-                                      //             secondText: 'Total Gold receive',
-                                      //             secondTextAmount: '1.5',
-                                      //             secondTextAmountType: 'gr',
-                                      //             thirdText: 'Net Gold price',
-                                      //             thirdTextAmount: '102',
-                                      //             thirdTextAmountType: '\$',
-                                      //             forthText: 'Fee',
-                                      //             forthPercent: '1',
-                                      //             forthTextAmount: '0.68',
-                                      //             forthTextAmountType: '\$',
-                                      //           )),
-                                      // );
                                     },
                                   )
                                 ],
