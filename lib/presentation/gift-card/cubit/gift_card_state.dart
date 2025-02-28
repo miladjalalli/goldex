@@ -19,3 +19,11 @@ class GiftCardsError extends GiftCardState{
   final String message;
   GiftCardsError(this.message);
 }
+
+//--- get balancy
+class GetGoldBalanceLoading extends GiftCardState {}
+class GetGoldBalanceSuccess extends GiftCardState {}
+class GetGoldBalanceError extends GiftCardState {
+  final String message;
+  GetGoldBalanceError(this.message);
+}

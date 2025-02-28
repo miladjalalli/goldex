@@ -21,73 +21,72 @@ class GetGoldReceivingMethodScreen extends StatefulWidget {
 }
 
 class _GetGoldReceivingMethodScreenState extends State<GetGoldReceivingMethodScreen> {
-
   @override
   Widget build(BuildContext context) {
-    GiveGoldCubit cubit = context.read<GiveGoldCubit>();
     return BlocProvider(
       create: (context) => sl<GiveGoldCubit>(),
-  child: BlocConsumer<GiveGoldCubit, GiveGoldState>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        return Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          appBar: AppBar(
-            leading: TextButton(
-              style: ButtonStyle(
-                padding: WidgetStateProperty.all(EdgeInsets.only(left: 20)),
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: SvgPicture.asset(
-                Asset.back,
-              ),
-            ),
+      child: BlocConsumer<GiveGoldCubit, GiveGoldState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          GiveGoldCubit cubit = context.read<GiveGoldCubit>();
+          return Scaffold(
             backgroundColor: Theme.of(context).colorScheme.surface,
-            elevation: 0,
-            forceMaterialTransparency: true,
-            centerTitle: true,
-            title: Text(
-              context.translate('receivingMethod'),
-            ),
-            titleTextStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Theme.of(context).colorScheme.onPrimary),
-          ),
-          body: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 34, 20, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                expandableList(cubit)
-              ],
-            ),
-          ),
-          bottomNavigationBar: Padding(
-              padding: EdgeInsets.fromLTRB(64,0,64,32),
-              child: CustomButton(
-                text: context.translate('continue'),
-                backgroundColorStart: Theme.of(context).primaryColor,
-                backgroundColorEnd: Theme.of(context).colorScheme.secondary,
-                textColor: Theme.of(context).colorScheme.surface,
-                height: 50,
-                width: 300,
-                borderColor: Theme.of(context).primaryColor,
+            appBar: AppBar(
+              leading: TextButton(
+                style: ButtonStyle(
+                  padding: WidgetStateProperty.all(EdgeInsets.only(left: 20)),
+                ),
                 onPressed: () {
-                  Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => GetGoldOrderSummaryScreen(
-                  title: '',
-                  totalAmount: '36.95',
-                  totalAmountType: 'g',
-                                    )),
-                  );
+                  Navigator.pop(context);
                 },
-              )
-          ),
-        );
-      },
-    ),
-);
+                child: SvgPicture.asset(
+                  Asset.back,
+                ),
+              ),
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              elevation: 0,
+              forceMaterialTransparency: true,
+              centerTitle: true,
+              title: Text(
+                context.translate('receivingMethod'),
+              ),
+              titleTextStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Theme.of(context).colorScheme.onPrimary),
+            ),
+            body: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 34, 20, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [expandableList(cubit)],
+              ),
+            ),
+            bottomNavigationBar: Padding(
+                padding: EdgeInsets.fromLTRB(64, 0, 64, 32),
+                child: CustomButton(
+                  text: context.translate('continue'),
+                  backgroundColorStart: Theme.of(context).primaryColor,
+                  backgroundColorEnd: Theme.of(context).colorScheme.secondary,
+                  textColor: Theme.of(context).colorScheme.surface,
+                  height: 50,
+                  width: 300,
+                  borderColor: Theme.of(context).primaryColor,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => GetGoldOrderSummaryScreen(
+                                title: '',
+                                totalAmount: '36.95',
+                                totalAmountType: 'g',
+                              )),
+                    );
+                  },
+                )),
+          );
+        },
+      ),
+    );
   }
+
   Widget expandableList(GiveGoldCubit cubit) {
     var items = cubit.items;
     return Padding(
@@ -113,8 +112,9 @@ class _GetGoldReceivingMethodScreenState extends State<GetGoldReceivingMethodScr
                     child: InkWell(
                       onTap: items[index]['active']
                           ? () {
-                        cubit.toggleExpanded(index);
-                      } : null,
+                              cubit.toggleExpanded(index);
+                            }
+                          : null,
                       child: ListTile(
                         leading: SvgPicture.asset(
                           items[index]['icon'],
@@ -124,16 +124,11 @@ class _GetGoldReceivingMethodScreenState extends State<GetGoldReceivingMethodScr
                         ),
                         title: Text(
                           items[index]['title'],
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: items[index]['active']
-                                  ? Theme.of(context).colorScheme.onSurface : Colors.grey
-                          ),
+                          style: TextStyle(fontSize: 16, color: items[index]['active'] ? Theme.of(context).colorScheme.onSurface : Colors.grey),
                         ),
                         trailing: SvgPicture.asset(
                           cubit.expandedState[index] ? Asset.trailingUp : Asset.trailingDown,
-                          color: items[index]['active']
-                              ? Theme.of(context).colorScheme.onSurface : Colors.grey,
+                          color: items[index]['active'] ? Theme.of(context).colorScheme.onSurface : Colors.grey,
                           width: 11,
                           height: 6,
                         ),
@@ -194,21 +189,21 @@ class _GetGoldReceivingMethodScreenState extends State<GetGoldReceivingMethodScr
                                                 shape: BoxShape.circle,
                                                 border: Border.all(
                                                   color: cubit.selectedDay == day['day']! ? Theme.of(context).primaryColor : Theme.of(context).colorScheme.primaryContainer,
-                                                  width: cubit.selectedDay == day['day']! ?  5 : 3,
+                                                  width: cubit.selectedDay == day['day']! ? 5 : 3,
                                                 ),
                                                 color: Colors.transparent, // Remove internal color
                                               ),
                                               child: cubit.selectedDay == day['day']!
                                                   ? Center(
-                                                child: Container(
-                                                  width: 10,
-                                                  height: 10,
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: Colors.transparent, // No color for the inner circle
-                                                  ),
-                                                ),
-                                              )
+                                                      child: Container(
+                                                        width: 10,
+                                                        height: 10,
+                                                        decoration: BoxDecoration(
+                                                          shape: BoxShape.circle,
+                                                          color: Colors.transparent, // No color for the inner circle
+                                                        ),
+                                                      ),
+                                                    )
                                                   : null, // No inner circle when not selected
                                             ),
                                           ),
@@ -217,7 +212,7 @@ class _GetGoldReceivingMethodScreenState extends State<GetGoldReceivingMethodScr
                                           day['day']!,
                                           style: TextStyle(
                                             fontSize: 18,
-                                            fontWeight: cubit.selectedDay == day['day']! ? FontWeight.w700 :FontWeight.w500,
+                                            fontWeight: cubit.selectedDay == day['day']! ? FontWeight.w700 : FontWeight.w500,
                                             color: Theme.of(context).colorScheme.onTertiaryContainer,
                                           ),
                                         ),
@@ -226,7 +221,7 @@ class _GetGoldReceivingMethodScreenState extends State<GetGoldReceivingMethodScr
                                           '(${day['hour']})',
                                           style: TextStyle(
                                             fontSize: 16,
-                                            fontWeight: cubit.selectedDay == day['day']! ? FontWeight.w700 :FontWeight.w500,
+                                            fontWeight: cubit.selectedDay == day['day']! ? FontWeight.w700 : FontWeight.w500,
                                             color: Theme.of(context).colorScheme.onTertiaryContainer,
                                           ),
                                         ),
@@ -238,7 +233,7 @@ class _GetGoldReceivingMethodScreenState extends State<GetGoldReceivingMethodScr
                                         day['date']!,
                                         style: TextStyle(
                                           fontSize: 16,
-                                          fontWeight: cubit.selectedDay == day['day']! ? FontWeight.w700 :FontWeight.w500,
+                                          fontWeight: cubit.selectedDay == day['day']! ? FontWeight.w700 : FontWeight.w500,
                                           color: Theme.of(context).colorScheme.onTertiaryContainer,
                                         ),
                                       ),
@@ -272,5 +267,3 @@ class _GetGoldReceivingMethodScreenState extends State<GetGoldReceivingMethodScr
     );
   }
 }
-
-

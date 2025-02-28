@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:meta/meta.dart';
 import '../../../core/assets.dart';
+import '../../../domain/entity/response/currency_balance_response.dart';
 import '../../../domain/entity/response/gift_cards_response.dart';
+import '../../../domain/entity/response/gold_balance_response.dart';
 import '../../../domain/repository/api_repository.dart';
 import '../../../domain/repository/secure_storage_service.dart';
 part 'gift_card_state.dart';
@@ -14,6 +16,7 @@ class GiftCardCubit extends Cubit<GiftCardState> {
   LocalAuthentication _auth = LocalAuthentication();
   GiftCardCubit({required this.apiRepository, required this.secureStorageService}) : super(GiftCardInitial());
 
+  double? goldBalanceMg;
   GiftCardsResponse? giftCardsResponse;
   Map<String, int> quantities = {};
   List<bool> expandedState = List.generate(2, (index) => false);
@@ -77,4 +80,21 @@ class GiftCardCubit extends Cubit<GiftCardState> {
       emit(GiftCardsError(e.toString()));
     }
   }
+
+  Future<void> getGoldBalance() async {
+    emit(GetGoldBalanceLoading());
+    try {
+      final res = await apiRepository.goldBalance();
+      if (res.statusCode == 200) {
+        GoldBalanceResponse response = GoldBalanceResponse.fromJson(res.data);
+        goldBalanceMg = response.data!.goldBalanceMg;
+        emit(GetGoldBalanceSuccess());
+      } else {
+        emit(GetGoldBalanceError('Error on get your balance'));
+      }
+    } catch (e) {
+      emit(GetGoldBalanceError(e.toString()));
+    }
+  }
+
 }
