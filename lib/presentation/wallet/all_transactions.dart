@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goldex/core/app_localizations.dart';
+import '../../core/dependency_injection.dart';
 import '../../core/theme/theme.dart';
 import '../../core/assets.dart';
 import 'cubit/wallet_cubit.dart';
@@ -18,43 +19,51 @@ class AllTransactionsScreen extends StatelessWidget {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      appBar: AppBar(
-        leading: TextButton(
-          style: ButtonStyle(
-            padding: WidgetStateProperty.all(EdgeInsets.only(left: 20)),
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: SvgPicture.asset(
-            Asset.back,
-          ),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        elevation: 0,
-        forceMaterialTransparency: true,
-        centerTitle: true,
-        title: Text(
-          context.translate('transaction'),
-        ),
-        titleTextStyle: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.w700,
-          color: Theme.of(context).colorScheme.onPrimaryContainer,
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 15, bottom: 15),
-        child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: context.read<WalletCubit>().transactions.length,
-          itemBuilder: (context, index) {
-            final transaction = context.read<WalletCubit>().transactions[index];
-            return cardView(context, transaction);
-          },
-        ),
+    return BlocProvider(
+      create: (context) => sl<WalletCubit>(),
+      child: BlocConsumer<WalletCubit, WalletState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return Scaffold(
+            backgroundColor: Theme.of(context).colorScheme.surface,
+            appBar: AppBar(
+              leading: TextButton(
+                style: ButtonStyle(
+                  padding: WidgetStateProperty.all(EdgeInsets.only(left: 20)),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: SvgPicture.asset(
+                  Asset.back,
+                ),
+              ),
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              elevation: 0,
+              forceMaterialTransparency: true,
+              centerTitle: true,
+              title: Text(
+                context.translate('transaction'),
+              ),
+              titleTextStyle: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w700,
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+              ),
+            ),
+            body: Padding(
+              padding: const EdgeInsets.only(top: 15, bottom: 15),
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: context.read<WalletCubit>().transactions.length,
+                itemBuilder: (context, index) {
+                  final transaction = context.read<WalletCubit>().transactions[index];
+                  return cardView(context, transaction);
+                },
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -133,17 +142,21 @@ class AllTransactionsScreen extends StatelessWidget {
                         color: transaction['status'] == 'Done'
                             ? Theme.of(context).primaryColor
                             : transaction['status'] == 'Failed'
-                            ? colorFailed
-                            : colorPending,
+                                ? colorFailed
+                                : colorPending,
                         fontWeight: FontWeight.w900,
                         fontSize: 11,
                       ),
                       textAlign: TextAlign.end,
                     ),
-                    SizedBox(width: 12,),
-                    SvgPicture.asset(Asset.attention,
+                    SizedBox(
+                      width: 12,
+                    ),
+                    SvgPicture.asset(
+                      Asset.attention,
                       width: 13,
-                      height: 15,)
+                      height: 15,
+                    )
                   ],
                 ),
               ),
@@ -154,4 +167,3 @@ class AllTransactionsScreen extends StatelessWidget {
     );
   }
 }
-

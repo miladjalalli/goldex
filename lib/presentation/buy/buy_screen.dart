@@ -166,55 +166,59 @@ class _BuyScreenState extends State<BuyScreen> {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            GoldexTextFormField(
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w700,
-                              ),
-                              suffix: Text(
-                                cubit.suffix1,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              controller: cubit.usdController,
-                              title: context.translate("iWantToSpend"),
-                              onChanged: (value) {
-                                if (value == null || value.trim().isEmpty) {
-                                  cubit.setUsdControllerHasError(true);
-                                }
-                                cubit.setUsdControllerHasError(false);
-                              },
-                              textInputAction: TextInputAction.next,
-                              keyboardType: TextInputType.number,
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            GoldexTextFormField(
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w700,
-                              ),
-                              controller: cubit.weightController,
-                              suffix: Text(
-                                cubit.suffix2,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              title: context.translate("iWillReceive"),
-                              onChanged: (value) {
-                                if (value == null || value.trim().isEmpty) {
-                                  cubit.setWeightControllerHasError(true);
-                                }
-                                cubit.setWeightControllerHasError(false);
-                              },
-                              textInputAction: TextInputAction.done,
-                              keyboardType: TextInputType.number,
-                            ),
+                            Form(
+                              key: cubit.formKey,
+                              child: Column(
+                                children: [
+                                  GoldexTextFormField(
+                                    style: const TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                    suffix: Text(
+                                      cubit.suffix1,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Enter USD Amount';
+                                      }
+                                    },
+                                    controller: cubit.usdController,
+                                    title: context.translate("iWantToSpend"),
+                                    textInputAction: TextInputAction.next,
+                                    keyboardType: TextInputType.number,
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  GoldexTextFormField(
+                                    style: const TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                    controller: cubit.weightController,
+                                    suffix: Text(
+                                      cubit.suffix2,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    title: context.translate("iWillReceive"),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Enter Weight';
+                                      }
+                                    },
+                                    textInputAction: TextInputAction.done,
+                                    keyboardType: TextInputType.number,
+                                  ),
+                                ],
+                              )),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(0, 20, 0, 5),
                               child: Row(
@@ -240,7 +244,9 @@ class _BuyScreenState extends State<BuyScreen> {
                                     borderColor: Theme.of(context).primaryColor,
                                     isLoading: (state is ConfirmLoading),
                                     onPressed: () {
-                                      cubit.confirm(context);
+                                      if (cubit.formKey.currentState!.validate()) {
+                                        cubit.confirm(context);
+                                      }
                                     },
                                   )
                                 ],

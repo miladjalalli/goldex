@@ -38,7 +38,9 @@ abstract class ApiRepository {
 
   Future<Response> currencyBalance();
 
-  Future<Response> transferCurrencyWithMobile();
+  Future<Response> transferCurrencyWithMobile(Map<String, Object?> data);
+
+  Future<Response> transferGoldWithMobile(Map<String, Object?> data);
 
   Future<Response> giftCards();
 }

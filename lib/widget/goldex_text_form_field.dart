@@ -51,46 +51,43 @@ class GoldexTextFormField extends StatelessWidget {
               ],
             ),
           ),
-        SizedBox(
-          height: 50,
-          child: TextFormField(
-            controller: controller,
-            keyboardType: keyboardType,
-            textInputAction: textInputAction,
-            obscureText: obscureText ?? false,
-            cursorColor: Theme.of(context).primaryColor,
-            maxLines: maxLines ?? 1,
-            style: style ?? TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: Theme.of(context).colorScheme.onSurface),
-            validator: validator,
-            onChanged: onChanged,
-            decoration: InputDecoration(
-              hintText: hintText,
-              labelText: labelText,
-              suffix: isLoading ? Padding(
-                padding: EdgeInsets.only(top: 15.0),
-                child: SpinKitThreeBounce(
-                  color: Theme.of(context).primaryColor,
-                  size: 20,
-                ),
-              ) : suffix,
-              suffixIcon: suffixIcon,
-              contentPadding: EdgeInsets.fromLTRB(16, 0, 16, 16),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(25),
-                borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary, width: 1),
+        TextFormField(
+          controller: controller,
+          keyboardType: keyboardType,
+          textInputAction: textInputAction,
+          obscureText: obscureText ?? false,
+          cursorColor: Theme.of(context).primaryColor,
+          maxLines: maxLines ?? 1,
+          style: style ?? TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: Theme.of(context).colorScheme.onSurface),
+          validator: validator,
+          onChanged: onChanged,
+          decoration: InputDecoration(
+            hintText: hintText,
+            labelText: labelText,
+            suffix: isLoading ? Padding(
+              padding: EdgeInsets.only(top: 15.0),
+              child: SpinKitThreeBounce(
+                color: Theme.of(context).primaryColor,
+                size: 20,
               ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(25),
-                borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary.withAlpha(95), width: 1),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(25),
-                borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary, width: 1),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(25),
-                borderSide: BorderSide(color: Theme.of(context).colorScheme.error, width: 1),
-              ),
+            ) : suffix,
+            suffixIcon: suffixIcon,
+            contentPadding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(25),
+              borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary, width: 1),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(25),
+              borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary.withAlpha(95), width: 1),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(25),
+              borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary, width: 1),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(25),
+              borderSide: BorderSide(color: Theme.of(context).colorScheme.error, width: 1),
             ),
           ),
         ),

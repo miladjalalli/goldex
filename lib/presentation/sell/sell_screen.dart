@@ -111,8 +111,7 @@ class _SellScreenState extends State<SellScreen> {
                           cardNumber: '2020-1821-1530-2401',
                           goldAmount: cubit.goldBalanceMg?.toStringAsFixed(2) ?? '0.0',
                           type: context.translate('mg'),
-                          onDeposit: () => {}
-                      ),
+                          onDeposit: () => {}),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
                     child: Center(
@@ -165,57 +164,61 @@ class _SellScreenState extends State<SellScreen> {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start, // Align content to start
                           children: [
-                            GoldexTextFormField(
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w700,
-                              ),
-                              suffix: Text(
-                                cubit.suffix1,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              isLoading: state is GoldCalcLoading,
-                              controller: cubit.weightController,
-                              title: context.translate("iWantToSell"),
-                              onChanged: (value) {
-                                if (value == null || value.trim().isEmpty) {
-                                  cubit.setUsdControllerHasError(true);
-                                }
-                                cubit.setUsdControllerHasError(false);
-                              },
-                              textInputAction: TextInputAction.next,
-                              keyboardType: TextInputType.number,
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            GoldexTextFormField(
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w700,
-                              ),
-                              controller: cubit.usdController,
-                              suffix: Text(
-                                cubit.suffix2,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              isLoading: state is GoldCalcLoading,
-                              title: context.translate("iWillEarn"),
-                              onChanged: (value) {
-                                if (value == null || value.trim().isEmpty) {
-                                  cubit.setWeightControllerHasError(true);
-                                }
-                                cubit.setWeightControllerHasError(false);
-                              },
-                              textInputAction: TextInputAction.done,
-                              keyboardType: TextInputType.number,
-                            ),
+                            Form(
+                                key: cubit.formKey,
+                                child: Column(
+                                  children: [
+                                    GoldexTextFormField(
+                                      style: const TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                      suffix: Text(
+                                        cubit.suffix1,
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      isLoading: state is GoldCalcLoading,
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Enter Weight';
+                                        }
+                                      },
+                                      controller: cubit.weightController,
+                                      title: context.translate("iWantToSell"),
+                                      textInputAction: TextInputAction.next,
+                                      keyboardType: TextInputType.number,
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    GoldexTextFormField(
+                                      style: const TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                      controller: cubit.usdController,
+                                      suffix: Text(
+                                        cubit.suffix2,
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Enter Amount';
+                                        }
+                                      },
+                                      isLoading: state is GoldCalcLoading,
+                                      title: context.translate("iWillEarn"),
+                                      textInputAction: TextInputAction.done,
+                                      keyboardType: TextInputType.number,
+                                    ),
+                                  ],
+                                )),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(0, 20, 0, 5),
                               child: Row(
@@ -241,7 +244,9 @@ class _SellScreenState extends State<SellScreen> {
                                     borderColor: Theme.of(context).primaryColor,
                                     isLoading: (state is ConfirmLoading),
                                     onPressed: () {
-                                      cubit.confirm(context);
+                                      if (cubit.formKey.currentState!.validate()) {
+                                        cubit.confirm(context);
+                                      }
                                     },
                                   )
                                 ],

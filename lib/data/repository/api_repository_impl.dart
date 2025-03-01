@@ -62,7 +62,10 @@ class ApiRepositoryImpl extends ApiRepository {
   Future<Response> currencyBalance() => remoteDataSource.currencyBalance();
 
   @override
-  Future<Response> transferCurrencyWithMobile() => remoteDataSource.transferCurrencyWithMobile();
+  Future<Response> transferCurrencyWithMobile(Map<String, dynamic> data) => remoteDataSource.transferCurrencyWithMobile(data);
+
+  @override
+  Future<Response> transferGoldWithMobile(Map<String, dynamic> data) => remoteDataSource.transferGoldWithMobile(data);
 
   @override
   Future<Response> giftCards() => remoteDataSource.giftCards();

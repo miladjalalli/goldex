@@ -27,6 +27,7 @@ class BuyCubit extends Cubit<BuyState> {
   String? family;
   double? goldBalanceMg;
   double? currencyBalanceUSD;
+  final formKey = GlobalKey<FormState>();
 
   String suffix1 = 'USD';
   String suffix2 = 'MilliGram';
@@ -42,13 +43,13 @@ class BuyCubit extends Cubit<BuyState> {
 
   final TextEditingController usdController = TextEditingController();
   final TextEditingController weightController = TextEditingController();
-  bool usdControllerHasError = true;
-  bool weightControllerHasError = true;
 
   void _onUsdTextChanged() {
     if (usdController.text.isNotEmpty && (double.parse(usdController.text) != previousUsdValue) && (double.parse(usdController.text)>0)) {
       weightController.text = '';
       previousUsdValue = double.parse(usdController.text);
+      isWeightControllerSelected = false;
+      isUSDControllerSelected = true;
       _goldCalc(double.parse(usdController.text), 0);
     }
   }
@@ -57,52 +58,32 @@ class BuyCubit extends Cubit<BuyState> {
     if (weightController.text.isNotEmpty && (double.parse(weightController.text) != previousWeightValue) && double.parse(weightController.text)>0) {
       usdController.text = '';
       previousWeightValue = double.parse(weightController.text);
+      isUSDControllerSelected = false;
+      isWeightControllerSelected = true;
       _goldCalc(0, double.parse(weightController.text));
     }
   }
 
-  void setUsdControllerHasError(bool value) {
-    usdControllerHasError = value;
-    isWeightControllerSelected = false;
-    isUSDControllerSelected = true;
-    emit(BuyInitial());
-  }
-
-  void setWeightControllerHasError(bool value) {
-    weightControllerHasError = value;
-    isUSDControllerSelected = false;
-    isWeightControllerSelected = true;
-    emit(BuyInitial());
-  }
-
   Future<void> confirm(BuildContext context) async {
-    if (usdControllerHasError && isUSDControllerSelected) {
-      emit(ConfirmError(context.translate('EnterUSD')));
-      return;
-    } else if (weightControllerHasError && isWeightControllerSelected) {
-      emit(ConfirmError(context.translate('EnterWeight')));
-      return;
-    } else {
-      emit(ConfirmLoading());
-      try {
-        Map<String, dynamic> data;
-        isWeightControllerSelected
-            ? data = {"weight_in_mg": weightController.text}
-            : data = {"fiat_amount": usdController.text};
+    emit(ConfirmLoading());
+    try {
+      Map<String, dynamic> data;
+      isWeightControllerSelected
+          ? data = {"weight_in_mg": weightController.text}
+          : data = {"fiat_amount": usdController.text};
 
-        final res = isWeightControllerSelected
-            ? await apiRepository.buyGoldByWeight(data)
-            : await apiRepository.buyGoldByAmount(data);
-        if (res.statusCode == 200) {
-          buyGoldByAmountAndWeightResponse = BuyGoldByAmountAndWeightResponse.fromJson(res.data);
-          emit(ConfirmSuccess());
-        } else {
-          var result = BuyGoldByAmountAndWeightResponse.fromJson(res.data);
-          emit(ConfirmError(result.message ?? 'Error on confirm data'));
-        }
-      } catch (e) {
-        emit(ConfirmError(e.toString()));
+      final res = isWeightControllerSelected
+          ? await apiRepository.buyGoldByWeight(data)
+          : await apiRepository.buyGoldByAmount(data);
+      if (res.statusCode == 200) {
+        buyGoldByAmountAndWeightResponse = BuyGoldByAmountAndWeightResponse.fromJson(res.data);
+        emit(ConfirmSuccess());
+      } else {
+        var result = BuyGoldByAmountAndWeightResponse.fromJson(res.data);
+        emit(ConfirmError(result.message ?? 'Error on confirm data'));
       }
+    } catch (e) {
+      emit(ConfirmError(e.toString()));
     }
   }
 

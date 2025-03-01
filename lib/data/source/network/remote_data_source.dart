@@ -79,8 +79,12 @@ import 'package:goldex/data/client/api_client.dart';
     return await apiClient.getRequest('currency-balance/');
   }
 
-  Future<Response> transferCurrencyWithMobile() async {
-    return await apiClient.getRequest('transfer-currency/mobile/');
+  Future<Response> transferCurrencyWithMobile(Map<String, dynamic> data) async {
+    return await apiClient.postRequest('transfer-currency/mobile/', data: data);
+  }
+
+  Future<Response> transferGoldWithMobile(Map<String, dynamic> data) async {
+    return await apiClient.postRequest('transfer-gold/mobile/', data: data);
   }
 
   Future<Response> giftCards() async {
