@@ -63,11 +63,11 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
         width: screenWidth * 0.16,
         height: screenWidth * 0.16,
         decoration: BoxDecoration(
-          color: isSelected ? Colors.green : colorDarkGreyNavigation,
+          color: isSelected ? Theme.of(context).primaryColor : colorDarkGreyNavigation,
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              color: (isSelected ? Colors.green : colorDarkGreyNavigation)
+              color: (isSelected ? Theme.of(context).primaryColor : colorDarkGreyNavigation)
                   .withOpacity(0.3),
               blurRadius: 15,
               offset: Offset(0, 5),
@@ -78,9 +78,9 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
           child: SvgPicture.asset(
             icon,
             fit: BoxFit.cover,
-            color: isSelected ? Theme.of(context).colorScheme.onSurface : Colors.grey,
-            width: screenWidth * 0.08,
-            height: screenWidth * 0.08,
+            color: isSelected ? Theme.of(context).colorScheme.onSurface : Theme.of(context).colorScheme.surface,
+            width: screenWidth * 0.07,
+            height: screenWidth * 0.07,
           ),
         ),
       ),

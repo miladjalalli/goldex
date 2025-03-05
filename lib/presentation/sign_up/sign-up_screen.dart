@@ -7,6 +7,7 @@ import 'package:goldex/widget/goldex_text_form_field.dart';
 
 import '../../core/assets.dart';
 import '../../widget/custom_button.dart';
+import '../../widget/size_config.dart';
 import '../home/home_screen.dart';
 import 'cubit/sing_up_cubit.dart';
 
@@ -119,13 +120,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Widget _buildHeader() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(40, 100, 41, 70),
+      padding: const EdgeInsets.fromLTRB(40, 120, 41, 70),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _buildStepIndicator(context.translate('phoneNumber'), 0),
           _buildDivider(),
-          _buildStepIndicator(context.translate('singUp'), 1),
+          _buildStepIndicator(context.translate('signUp'), 1),
           _buildDivider(),
           _buildStepIndicator(context.translate('setPassword'), 2),
         ],
@@ -140,13 +141,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
         Text(
           title,
           style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                color: cubit.currentIndex == index
-                    ? Theme.of(context).colorScheme.surface
-                    : cubit.currentIndex >= index
-                        ? Colors.green
-                        : Theme.of(context).colorScheme.onPrimary,
-                fontWeight: FontWeight.w500,
-              ),
+              color: cubit.currentIndex == index
+                  ? Theme.of(context).colorScheme.surface
+                  : cubit.currentIndex >= index
+                      ? Colors.green
+                      : Theme.of(context).colorScheme.onPrimary,
+              fontWeight: FontWeight.w500,
+              fontSize: 15,
+              fontFamily: 'inter'),
         ),
       ],
     );
@@ -167,12 +169,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget _buildPhoneNumberStep(SingUpState state) {
     SingUpCubit cubit = context.read<SingUpCubit>();
     return Padding(
-      padding: const EdgeInsets.fromLTRB(21, 0, 21, 35),
+      padding: const EdgeInsets.fromLTRB(21, 10, 21, 35),
       child: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              height: 448,
+              height: 440,
               width: 363,
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
@@ -192,95 +194,168 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Visibility(
-                      visible: !cubit.otpIsShowing,
+                    Expanded(
                       child: Column(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(23, 5, 0, 7),
-                            child: Text(
-                              context.translate("phoneNumberEmail"),
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: Theme.of(context).colorScheme.onSurface),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 37.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          Visibility(
+                            visible: !cubit.otpIsShowing,
+                            child: Column(
                               children: [
-                                Container(
-                                    width: 90,
-                                    height: 50,
-                                    padding: EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context).colorScheme.surface,
-                                      borderRadius: BorderRadius.circular(25),
-                                      border: Border.all(
-                                        color: Theme.of(context).colorScheme.primaryContainer,
-                                        width: 1,
-                                      ),
-                                    ),
-                                    child: Theme(
-                                      data: Theme.of(context).copyWith(
-                                        cardColor: Theme.of(context).colorScheme.surface,
-                                        popupMenuTheme: PopupMenuThemeData(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(12),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(23, 2, 0, 7),
+                                  child: Text(
+                                    context.translate("pleaseEnterPhoneNumber"),
+                                    style: TextStyle(fontSize: SizeConfig.scaleWidth(16), fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 30.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                          width: 90,
+                                          height: 50,
+                                          padding: EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                            color: Theme.of(context).colorScheme.surface,
+                                            borderRadius: BorderRadius.circular(25),
+                                            border: Border.all(
+                                              color: Theme.of(context).colorScheme.primaryContainer,
+                                              width: 1,
+                                            ),
                                           ),
-                                        ),
+                                          child: Theme(
+                                            data: Theme.of(context).copyWith(
+                                              cardColor: Theme.of(context).colorScheme.surface,
+                                              popupMenuTheme: PopupMenuThemeData(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(12),
+                                                ),
+                                              ),
+                                            ),
+                                            child: DropdownButtonHideUnderline(
+                                              child: DropdownButton<String>(
+                                                value: cubit.selectedCountryCode.isNotEmpty ? cubit.selectedCountryCode : cubit.countryCodes.first,
+                                                isExpanded: true,
+                                                icon: Icon(Icons.arrow_drop_down, color: Colors.blue),
+                                                items: cubit.countryCodes.map((String code) {
+                                                  return DropdownMenuItem<String>(
+                                                    value: code,
+                                                    child: Text(code, style: Theme.of(context).textTheme.bodySmall),
+                                                  );
+                                                }).toList(),
+                                                onChanged: (String? newValue) {
+                                                  setState(() {
+                                                    cubit.selectedCountryCode = newValue!;
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                          )),
+                                      SizedBox(width: 6),
+                                      Expanded(
+                                        child: GoldexTextFormField(
+                                            controller: cubit.numberOrEmailController,
+                                            onChanged: (value) {
+                                              if (value == null || value.isEmpty) {
+                                                cubit.setTNumberOrEmailControllerHasError(true);
+                                                return;
+                                              }
+
+                                              // Regex for email validation
+                                              final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+
+                                              // Regex for a 10-digit mobile number (without country code)
+                                              final mobileRegex = RegExp(r'^\d{10}$');
+
+                                              if (!emailRegex.hasMatch(value) && !mobileRegex.hasMatch(value)) {
+                                                cubit.setTNumberOrEmailControllerHasError(true);
+                                                return;
+                                              }
+                                              cubit.setTNumberOrEmailControllerHasError(false);
+                                            },
+                                            validator: (String? value) {
+                                              return null; // ✅ Valid input
+                                            },
+                                            suffixIcon: cubit.numberOrEmailControllerHasError ? Icon(Icons.error_outline, color: Theme.of(context).colorScheme.error) : SizedBox()),
                                       ),
-                                      child: DropdownButtonHideUnderline(
-                                        child: DropdownButton<String>(
-                                          value: cubit.selectedCountryCode.isNotEmpty
-                                              ? cubit.selectedCountryCode
-                                              : cubit.countryCodes.first,
-                                          isExpanded: true,
-                                          icon: Icon(Icons.arrow_drop_down, color: Colors.blue),
-                                          items: cubit.countryCodes.map((String code) {
-                                            return DropdownMenuItem<String>(
-                                              value: code,
-                                              child: Text(code, style: Theme.of(context).textTheme.bodySmall),
-                                            );
-                                          }).toList(),
-                                          onChanged: (String? newValue) {
-                                            setState(() {
-                                              cubit.selectedCountryCode = newValue!;
-                                            });
-                                          },
-                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Visibility(
+                            visible: cubit.otpIsShowing,
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(25, 5, 0, 25),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        context.translate("pleaseEnterVerificationCode"),
+                                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface),
                                       ),
-                                    )),
-                                SizedBox(width: 6),
-                                Expanded(
-                                  child: GoldexTextFormField(
-                                      controller: cubit.numberOrEmailController,
-                                      onChanged: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          cubit.setTNumberOrEmailControllerHasError(true);
-                                          return;
-                                        }
-
-                                        // Regex for email validation
-                                        final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
-
-                                        // Regex for a 10-digit mobile number (without country code)
-                                        final mobileRegex = RegExp(r'^\d{10}$');
-
-                                        if (!emailRegex.hasMatch(value) && !mobileRegex.hasMatch(value)) {
-                                          cubit.setTNumberOrEmailControllerHasError(true);
-                                          return;
-                                        }
-                                        cubit.setTNumberOrEmailControllerHasError(false);
-                                      },
-                                      validator: (String? value) {
-                                        return null; // ✅ Valid input
-                                      },
-                                      suffixIcon: cubit.numberOrEmailControllerHasError
-                                          ? Icon(Icons.error, color: Colors.red)
-                                          : SizedBox()),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 6),
+                                Center(
+                                  child: VerificationCode(
+                                    digitsOnly: true,
+                                    isSecure: true,
+                                    textStyle: TextStyle(fontSize: 20, color: Theme.of(context).colorScheme.onSurface),
+                                    keyboardType: TextInputType.number,
+                                    underlineColor: Colors.transparent,
+                                    fillColor: Colors.grey[200],
+                                    itemSize: 42,
+                                    cursorColor: Colors.green,
+                                    fullBorder: true,
+                                    underlineWidth: 0,
+                                    length: 6,
+                                    onCompleted: (String value) {
+                                      cubit.confirmCodeRecieved(value);
+                                    },
+                                    onEditing: (bool value) {
+                                      setState(() {});
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(22, 35, 0, 0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        context.translate('didntReceiveCode'),
+                                        style: TextStyle(fontSize: SizeConfig.scaleWidth(14), fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(cubit.resendTimerInSecond == 0 ? 10 : 0, 0, 0, 0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      TextButton(
+                                        onPressed: () {
+                                          if (state is! RegisterLoading && cubit.resendTimerInSecond == 0) {
+                                            cubit.register(context);
+                                          }
+                                        },
+                                        child: state is RegisterLoading
+                                            ? SpinKitThreeBounce(
+                                                color: Theme.of(context).colorScheme.primary,
+                                                size: 14,
+                                              )
+                                            : Text(cubit.resendTimerInSecond == 0 ? context.translate('resend') : cubit.resendTimerInSecond.toString(), style: TextStyle(color: Colors.green)),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -288,87 +363,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ],
                       ),
                     ),
-                    Visibility(
-                      visible: cubit.otpIsShowing,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(25, 5, 0, 25),
-                            child: Row(
-                              children: [
-                                Text(
-                                  context.translate("pleaseEnterVerificationCode"),
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: Theme.of(context).colorScheme.onSurface),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Center(
-                            child: VerificationCode(
-                              digitsOnly: true,
-                              isSecure: true,
-                              textStyle: TextStyle(fontSize: 20, color: Theme.of(context).colorScheme.onSurface),
-                              keyboardType: TextInputType.number,
-                              underlineColor: Colors.transparent,
-                              fillColor: Colors.grey[200],
-                              itemSize: 42,
-                              cursorColor: Colors.green,
-                              fullBorder: true,
-                              underlineWidth: 0,
-                              length: 6,
-                              onCompleted: (String value) {
-                                cubit.confirmCodeRecieved(value);
-                              },
-                              onEditing: (bool value) {
-                                setState(() {});
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(22, 29, 0, 0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  context.translate('didntReceiveCode'),
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(cubit.resendTimerInSecond == 0 ? 10 : 0, 0, 0, 0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                TextButton(
-                                  onPressed: () {
-                                    if (state is! RegisterLoading && cubit.resendTimerInSecond == 0) {
-                                      cubit.register(context);
-                                    }
-                                  },
-                                  child: state is RegisterLoading
-                                      ? SpinKitThreeBounce(
-                                          color: Theme.of(context).colorScheme.primary,
-                                          size: 14,
-                                        )
-                                      : Text(
-                                          cubit.resendTimerInSecond == 0
-                                              ? context.translate('resend')
-                                              : cubit.resendTimerInSecond.toString(),
-                                          style: TextStyle(color: Colors.green)),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Spacer(),
                     Visibility(
                       visible: !cubit.otpIsShowing,
                       child: InkWell(
@@ -410,6 +404,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     style: TextStyle(
                                       color: Theme.of(context).colorScheme.onSurface,
                                       fontSize: 14,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                     children: [
                                       TextSpan(text: context.translate('iHave')),
@@ -417,6 +412,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         text: context.translate('readTheToS'),
                                         style: TextStyle(
                                           fontFamily: 'IRsans',
+                                          decoration: TextDecoration.underline,
                                           color: Theme.of(context).primaryColor,
                                         ),
                                       ),
@@ -431,7 +427,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 25, bottom: 0),
+                      padding: const EdgeInsets.only(top: 20, bottom: 0),
                       child: CustomButton(
                         text: context.translate('confirmAndContinue'),
                         backgroundColorStart: Theme.of(context).primaryColor,
@@ -454,26 +450,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 30),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                context.translate('alreadyHaveAnAccount'),
-                style:
-                    TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.w500, fontSize: 14),
+            SizedBox(height: 60),
+            Visibility(
+              visible: !cubit.otpIsShowing,
+              child: Column(
+                children: [
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      context.translate('alreadyHaveAnAccount'),
+                      style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.w500, fontSize: 14),
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  CustomButton(
+                    text: context.translate('logIn'),
+                    borderWidth: 2,
+                    backgroundColorStart: Colors.transparent,
+                    textColor: Theme.of(context).primaryColor,
+                    height: 50,
+                    width: 300,
+                    borderColor: Theme.of(context).colorScheme.surface,
+                    onPressed: () {
+                      // Handle Sign Up action
+                    },
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(height: 5),
-            CustomButton(
-              text: context.translate('logIn'),
-              backgroundColorStart: Colors.transparent,
-              textColor: Theme.of(context).primaryColor,
-              height: 50,
-              width: 300,
-              borderColor: Theme.of(context).colorScheme.surface,
-              onPressed: () {
-                // Handle Sign Up action
-              },
             )
           ],
         ),
@@ -605,9 +608,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     onChanged: (value) {
                       final RegExp _passwordRegex = RegExp(r'^[a-zA-Z0-9_@]{6,10}$');
 
-                     cubit.atLeast8Characters = value.length >= 8;
-                     cubit.upperAndLowerCaseLetters = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])').hasMatch(value);
-                     cubit.numbers = RegExp(r'(?=.*[0-9])').hasMatch(value);
+                      cubit.atLeast8Characters = value.length >= 8;
+                      cubit.upperAndLowerCaseLetters = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])').hasMatch(value);
+                      cubit.numbers = RegExp(r'(?=.*[0-9])').hasMatch(value);
 
                       if (value.isEmpty) {
                         cubit.setPasswordControllerHasError(true);
@@ -625,49 +628,64 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0,8,0,8),
+                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
                     child: Row(
                       children: [
-                        Icon(Icons.check, color: cubit.atLeast8Characters?Colors.green:Theme.of(context).colorScheme.tertiary.withOpacity(0.3),size: 16,),
-                        SizedBox(width: 2,),
+                        Icon(
+                          Icons.check,
+                          color: cubit.atLeast8Characters ? Colors.green : Theme.of(context).colorScheme.tertiary.withOpacity(0.3),
+                          size: 16,
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
                         Text(
                           context.translate('atLeast8Characters'),
                           textAlign: TextAlign.justify,
                           textDirection: TextDirection.ltr,
-                          style: TextStyle(
-                              fontSize: 12,  color: cubit.atLeast8Characters?Colors.green:Theme.of(context).colorScheme.tertiary.withOpacity(0.3)),
+                          style: TextStyle(fontSize: 12, color: cubit.atLeast8Characters ? Colors.green : Theme.of(context).colorScheme.tertiary.withOpacity(0.3)),
                         ),
                       ],
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0,8,0,8),
+                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
                     child: Row(
                       children: [
-                        Icon(Icons.check, color: cubit.upperAndLowerCaseLetters?Colors.green:Theme.of(context).colorScheme.tertiary.withOpacity(0.3),size: 16,),
-                        SizedBox(width: 2,),
+                        Icon(
+                          Icons.check,
+                          color: cubit.upperAndLowerCaseLetters ? Colors.green : Theme.of(context).colorScheme.tertiary.withOpacity(0.3),
+                          size: 16,
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
                         Text(
                           context.translate('upperAndLowerCaseLetters'),
                           textAlign: TextAlign.justify,
                           textDirection: TextDirection.ltr,
-                          style: TextStyle(
-                              fontSize: 12,  color: cubit.upperAndLowerCaseLetters?Colors.green:Theme.of(context).colorScheme.tertiary.withOpacity(0.3)),
+                          style: TextStyle(fontSize: 12, color: cubit.upperAndLowerCaseLetters ? Colors.green : Theme.of(context).colorScheme.tertiary.withOpacity(0.3)),
                         ),
                       ],
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0,8,0,8),
+                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
                     child: Row(
                       children: [
-                        Icon(Icons.check, color: cubit.numbers?Colors.green:Theme.of(context).colorScheme.tertiary.withOpacity(0.3),size: 16,),
-                        SizedBox(width: 2,),
+                        Icon(
+                          Icons.check,
+                          color: cubit.numbers ? Colors.green : Theme.of(context).colorScheme.tertiary.withOpacity(0.3),
+                          size: 16,
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
                         Text(
                           context.translate('numbers'),
                           textAlign: TextAlign.justify,
                           textDirection: TextDirection.ltr,
-                          style: TextStyle(
-                              fontSize: 12,  color: cubit.numbers?Colors.green:Theme.of(context).colorScheme.tertiary.withOpacity(0.3)),
+                          style: TextStyle(fontSize: 12, color: cubit.numbers ? Colors.green : Theme.of(context).colorScheme.tertiary.withOpacity(0.3)),
                         ),
                       ],
                     ),
@@ -712,10 +730,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             context.translate('showPassword'),
                             textAlign: TextAlign.justify,
                             textDirection: TextDirection.ltr,
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Theme.of(context).colorScheme.onSurface),
+                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface),
                           ),
                         ),
                       ],

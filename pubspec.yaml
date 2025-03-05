@@ -80,3 +80,9 @@ flutter:
     - family: opensans
       fonts:
         - asset: assets/fonts/opensanc.ttf
+    - family: interBold
+      fonts:
+       - asset: assets/fonts/inter_bold.ttf
+    - family: inter
+      fonts:
+        - asset: assets/fonts/inter.ttf

@@ -42,7 +42,7 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
         ),
         DraggableScrollableSheet(
             controller: widget.draggableController,
-            initialChildSize: 0.5,
+            initialChildSize: 0.49,
             minChildSize: 0.3,
             maxChildSize: 0.9,
             builder: (BuildContext context, ScrollController scrollController) {
@@ -52,8 +52,8 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
                   setState(() {
                     _overlayHeight = newHeight;
                   });
-                  widget.onScroll(_overlayHeight); // حالا مقدار درست ارسال می‌شود
-                  print("Scroll Height Factor: $_overlayHeight"); // مقدار ارتفاع را بررسی کن
+                  widget.onScroll(_overlayHeight);
+                  print("Scroll Height Factor: $_overlayHeight");
                   return true;
                 },
                 child: Container(
@@ -75,12 +75,12 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
                             height: 5,
                             width: 75,
                             decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.onPrimary,
+                              color: Theme.of(context).colorScheme.primaryContainer,
                               borderRadius: BorderRadius.circular(5.0),
                             ),
                             margin: EdgeInsets.only(top: 10)),
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
+                          padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
@@ -126,109 +126,112 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
                         ),
                         SingleChildScrollView(
                           controller: scrollController,
-                          child: Center(
-                            child: Container(
-                              width: 379,
-                              height: 317,
-                              decoration: BoxDecoration(
-                                color: colorLightGrey,
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            context.translate('goldPriceChart'),
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w700,
-                                              color: Theme.of(context).colorScheme.onSurface,
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: Theme.of(context).colorScheme.tertiaryContainer,
-                                            borderRadius: BorderRadius.circular(30),
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: List.generate(4, (index) {
-                                              return _buildTimeframeButton(index);
-                                            }),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          '67.51',
-                                          style: TextStyle(
-                                            fontSize: 27,
-                                            fontWeight: FontWeight.w400,
-                                            color: Theme.of(context).colorScheme.onSurface,
-                                          ),
-                                        ),
-                                        SizedBox(width: 8),
-                                        Text(
-                                          '+2.1%',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w700,
-                                            color: Colors.green,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 16),
-                                    Expanded(
-                                      child: LineChart(
-                                        LineChartData(
-                                          gridData: FlGridData(show: false),
-                                          titlesData: FlTitlesData(show: false),
-                                          borderData: FlBorderData(show: false),
-                                          lineBarsData: [
-                                            LineChartBarData(
-                                              spots: [
-                                                FlSpot(0, 3),
-                                                FlSpot(1, 2),
-                                                FlSpot(2, 5),
-                                                FlSpot(3, 3.1),
-                                                FlSpot(4, 4),
-                                                FlSpot(5, 3.5),
-                                                FlSpot(6, 4.1),
-                                              ],
-                                              isCurved: true,
-                                              color: Theme.of(context).colorScheme.onSurface,
-                                              barWidth: 1,
-                                              isStrokeCapRound: true,
-                                              belowBarData: BarAreaData(
-                                                show: true,
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    Theme.of(context).primaryColor,
-                                                    colorLightGrey,
-                                                  ],
-                                                  stops: [
-                                                    0.01,
-                                                    1.0,
-                                                  ],
-                                                  begin: Alignment.topCenter,
-                                                  end: Alignment.bottomCenter,
-                                                ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 7.0),
+                            child: Center(
+                              child: Container(
+                                width: 379,
+                                height: 317,
+                                decoration: BoxDecoration(
+                                  color: colorLightGrey,
+                                  borderRadius: BorderRadius.circular(25),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(16.0, 8, 16, 16),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              context.translate('goldPriceChart'),
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w700,
+                                                color: Theme.of(context).colorScheme.onSurface,
                                               ),
                                             ),
-                                          ],
+                                          ),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: Theme.of(context).colorScheme.tertiaryContainer,
+                                              borderRadius: BorderRadius.circular(30),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: List.generate(4, (index) {
+                                                return _buildTimeframeButton(index);
+                                              }),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            '67.51',
+                                            style: TextStyle(
+                                              fontSize: 27,
+                                              fontWeight: FontWeight.w400,
+                                              color: Theme.of(context).colorScheme.onSurface,
+                                            ),
+                                          ),
+                                          SizedBox(width: 8),
+                                          Text(
+                                            '+2.1%',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.green,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 16),
+                                      Expanded(
+                                        child: LineChart(
+                                          LineChartData(
+                                            gridData: FlGridData(show: false),
+                                            titlesData: FlTitlesData(show: false),
+                                            borderData: FlBorderData(show: false),
+                                            lineBarsData: [
+                                              LineChartBarData(
+                                                spots: [
+                                                  FlSpot(0, 3),
+                                                  FlSpot(1, 2),
+                                                  FlSpot(2, 5),
+                                                  FlSpot(3, 3.1),
+                                                  FlSpot(4, 4),
+                                                  FlSpot(5, 3.5),
+                                                  FlSpot(6, 4.1),
+                                                ],
+                                                isCurved: true,
+                                                color: Theme.of(context).colorScheme.onSurface,
+                                                barWidth: 1,
+                                                isStrokeCapRound: true,
+                                                belowBarData: BarAreaData(
+                                                  show: true,
+                                                  gradient: LinearGradient(
+                                                    colors: [
+                                                      Theme.of(context).primaryColor,
+                                                      colorLightGrey,
+                                                    ],
+                                                    stops: [
+                                                      0.01,
+                                                      1.0,
+                                                    ],
+                                                    begin: Alignment.topCenter,
+                                                    end: Alignment.bottomCenter,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

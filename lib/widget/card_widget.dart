@@ -21,16 +21,16 @@ class CardWidget extends StatelessWidget {
     return Card(
       color: Theme.of(context).colorScheme.onSurface,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(23),
       ),
       child: SizedBox(
-        height: 218,
+        height: 210,
         width: 372,
         child: Stack(
           children: [
             Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(23),
                 gradient: RadialGradient(
                   center: Alignment(1.0, -1.0),
                   radius: 1.9,
@@ -44,7 +44,7 @@ class CardWidget extends StatelessWidget {
             ),
             Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(23),
                 gradient: RadialGradient(
                   center: Alignment(-2.0, -1.0),
                   radius: 1.6,
@@ -58,7 +58,7 @@ class CardWidget extends StatelessWidget {
             ),
             Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(23),
                 gradient: RadialGradient(
                   center: Alignment(0, -2.1),
                   radius: 1.4,
@@ -106,7 +106,6 @@ class CardWidget extends StatelessWidget {
                               fontWeight: FontWeight.w600
                             ),
                           ),
-                        SizedBox(height: 10),
                         SizedBox(
                           child: Text(
                             balance,
@@ -120,7 +119,6 @@ class CardWidget extends StatelessWidget {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          mainAxisSize: MainAxisSize.max,
                           children: [
                             Row(
                               children: [

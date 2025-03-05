@@ -113,7 +113,7 @@ class _SellScreenState extends State<SellScreen> {
                           type: context.translate('mg'),
                           onDeposit: () => {}),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                     child: Center(
                       child: (state is LivePriceLoading)
                           ? SpinKitThreeBounce(
@@ -146,7 +146,7 @@ class _SellScreenState extends State<SellScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 36, 10, 0),
+                    padding: const EdgeInsets.fromLTRB(10, 30, 10, 0),
                     child: Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
@@ -230,7 +230,7 @@ class _SellScreenState extends State<SellScreen> {
                                     },
                                     child: Text(
                                       context.translate('cancel'),
-                                      style: TextStyle(fontSize: 14, color: Colors.grey),
+                                      style: TextStyle(fontSize: 14, color: Theme.of(context).colorScheme.onSurface),
                                     ),
                                   ),
                                   SizedBox(width: 29),

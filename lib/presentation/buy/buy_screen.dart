@@ -116,7 +116,7 @@ class _BuyScreenState extends State<BuyScreen> {
                           type: context.translate('mg'),
                           onDeposit: () => {}),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                     child: Center(
                       child: (state is LivePriceLoading)
                           ? SpinKitThreeBounce(
@@ -149,7 +149,7 @@ class _BuyScreenState extends State<BuyScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 36, 10, 0),
+                    padding: const EdgeInsets.fromLTRB(10, 30, 10, 0),
                     child: Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
@@ -220,7 +220,7 @@ class _BuyScreenState extends State<BuyScreen> {
                                 ],
                               )),
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 20, 0, 5),
+                              padding: const EdgeInsets.fromLTRB(0, 15, 0, 5),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
@@ -230,7 +230,7 @@ class _BuyScreenState extends State<BuyScreen> {
                                     },
                                     child: Text(
                                       context.translate('cancel'),
-                                      style: TextStyle(fontSize: 14, color: Colors.grey),
+                                      style: TextStyle(fontSize: 14, color: Theme.of(context).colorScheme.onSurface),
                                     ),
                                   ),
                                   SizedBox(width: 29),
@@ -240,7 +240,7 @@ class _BuyScreenState extends State<BuyScreen> {
                                     backgroundColorEnd: Theme.of(context).colorScheme.secondary,
                                     textColor: Theme.of(context).colorScheme.surface,
                                     height: 50,
-                                    width: 121,
+                                    width: 120,
                                     borderColor: Theme.of(context).primaryColor,
                                     isLoading: (state is ConfirmLoading),
                                     onPressed: () {

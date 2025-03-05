@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goldex/core/app_localizations.dart';
 import 'package:goldex/core/theme/theme.dart';
@@ -23,7 +24,6 @@ class _TransferScreenState extends State<TransferScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocProvider(
       create: (context) => sl<TransferCubit>()..getGoldBalance(),
       child: BlocConsumer<TransferCubit, TransferState>(
@@ -100,7 +100,7 @@ class _TransferScreenState extends State<TransferScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 36, 10, 0),
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                     child: Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
@@ -178,7 +178,7 @@ class _TransferScreenState extends State<TransferScreen> {
                                           }
                                         },
                                         controller: cubit.mobileNumberController,
-                                        title: context.translate("receiverMobileNumber"),
+                                        title: context.translate("to"),
                                         textInputAction: TextInputAction.next,
                                         keyboardType: TextInputType.number,
                                       ),
@@ -206,11 +206,26 @@ class _TransferScreenState extends State<TransferScreen> {
                                         textInputAction: TextInputAction.next,
                                         keyboardType: TextInputType.number,
                                       ),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(10, 2, 15, 0),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                            state is GoldBalanceLoading ? SpinKitThreeBounce(
+                                              color: Theme.of(context).primaryColor,
+                                              size: 20,
+                                            ) : Text(
+                                              'Balance: ${cubit.selectedItem == 'Gold' ? cubit.goldBalanceMg : cubit.currencyBalanceUSD} ${cubit.selectedItem == 'Gold' ? 'mg':'usd'}',
+                                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Theme.of(context).colorScheme.onPrimaryContainer),
+                                            )
+                                          ],
+                                        ),
+                                      )
                                     ],
                                   )),
                             ),
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 5, 10, 5),
+                              padding: const EdgeInsets.fromLTRB(0, 5, 10, 0),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
@@ -221,36 +236,35 @@ class _TransferScreenState extends State<TransferScreen> {
                                 ],
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 20, 0, 5),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      context.translate('cancel'),
-                                      style: TextStyle(fontSize: 14, color: Colors.grey),
-                                    ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    context.translate('cancel'),
+                                    style: TextStyle(fontSize: 14, color: Theme.of(context).colorScheme.onSurface),
                                   ),
-                                  SizedBox(width: 29),
-                                  CustomButton(
-                                    text: context.translate('confirm'),
-                                    backgroundColorStart: Theme.of(context).primaryColor,
-                                    backgroundColorEnd: Theme.of(context).colorScheme.secondary,
-                                    textColor: Theme.of(context).colorScheme.surface,
-                                    height: 50,
-                                    width: 121,
-                                    borderColor: Theme.of(context).primaryColor,
-                                    isLoading: state is GoldOrMoneyTransferLoading,
-                                    onPressed: () {
-                                      if (cubit.formKey.currentState!.validate()) {
-                                        cubit.transferCurrency();
-                                      }
-                                    },
-                                  )
-                                ],
-                              ),
+                                ),
+                                SizedBox(width: 29),
+                                CustomButton(
+                                  text: context.translate('confirm'),
+                                  backgroundColorStart: Theme.of(context).primaryColor,
+                                  backgroundColorEnd: Theme.of(context).colorScheme.secondary,
+                                  textColor: Theme.of(context).colorScheme.surface,
+                                  height: 50,
+                                  width: 121,
+                                  borderColor: Theme.of(context).primaryColor,
+                                  isLoading: state is GoldOrMoneyTransferLoading,
+                                  onPressed: () {
+                                    if (cubit.formKey.currentState!.validate()) {
+                                      cubit.transferCurrency();
+                                    }
+                                  },
+                                )
+                              ],
                             ),
                           ],
                         ),

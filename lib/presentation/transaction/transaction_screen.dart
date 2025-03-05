@@ -81,7 +81,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                   Text(
                                     context.translate('welcomeBack'),
                                     style: TextStyle(
-                                      color: Colors.grey,
+                                      color: Theme.of(context).colorScheme.surface,
                                       fontSize: 14,
                                     ),
                                   ),
@@ -89,9 +89,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                               ),
                             ],
                           ),
-                          Icon(
-                            Icons.notifications,
-                            color: Theme.of(context).colorScheme.surface,
+                          SvgPicture.asset(
+                            Asset.notification,
                           ),
                         ],
                       ),

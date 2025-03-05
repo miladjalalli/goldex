@@ -55,6 +55,7 @@ class Asset {
   static const String logo = '$_icons/logo.svg';
   static const String splash = '$_icons/splash.svg';
   static const String goldexLogo = '$_icons/goldex-logo.svg';
+  static const String notification = '$_icons/notification.svg';
 
   static const String applePay = '$_iconsPay/apple-pay.svg';
   static const String googlePay = '$_iconsPay/google-pay.svg';

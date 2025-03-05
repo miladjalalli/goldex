@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:goldex/widget/size_config.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -9,6 +10,7 @@ class CustomButton extends StatelessWidget {
   final Color textColor;
   final double height;
   final double width;
+  double? borderWidth;
   final Color borderColor;
   final VoidCallback onPressed;
   bool isLoading;
@@ -23,6 +25,7 @@ class CustomButton extends StatelessWidget {
     required this.textColor,
     required this.height,
     required this.width,
+    this.borderWidth = 1,
     required this.borderColor,
     required this.onPressed,
     this.isLoading = false,
@@ -34,6 +37,7 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
     return SizedBox(
       height: height,
       width: width,
@@ -57,7 +61,8 @@ class CustomButton extends StatelessWidget {
                     ? Theme.of(context).colorScheme.onSurface
                     : null,
             borderRadius: const BorderRadius.all(Radius.circular(25.0)),
-            border: Border.all(color: borderColor),
+            border: Border.all(color: borderColor, width: borderWidth ?? 1),
+
           ),
           child: InkWell(
             borderRadius: const BorderRadius.all(Radius.circular(25.0)),
@@ -86,7 +91,7 @@ class CustomButton extends StatelessWidget {
                   Text(
                     text,
                     style: TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w600, color: textColor)),
+                        fontSize: SizeConfig.scaleWidth(16), fontWeight: FontWeight.w600, color: textColor)),
                 ],
               ),
             ),

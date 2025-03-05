@@ -6,7 +6,7 @@ class AppTheme {
       // فعال‌سازی Material 3
       fontFamily: 'opensans',
       brightness: Brightness.light,
-      primaryColor: Color(0xFF4CAF50),
+      primaryColor: Color(0xFF50C878),
       // سبز
       colorScheme: ColorScheme.light(
         primary: Color(0xffE1FFEB),

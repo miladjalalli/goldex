@@ -49,7 +49,6 @@ class TransferCubit extends Cubit<TransferState> {
       GoldBalanceResponse response = GoldBalanceResponse.fromJson(res.data);
       if (res.statusCode == 200) {
         goldBalanceMg = response.data!.goldBalanceMg;
-        amountController.text = (goldBalanceMg??0).toString();
         emit(GoldBalanceLoaded());
       } else {
         emit(GoldBalanceError('Error on get your balance'));
@@ -66,7 +65,6 @@ class TransferCubit extends Cubit<TransferState> {
       CurrencyBalanceResponse response = CurrencyBalanceResponse.fromJson(res.data);
       if (res.statusCode == 200) {
         currencyBalanceUSD = response.data!.currencyBalance;
-        amountController.text = currencyBalanceUSD?.toStringAsFixed(2) ?? "0.0";
         emit(GoldBalanceLoaded());
       } else {
         emit(GoldBalanceError('Error on get your balance'));
@@ -81,10 +79,10 @@ class TransferCubit extends Cubit<TransferState> {
     try {
       var data = selectedItem == 'Dollar' ? {
         "mobile": mobileNumberController.text,
-        "amount": currencyBalanceUSD
+        "amount": amountController.text
       } : {
         "mobile": mobileNumberController.text,
-        "weight_in_mg": goldBalanceMg
+        "weight_in_mg": amountController.text
       };
       final res = selectedItem == 'Dollar' ? await apiRepository.transferCurrencyWithMobile(data) :
       await apiRepository.transferGoldWithMobile(data);
