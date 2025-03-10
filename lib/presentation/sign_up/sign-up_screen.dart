@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:goldex/core/app_localizations.dart';
 import 'package:goldex/widget/goldex_text_form_field.dart';
@@ -278,7 +279,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             validator: (String? value) {
                                               return null; // ✅ Valid input
                                             },
-                                            suffixIcon: cubit.numberOrEmailControllerHasError ? Icon(Icons.error_outline, color: Theme.of(context).colorScheme.error) : SizedBox()),
+                                            suffixIcon: cubit.numberOrEmailControllerHasError ? Transform.scale(
+                                            scale: 0.5,
+                                            child: SvgPicture.asset(
+                                                  Asset.danger,
+                                                  color: Theme.of(context).colorScheme.error,
+                                                  ),
+                                            )  : SizedBox()),
                                       ),
                                     ],
                                   ),
@@ -767,7 +774,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               borderRadius: BorderRadius.circular(16),
             ),
             child: ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: 400, minWidth: 300), // ارتفاع ثابت
+              constraints: BoxConstraints(maxHeight: 400, minWidth: 300),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -815,24 +822,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           text: context.translate('reject'),
                           backgroundColorStart: Colors.transparent,
                           backgroundColorEnd: Colors.transparent,
-                          textColor: Colors.red,
+                          textColor: Theme.of(context).colorScheme.error,
                           height: 50,
                           width: 140,
-                          borderColor: Colors.red,
-                          onPressed: () => Navigator.pop(context, false),
+                          borderColor: Theme.of(context).colorScheme.error,
+                          onPressed: () {
+                            Navigator.pop(context, true);
+                            onConfirm();
+                          },
+
                         ),
                         CustomButton(
                           text: context.translate('confirm'),
-                          backgroundColorStart: Theme.of(context).colorScheme.primary,
+                          backgroundColorStart: Theme.of(context).primaryColor,
                           backgroundColorEnd: Theme.of(context).colorScheme.secondary,
                           textColor: Theme.of(context).colorScheme.surface,
                           height: 50,
                           width: 140,
                           borderColor: Colors.green,
-                          onPressed: () {
-                            Navigator.pop(context, true);
-                            onConfirm();
-                          },
+                          onPressed: () => Navigator.pop(context, false),
                         ),
                       ],
                     ),

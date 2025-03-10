@@ -145,5 +145,6 @@
   "sellAmount": "Sell Amount",
   "sendAmount": "Send Amount",
   "mg": "mg",
-  "chooseYourBar": "Choose your Bar"
+  "chooseYourBar": "Choose your Bar",
+  "reject": "reject"
 }

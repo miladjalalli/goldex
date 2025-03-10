@@ -21,7 +21,7 @@ class TransactionScreen extends StatefulWidget {
 class _TransactionScreenState extends State<TransactionScreen> {
   final DraggableScrollableController _draggableController = DraggableScrollableController();
 
-  double _floatingTextOffset = 0.3;
+  double _floatingTextOffset = 0.49;
 
   @override
   Widget build(BuildContext context) {
