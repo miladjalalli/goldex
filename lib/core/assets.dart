@@ -21,6 +21,7 @@ class Asset {
   static const String sellingGold = '$_img/selling-gold.png';
   static const String background = '$_img/background.png';
   static const String home = '$_img/home.png';
+  static const String goldexLogoPNG = '$_img/goldex-logo.png';
 
   static const String buyModal = '$_imgModal/buy.png';
   static const String sellModal = '$_imgModal/sell.png';
