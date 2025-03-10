@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:goldex/core/app_localizations.dart';
 import '../../core/dependency_injection.dart';
@@ -51,7 +52,7 @@ class GetGoldOrderSummaryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<GiveGoldCubit>(),
+      create: (context) => sl<GiveGoldCubit>()..getCurrencyBalance(),
       child: BlocConsumer<GiveGoldCubit, GiveGoldState>(
         listener: (context, state) {
           // TODO: implement listener
@@ -94,9 +95,7 @@ class GetGoldOrderSummaryScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          height: 72,
-                          width: 325,
-                          padding: const EdgeInsets.fromLTRB(13, 8, 13, 4),
+                          padding: const EdgeInsets.only(top: 8),
                           decoration: BoxDecoration(
                             color: Theme.of(context).colorScheme.surface,
                             borderRadius: BorderRadius.circular(15),
@@ -105,29 +104,30 @@ class GetGoldOrderSummaryScreen extends StatelessWidget {
                               width: 1,
                             ),
                           ),
+                          width: 325,
+                          height: 72,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),
+                              Text(
+                                context.translate('currentBalance'),
+                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Theme.of(context).colorScheme.onSurface),
+                              ),
+                              (state is GetCurrencyBalanceLoading)
+                                  ? SpinKitThreeBounce(
+                                color: Theme.of(context).primaryColor,
+                                size: 20,
+                              ) : Padding(
+                                padding: const EdgeInsets.only(top: 2),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      context.translate('currentBalance'),
-                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Theme.of(context).colorScheme.onSurface),
+                                      '${cubit.currencyBalanceUSD?.toStringAsFixed(2) ?? 0.0} ${context.translate('USD')}',
+                                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface),
                                     ),
                                   ],
                                 ),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    '431.1 ${context.translate('gr')}',
-                                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface),
-                                  ),
-                                ],
                               ),
                             ],
                           ),

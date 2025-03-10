@@ -74,8 +74,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Image.asset(
                       Asset.person,
                       fit: BoxFit.cover,
-                      height: 78,
-                      width: 78,
+                      height: 65,
+                      width: 65,
                     ),
                   ),
                   Column(
@@ -88,7 +88,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ) : Text('${cubit.name} ${cubit.family}', style: TextStyle(fontWeight: FontWeight.w900, fontSize: 24, color: Theme.of(context).colorScheme.onPrimary)),
                       Text(context.translate('notVerified'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16, color: colorRedLight)),
                       Padding(
-                        padding: const EdgeInsets.only(top: 24, bottom: 24.0),
+                        padding: const EdgeInsets.only(top: 10, bottom: 20.0),
                         child: CustomButton(
                           text: context.translate('editProfile'),
                           backgroundColorStart: Theme.of(context).colorScheme.onSurface,
@@ -109,161 +109,177 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Container(
-                          padding: EdgeInsets.fromLTRB(15, 24, 0, 11),
-                          child: Row(
-                            children: [
-                              Text(context.translate('goldexEntryGifts'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18, color: Theme.of(context).colorScheme.onPrimary)),
-                            ],
-                          )),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.onTertiary,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Column(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: InkWell(
-                                    onTap: () {},
-                                    child: ListTile(
-                                      leading: SvgPicture.asset(Asset.gift, width: 17, height: 17),
-                                      title: Text(context.translate('getFreeGift'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: Theme.of(context).colorScheme.onSurface)),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 24, right: 24),
-                                child: Divider(height: 1, color: Theme.of(context).colorScheme.primaryContainer),
-                              ),
-                              ClipRRect(
-                                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12)),
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: InkWell(
-                                    onTap: () {
-                                      // Navigator.push(
-                                      //   context,
-                                      // MaterialPageRoute(builder: (context) => BlocProvider(
-                                      //   create: (context) => GiftCardCubit(),
-                                      //   child: GiftCardScreen(),
-                                      // )),
-                                      // );
-                                    },
-                                    child: ListTile(
-                                      leading: SvgPicture.asset(
-                                        Asset.invite,
-                                        width: 17,
-                                        height: 17,
-                                      ),
-                                      title: Text(context.translate('inviteFriend'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: Theme.of(context).colorScheme.onSurface)),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                        padding: EdgeInsets.fromLTRB(5, 0, 0, 10),
+                        child: Row(
+                          children: [
+                            Text(context.translate('goldexEntryGifts'),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 16,
+                                    color: Theme.of(context).colorScheme.onPrimary)
+                            ),
+                          ],
                         ),
                       ),
                       Container(
-                          padding: EdgeInsets.fromLTRB(15, 18, 0, 11),
+                        width: 388,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.tertiaryFixed,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: ListTile(
+                                    contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                                    leading: SvgPicture.asset(Asset.gift, width: 17, height: 17),
+                                    title: Text(
+                                      context.translate('getFreeGift'),
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 14,
+                                        color: Theme.of(context).colorScheme.onSurface,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 24),
+                              child: Divider(
+                                height: 1,
+                                color: Theme.of(context).colorScheme.primaryContainer,
+                              ),
+                            ),
+                            ClipRRect(
+                              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () {
+                                    // Navigator.push(...);
+                                  },
+                                  child: ListTile(
+
+                                    leading: SvgPicture.asset(
+                                      Asset.invite,
+                                      width: 20,
+                                      height: 20,
+                                    ),
+                                    title: Text(
+                                      context.translate('inviteFriend'),
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 14,
+                                        color: Theme.of(context).colorScheme.onSurface,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                          padding: EdgeInsets.fromLTRB(5, 18, 0, 10),
                           child: Row(
                             children: [
-                              Text(context.translate('settings'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18, color: Theme.of(context).colorScheme.onPrimary)),
+                              Text(context.translate('settings'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16, color: Theme.of(context).colorScheme.onPrimary)),
                             ],
                           )),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.onTertiary,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Column(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: InkWell(
-                                    onTap: () {},
-                                    child: ListTile(
-                                      leading: SvgPicture.asset(Asset.lock, width: 17, height: 17),
-                                      title: Text(context.translate('security'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: Theme.of(context).colorScheme.onSurface)),
-                                    ),
+                      Container(
+                        width: 388,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.tertiaryFixed,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: ListTile(
+                                    leading: SvgPicture.asset(Asset.lock, width: 17, height: 17),
+                                    title: Text(context.translate('security'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: Theme.of(context).colorScheme.onSurface)),
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 24, right: 24),
-                                child: Divider(height: 1, color: Theme.of(context).colorScheme.primaryContainer),
-                              ),
-                              ClipRRect(
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: InkWell(
-                                    onTap: () {
-                                      // Navigator.push(
-                                      //   context,
-                                      // MaterialPageRoute(builder: (context) => BlocProvider(
-                                      //   create: (context) => GiftCardCubit(),
-                                      //   child: GiftCardScreen(),
-                                      // )),
-                                      // );
-                                    },
-                                    child: ListTile(
-                                      leading: SvgPicture.asset(
-                                        Asset.hideProfile,
-                                        width: 17,
-                                        height: 17,
-                                      ),
-                                      title: Text(context.translate('appearances'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: Theme.of(context).colorScheme.onSurface)),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 24, right: 24),
+                              child: Divider(height: 1, color: Theme.of(context).colorScheme.primaryContainer),
+                            ),
+                            ClipRRect(
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () {
+                                    // Navigator.push(
+                                    //   context,
+                                    // MaterialPageRoute(builder: (context) => BlocProvider(
+                                    //   create: (context) => GiftCardCubit(),
+                                    //   child: GiftCardScreen(),
+                                    // )),
+                                    // );
+                                  },
+                                  child: ListTile(
+                                    leading: SvgPicture.asset(
+                                      Asset.hideProfile,
+                                      width: 20,
+                                      height: 20,
                                     ),
+                                    title: Text(context.translate('appearances'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: Theme.of(context).colorScheme.onSurface)),
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 24, right: 24),
-                                child: Divider(height: 1, color: Theme.of(context).colorScheme.primaryContainer),
-                              ),
-                              ClipRRect(
-                                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12)),
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: InkWell(
-                                    onTap: () {
-                                      // Navigator.push(
-                                      //   context,
-                                      // MaterialPageRoute(builder: (context) => BlocProvider(
-                                      //   create: (context) => GiftCardCubit(),
-                                      //   child: GiftCardScreen(),
-                                      // )),
-                                      // );
-                                    },
-                                    child: ListTile(
-                                      leading: SvgPicture.asset(
-                                        Asset.info,
-                                        width: 17,
-                                        height: 17,
-                                      ),
-                                      title: Text(context.translate('aboutGoldex'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: Theme.of(context).colorScheme.onSurface)),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 24, right: 24),
+                              child: Divider(height: 1, color: Theme.of(context).colorScheme.primaryContainer),
+                            ),
+                            ClipRRect(
+                              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () {
+                                    // Navigator.push(
+                                    //   context,
+                                    // MaterialPageRoute(builder: (context) => BlocProvider(
+                                    //   create: (context) => GiftCardCubit(),
+                                    //   child: GiftCardScreen(),
+                                    // )),
+                                    // );
+                                  },
+                                  child: ListTile(
+                                    leading: SvgPicture.asset(
+                                      Asset.info,
+                                      width: 20,
+                                      height: 20,
                                     ),
+                                    title: Text(context.translate('aboutGoldex'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: Theme.of(context).colorScheme.onSurface)),
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                       Center(
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 35),
+                          padding: const EdgeInsets.only(top: 25),
                           child: CustomButton(
                             text: context.translate('logout'),
                             isIconEnabled: true,

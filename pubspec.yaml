@@ -49,6 +49,7 @@ dependencies:
   flutter_secure_storage: ^5.0.2
   local_auth:
   shimmer:
+  dropdown_button2:
 
 dev_dependencies:
   flutter_test:

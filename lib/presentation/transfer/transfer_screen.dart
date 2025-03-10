@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +10,7 @@ import '../../core/dependency_injection.dart';
 import '../../widget/custom_button.dart';
 import '../../core/assets.dart';
 import '../../widget/goldex_text_form_field.dart';
+import '../../widget/size_config.dart';
 import '../order_summary/order_summary_screen.dart';
 import 'cubit/transfer_cubit.dart';
 
@@ -24,6 +26,7 @@ class _TransferScreenState extends State<TransferScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
     return BlocProvider(
       create: (context) => sl<TransferCubit>()..getGoldBalance(),
       child: BlocConsumer<TransferCubit, TransferState>(
@@ -89,7 +92,7 @@ class _TransferScreenState extends State<TransferScreen> {
                 context.translate('send'),
               ),
               titleTextStyle: TextStyle(
-                fontSize: 24,
+                fontSize: SizeConfig.scaleWidth(24),
                 fontWeight: FontWeight.w700,
                 color: Theme.of(context).colorScheme.onPrimaryContainer,
               ),
@@ -118,50 +121,117 @@ class _TransferScreenState extends State<TransferScreen> {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            DropdownButtonFormField<String>(
-                              value: cubit.selectedItem,
-                              items: cubit.items.map((item) {
-                                return DropdownMenuItem(
-                                  value: item['value'],
-                                  child: Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        item['icon']!,
-                                        fit: BoxFit.cover,
-                                        width: 18,
-                                        height: 18,
-                                      ),
-                                      SizedBox(width: 8),
-                                      Text(context.translate(item['label']!)),
-                                    ],
-                                  ),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                if (value != null) {
-                                  context.read<TransferCubit>().selectValue(value, context.translate);
-                                }
-                              },
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.grey[200],
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(25),
-                                ),
-                                contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(25),
-                                  borderSide: BorderSide(color: Theme.of(context).colorScheme.surface, width: 1.5),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(25),
-                                  borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                            // DropdownButtonFormField<String>(
+                            //   value: cubit.selectedItem,
+                            //   items: cubit.items.map((item) {
+                            //     return DropdownMenuItem(
+                            //       value: item['value'],
+                            //       child: Row(
+                            //         children: [
+                            //           SvgPicture.asset(
+                            //             item['icon']!,
+                            //             fit: BoxFit.cover,
+                            //             width: 18,
+                            //             height: 18,
+                            //           ),
+                            //           SizedBox(width: 8),
+                            //           Text(context.translate(item['label']!)),
+                            //         ],
+                            //       ),
+                            //     );
+                            //   }).toList(),
+                            //   onChanged: (value) {
+                            //     if (value != null) {
+                            //       context.read<TransferCubit>().selectValue(value, context.translate);
+                            //     }
+                            //   },
+                            //   decoration: InputDecoration(
+                            //     filled: true,
+                            //     fillColor: Colors.grey[200],
+                            //     border: OutlineInputBorder(
+                            //       borderRadius: BorderRadius.circular(25),
+                            //     ),
+                            //     contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+                            //     enabledBorder: OutlineInputBorder(
+                            //       borderRadius: BorderRadius.circular(25),
+                            //       borderSide: BorderSide(color: Theme.of(context).colorScheme.surface, width: 1.5),
+                            //     ),
+                            //     focusedBorder: OutlineInputBorder(
+                            //       borderRadius: BorderRadius.circular(25),
+                            //       borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                            //     ),
+                            //   ),
+                            //   hint: Text(context.translate('selectValue')),
+                            //   dropdownColor: Theme.of(context).colorScheme.surface
+                            // ),
+                          DropdownButtonFormField2<String>(
+                          value: cubit.selectedItem,
+                          items: cubit.items.map((item) {
+                            return DropdownMenuItem(
+                              value: item['value'],
+                              child: Container(
+                                padding: EdgeInsets.zero,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SvgPicture.asset(
+                                      item['icon']!,
+                                      fit: BoxFit.cover,
+                                      width: 22,
+                                      height: 22,
+                                    ),
+                                    SizedBox(width: 8),
+                                    Text(context.translate(item['label']!),
+                                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+                                  ],
                                 ),
                               ),
-                              hint: Text(context.translate('selectValue')),
-                              dropdownColor: Theme.of(context).colorScheme.surface,
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            if (value != null) {
+                              context.read<TransferCubit>().selectValue(value, context.translate);
+                            }
+                          },
+                          dropdownStyleData: DropdownStyleData(
+                            maxHeight: 200,
+                            width: null, // if null => default
+                            offset: const Offset(0, 0), //(x,y)
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              color: Theme.of(context).colorScheme.surface,
                             ),
-                            Padding(
+                          ),
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.grey[200],
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                              borderSide: BorderSide(color: Theme.of(context).colorScheme.surface, width: 1.5),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                              borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                            ),
+                          ),
+                          hint: Text(context.translate('selectValue')),
+                          iconStyleData: IconStyleData(
+                              icon: Padding(
+                                padding: const EdgeInsets.only(right: 15.0),
+                                child: SvgPicture.asset(
+                                  Asset.trailingDown,
+                                  color: Theme.of(context).colorScheme.onSurface,
+                                  width: 11,
+                                  height: 6,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
                               padding: const EdgeInsets.only(top: 10.0),
                               child: Form(
                                   key: cubit.formKey,

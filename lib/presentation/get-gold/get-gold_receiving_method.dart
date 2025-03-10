@@ -93,7 +93,7 @@ class _GetGoldReceivingMethodScreenState extends State<GetGoldReceivingMethodScr
       padding: const EdgeInsets.all(8.0),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.grey.shade100,
+          color: Theme.of(context).colorScheme.tertiaryFixed,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -153,7 +153,7 @@ class _GetGoldReceivingMethodScreenState extends State<GetGoldReceivingMethodScr
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 35, right: 20),
-                        child: Text('lorem address,ipsum trablos, 12 st. , sample sq. , imam street', style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18)),
+                        child: Text('lorem address,ipsum trablos, 12 st. , sample sq. , imam street', style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: Colors.grey[600])),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 20, bottom: 8.0, left: 35),
@@ -163,99 +163,103 @@ class _GetGoldReceivingMethodScreenState extends State<GetGoldReceivingMethodScr
                           ],
                         ),
                       ),
-                      Column(
-                        children: cubit.visitDays.asMap().entries.map((entry) {
-                          int index = entry.key;
-                          Map<String, String> day = entry.value;
-                          return Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(left: 8.0, right: 7),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              cubit.updateSelectedDay(day['day']!);
-                                            },
-                                            child: Container(
-                                              width: 20,
-                                              height: 20,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                border: Border.all(
-                                                  color: cubit.selectedDay == day['day']! ? Theme.of(context).primaryColor : Theme.of(context).colorScheme.primaryContainer,
-                                                  width: cubit.selectedDay == day['day']! ? 5 : 3,
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 20.0, top: 10),
+                        child: Column(
+                          children: cubit.visitDays.asMap().entries.map((entry) {
+                            int index = entry.key;
+                            Map<String, String> day = entry.value;
+                            return Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(left: 8.0, right: 7),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                cubit.updateSelectedDay(day['day']!);
+                                              },
+                                              child: Container(
+                                                width: 20,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(
+                                                    color: cubit.selectedDay == day['day']! ? Theme.of(context).primaryColor : Theme.of(context).colorScheme.primaryContainer,
+                                                    width: cubit.selectedDay == day['day']! ? 3 : 3,
+                                                  ),
+                                                  color: Colors.transparent, // Remove internal color
                                                 ),
-                                                color: Colors.transparent, // Remove internal color
-                                              ),
-                                              child: cubit.selectedDay == day['day']!
-                                                  ? Center(
-                                                      child: Container(
-                                                        width: 10,
-                                                        height: 10,
-                                                        decoration: BoxDecoration(
-                                                          shape: BoxShape.circle,
-                                                          color: Colors.transparent, // No color for the inner circle
+                                                child: cubit.selectedDay == day['day']!
+                                                    ? Center(
+                                                        child: Container(
+                                                          width: 15,
+                                                          height: 15,
+                                                          decoration: BoxDecoration(
+                                                            shape: BoxShape.circle,
+                                                            color: Colors.transparent, // No color for the inner circle
+                                                          ),
                                                         ),
-                                                      ),
-                                                    )
-                                                  : null, // No inner circle when not selected
+                                                      )
+                                                    : null, // No inner circle when not selected
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Text(
-                                          day['day']!,
+                                          Text(
+                                            day['day']!,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: cubit.selectedDay == day['day']! ? FontWeight.w700 : FontWeight.w500,
+                                              color: Theme.of(context).colorScheme.onTertiaryContainer,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 5),
+                                          Text(
+                                            '(${day['hour']})',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: cubit.selectedDay == day['day']! ? FontWeight.w700 : FontWeight.w500,
+                                              color: Theme.of(context).colorScheme.onTertiaryContainer,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(right: 8.0),
+                                        child: Text(
+                                          day['date']!,
                                           style: TextStyle(
-                                            fontSize: 18,
+                                            fontSize: 14,
                                             fontWeight: cubit.selectedDay == day['day']! ? FontWeight.w700 : FontWeight.w500,
                                             color: Theme.of(context).colorScheme.onTertiaryContainer,
                                           ),
-                                        ),
-                                        const SizedBox(width: 5),
-                                        Text(
-                                          '(${day['hour']})',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: cubit.selectedDay == day['day']! ? FontWeight.w700 : FontWeight.w500,
-                                            color: Theme.of(context).colorScheme.onTertiaryContainer,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 8.0),
-                                      child: Text(
-                                        day['date']!,
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: cubit.selectedDay == day['day']! ? FontWeight.w700 : FontWeight.w500,
-                                          color: Theme.of(context).colorScheme.onTertiaryContainer,
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              if (index < cubit.visitDays.length - 1)
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                                  child: Divider(
-                                    color: Theme.of(context).colorScheme.primaryContainer,
-                                    thickness: 1,
+                                    ],
                                   ),
                                 ),
-                            ],
-                          );
-                        }).toList(),
+                                if (index < cubit.visitDays.length - 1)
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                                    child: Divider(
+                                      color: Theme.of(context).colorScheme.primaryContainer,
+                                      thickness: 1,
+                                    ),
+                                  ),
+                              ],
+                            );
+                          }).toList(),
+                        ),
                       ),
                     ],
                   ),
-                Padding(
+                if (index == 0)
+                  Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Divider(height: 1, color: Colors.grey.shade300),
                 ),

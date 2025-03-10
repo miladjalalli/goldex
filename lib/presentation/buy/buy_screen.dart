@@ -114,6 +114,7 @@ class _BuyScreenState extends State<BuyScreen> {
                           cardNumber: '2020-1821-1530-2401',
                           goldAmount: cubit.goldBalanceMg?.toStringAsFixed(2) ?? '0.0',
                           type: context.translate('mg'),
+                          showDeposit: true,
                           onDeposit: () => {}),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),

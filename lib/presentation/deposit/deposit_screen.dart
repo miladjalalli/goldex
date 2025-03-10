@@ -10,6 +10,7 @@ import 'package:goldex/core/theme/theme.dart';
 import '../../core/dependency_injection.dart';
 import '../../widget/custom_button.dart';
 import '../../core/assets.dart';
+import '../../widget/goldex_text_form_field.dart';
 import 'cubit/deposit_cubit.dart';
 
 class DepositScreen extends StatefulWidget {
@@ -65,7 +66,7 @@ class _DepositScreenState extends State<DepositScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 36, 10, 0),
+                        padding: const EdgeInsets.fromLTRB(10, 30, 10, 0),
                         child: Container(
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
@@ -82,7 +83,7 @@ class _DepositScreenState extends State<DepositScreen> {
                             child: Column(
                               children: [
                                 Container(
-                                  padding: const EdgeInsets.all(13),
+                                  padding: const EdgeInsets.only(top: 8),
                                   decoration: BoxDecoration(
                                     color: Theme.of(context).colorScheme.surface,
                                     borderRadius: BorderRadius.circular(15),
@@ -91,29 +92,22 @@ class _DepositScreenState extends State<DepositScreen> {
                                       width: 1,
                                     ),
                                   ),
-                                  width: double.infinity,
+                                  width: 325,
+                                  height: 72,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 4),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              context.translate('currentBalance'),
-                                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Theme.of(context).colorScheme.onSurface),
-                                            ),
-                                          ],
-                                        ),
+                                      Text(
+                                        context.translate('currentBalance'),
+                                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Theme.of(context).colorScheme.onSurface),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                                        child: (state is GetCurrencyBalanceLoading)
-                                            ? SpinKitThreeBounce(
-                                          color: Theme.of(context).primaryColor,
-                                          size: 20,
-                                        ) : Row(
+                                      (state is GetCurrencyBalanceLoading)
+                                          ? SpinKitThreeBounce(
+                                        color: Theme.of(context).primaryColor,
+                                        size: 20,
+                                      ) : Padding(
+                                        padding: const EdgeInsets.only(top: 2),
+                                        child: Row(
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             Text(
@@ -127,43 +121,33 @@ class _DepositScreenState extends State<DepositScreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.fromLTRB(23, 10, 0, 7),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        context.translate("amount"),
-                                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface),
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: GoldexTextFormField(
+                                    style: const TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                    suffix: Text(
+                                      context.translate('USD'),
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
                                       ),
-                                    ],
-                                  ),
-                                ),
-                                TextField(
-                                  textAlign: TextAlign.left,
-                                  controller: cubit.amountController,
-                                  keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
-                                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primaryContainer, width: 1),
                                     ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
-                                      borderSide: BorderSide(color: Theme.of(context).colorScheme.primaryContainer, width: 1),
-                                    ),
-                                    contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                                    filled: true,
-                                    fillColor: Theme.of(context).colorScheme.surface,
-                                    suffixIcon: Text(context.translate('USD')),
-                                    hintStyle: TextStyle(fontSize: 16, color: Theme.of(context).colorScheme.primaryContainer),
-                                    hintTextDirection: TextDirection.rtl,
-                                  ),
-                                  style: const TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w900,
+                                    isLoading: false,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Enter Weight';
+                                      }
+                                    },
+                                    controller: cubit.amountController,
+                                    title: context.translate("amount"),
+                                    textInputAction: TextInputAction.next,
+                                    keyboardType: TextInputType.number,
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.fromLTRB(23, 10, 0, 7),
+                                  padding: const EdgeInsets.fromLTRB(23, 15, 0, 7),
                                   child: Row(
                                     children: [
                                       Text(
@@ -174,9 +158,9 @@ class _DepositScreenState extends State<DepositScreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.fromLTRB(5, 13, 5, 0),
+                                  padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
                                   child: SizedBox(
-                                    height: 50,
+                                    height: 37,
                                     child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
                                       itemCount: cubit.paymentMethods.length,
@@ -187,9 +171,9 @@ class _DepositScreenState extends State<DepositScreen> {
                                             cubit.selectPaymentMethod(index);
                                           },
                                           child: Container(
-                                            width: 70,
+                                            width: 57,
                                             height: 30,
-                                            margin: const EdgeInsets.symmetric(horizontal: 9),
+                                            margin: const EdgeInsets.symmetric(horizontal: 5),
                                             padding: const EdgeInsets.all(5),
                                             decoration: BoxDecoration(
                                               color: Theme.of(context).colorScheme.surface,
@@ -222,7 +206,7 @@ class _DepositScreenState extends State<DepositScreen> {
                                         onPressed: () {},
                                         child: Text(
                                           context.translate('cancel'),
-                                          style: TextStyle(fontSize: 14, color: Colors.grey),
+                                          style: TextStyle(fontSize: 14, color: Theme.of(context).colorScheme.onSurface),
                                         ),
                                       ),
                                       SizedBox(width: 29),

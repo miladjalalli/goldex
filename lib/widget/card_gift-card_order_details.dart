@@ -64,11 +64,11 @@ class GiftCardOrderDetails extends StatelessWidget {
                                 ),
                                 WidgetSpan(
                                   child: Transform.translate(
-                                    offset: const Offset(0, 10),
+                                    offset: const Offset(0, 1),
                                     child: Text(
                                       giftCardType,
                                       style: TextStyle(
-                                          fontSize: 20,
+                                          fontSize: 15,
                                           color: Theme.of(context).colorScheme.onSurface,
                                           fontWeight: FontWeight.w400,
                                           overflow: TextOverflow.ellipsis
@@ -206,10 +206,10 @@ class GiftCardOrderDetails extends StatelessWidget {
   Widget cardView(BuildContext context, int index) {
     return Card(
       color: Theme.of(context).colorScheme.primaryContainer,
-      elevation: 5,
+      elevation: 0,
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(13),
+        borderRadius: BorderRadius.circular(10),
       ),
       child: Container(
         height: 45,

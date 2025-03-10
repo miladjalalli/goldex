@@ -89,8 +89,11 @@ class _TransactionScreenState extends State<TransactionScreen> {
                               ),
                             ],
                           ),
-                          SvgPicture.asset(
-                            Asset.notification,
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: SvgPicture.asset(
+                              Asset.notification,
+                            ),
                           ),
                         ],
                       ),

@@ -119,7 +119,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                   }).toList(),
                 ),
                 Container(
-                    padding: EdgeInsets.fromLTRB(15, 39, 0, 11),
+                    padding: EdgeInsets.fromLTRB(20, 39, 0, 0),
                     child: Row(
                       children: [
                         Text(context.translate('services'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18, color: Theme.of(context).colorScheme.onPrimary)),
@@ -129,13 +129,14 @@ class _ServicesScreenState extends State<ServicesScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade100,
-                      borderRadius: BorderRadius.circular(12),
+                      color: Theme.of(context).colorScheme.tertiaryFixed,
+                      borderRadius: BorderRadius.circular(20),
                     ),
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
@@ -160,10 +161,10 @@ class _ServicesScreenState extends State<ServicesScreen> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 24, right: 24),
-                          child:  Divider(height: 1, color: Theme.of(context).colorScheme.primaryContainer),
+                          child: Divider(height: 1, color: Theme.of(context).colorScheme.primaryContainer),
                         ),
                         ClipRRect(
-                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12)),
+                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(

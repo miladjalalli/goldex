@@ -78,7 +78,7 @@ class _GiveGoldCardScreenState extends State<GiveGoldCardScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 22.0),
+                    padding: const EdgeInsets.only(bottom: 5.0),
                     child: Container(
                       height: 72,
                       width: 325,
@@ -124,6 +124,13 @@ class _GiveGoldCardScreenState extends State<GiveGoldCardScreen> {
                       ),
                     ),
                   ),
+                  Container(
+                      padding: EdgeInsets.fromLTRB(2, 10, 0, 20),
+                      child: Row(
+                        children: [
+                          Text(context.translate('chooseYourBar'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18, color: Theme.of(context).colorScheme.onPrimary)),
+                        ],
+                      )),
                   Expanded(
                     child: ShaderMask(
                       blendMode: BlendMode.dstIn,

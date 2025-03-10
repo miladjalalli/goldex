@@ -61,6 +61,7 @@ class _WalletScreenState extends State<WalletScreen> {
                           cardNumber: '2020-1821-1530-2401',
                           goldAmount: cubit.goldBalanceMg?.toStringAsFixed(2) ?? '0.0',
                           type: context.translate('mg'),
+                          showDeposit: false,
                           onDeposit: () => {}
                       ),
                   Padding(
@@ -116,6 +117,7 @@ class _WalletScreenState extends State<WalletScreen> {
                   Container(
                       padding: EdgeInsets.fromLTRB(2, 20, 5, 0),
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(context.translate('transactions'), style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18, color: Theme.of(context).colorScheme.onPrimary)),
                           SizedBox(
@@ -167,6 +169,7 @@ class _WalletScreenState extends State<WalletScreen> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
+      elevation: 0,
       child: Container(
         height: 50,
         width: width,

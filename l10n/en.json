@@ -93,7 +93,7 @@
   "toggleTheme": "Toggle Theme",
   "totalGoldSell": "Total gold Sell",
   "totalMoneyReceived": "Total Money Received",
-  "transaction": "Transaction",
+  "transaction": "Transactions",
   "transactionCode": "Transaction Code",
   "transactionDetails": "Transaction Details",
   "transactions": "Transactions",
@@ -144,5 +144,6 @@
   "totalUSDReceive": "Total USD receive",
   "sellAmount": "Sell Amount",
   "sendAmount": "Send Amount",
-  "mg": "mg"
+  "mg": "mg",
+  "chooseYourBar": "Choose your Bar"
 }

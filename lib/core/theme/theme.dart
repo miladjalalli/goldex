@@ -18,6 +18,7 @@ class AppTheme {
         primaryContainer: Color(0xffCCCCCC),
         secondaryContainer: Color(0xffE6E6E6),
         tertiaryContainer: Color(0xffE7E7E7),
+        tertiaryFixed: Color(0xffF2F2F2),
         surface: Colors.white,
         background: Colors.white,
         onPrimary: Color(0xff494949),
@@ -150,7 +151,7 @@ class AppTheme {
 
 const Color colorLightGrey = Color(0xffF2F2F2);
 
-const Color colorPending = Color(0xffE8BB41);
+const Color colorPending = Color(0xff707070);
 const Color colorFailed = Color(0xffE13C22);
 
 const Color colorGold = Color(0xffC6903B);

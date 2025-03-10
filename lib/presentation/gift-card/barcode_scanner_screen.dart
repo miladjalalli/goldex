@@ -10,6 +10,7 @@ import '../../widget/card_buy_or_sell_details.dart';
 import '../../widget/card_gift-card_order_details.dart';
 import '../../widget/custom_button.dart';
 import '../../core/assets.dart';
+import '../../widget/goldex_text_form_field.dart';
 import '../confirmation/confirmation_screen.dart';
 import '../order_summary/cubit/order_summary_cubit.dart';
 import 'cubit/gift_card_cubit.dart';
@@ -96,47 +97,27 @@ class BarcodeScannerScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Theme.of(context).colorScheme.onSurface),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(80, 21, 0, 7),
-                  child: Row(
-                    children: [
-                      Text(
-                        context.translate("enterSerialCode"),
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(64, 10, 64, 10),
-                  child: SizedBox(
-                    child: TextField(
-                      textAlign: TextAlign.left,
-                      controller: cubit.serialCode,
-                      keyboardType: const TextInputType.numberWithOptions(decimal: false, signed: false),
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(color: Theme.of(context).colorScheme.primaryContainer, width: 1),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(color: Theme.of(context).colorScheme.primaryContainer, width: 1),
-                        ),
-                        filled: true,
-                        fillColor: Theme.of(context).colorScheme.surface,
-                      ),
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                      ),
+                  padding: const EdgeInsets.fromLTRB(64, 10 , 64, 10),
+                  child: GoldexTextFormField(
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
                     ),
+                    controller: cubit.serialCode,
+                    title: context.translate("enterSerialCode"),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Enter serial code';
+                      }
+                    },
+                    textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.number,
                   ),
                 ),
               ],
             ),
             bottomNavigationBar: Padding(
-                padding: EdgeInsets.fromLTRB(64, 0, 64, 32),
+                padding: EdgeInsets.fromLTRB(64, 10, 64, 32),
                 child: CustomButton(
                   text: context.translate('continue'),
                   backgroundColorStart: Theme.of(context).primaryColor,
@@ -207,8 +188,8 @@ class BarcodeScannerScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Container(
-                        width: 130,
-                        height: 130,
+                        width: 110,
+                        height: 110,
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.surface,
                           borderRadius: BorderRadius.circular(13),

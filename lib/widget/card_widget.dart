@@ -7,13 +7,14 @@ import '../core/assets.dart';
 import '../core/theme/theme.dart';
 
 class CardWidget extends StatelessWidget {
-  const CardWidget({super.key, required this.name, required this.cardNumber, required this.balance, required this.goldAmount, required this.onDeposit, required this.type});
+  const CardWidget({super.key, required this.name, required this.cardNumber, required this.balance, required this.goldAmount, required this.onDeposit, required this.type, required this.showDeposit});
 
   final String name;
   final String cardNumber;
   final String balance;
   final String goldAmount;
   final String type;
+  final bool showDeposit;
   final VoidCallback onDeposit;
 
   @override
@@ -153,38 +154,41 @@ class CardWidget extends StatelessWidget {
                 ],
               ),
             ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Padding(
-                padding: EdgeInsets.only(right: 18, bottom: 8),
-                child: ElevatedButton(
-                  onPressed: onDeposit,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      side: BorderSide(color: Theme.of(context).colorScheme.surface),
-                    ),
-                    minimumSize: Size(111, 25), // Set width and height here
-                  ),
-                  child: RichText(
-                    textAlign: TextAlign.justify,
-                    textDirection: TextDirection.ltr,
-                    text: TextSpan(
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.surface,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400
+            Visibility(
+              visible: showDeposit,
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: Padding(
+                  padding: EdgeInsets.only(right: 18, bottom: 8),
+                  child: ElevatedButton(
+                    onPressed: onDeposit,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        side: BorderSide(color: Theme.of(context).colorScheme.surface),
                       ),
-                      children: [
-                        TextSpan(text: context.translate('depositUSD')),
-                        TextSpan(
-                          text: '+',
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        )
-                      ],
+                      minimumSize: Size(111, 25), // Set width and height here
+                    ),
+                    child: RichText(
+                      textAlign: TextAlign.justify,
+                      textDirection: TextDirection.ltr,
+                      text: TextSpan(
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.surface,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400
+                        ),
+                        children: [
+                          TextSpan(text: context.translate('depositUSD')),
+                          TextSpan(
+                            text: '+',
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
