@@ -24,7 +24,15 @@ class DraggableModalDialog extends StatefulWidget {
 class _DraggableModalDialogState extends State<DraggableModalDialog> {
   int _currentSlide = 0;
   int _selectedIndex = 0;
-  double _overlayHeight = 0.0;
+  late double _overlayHeight = 0.0;
+
+  final ScrollController _innerScrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _innerScrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,272 +40,265 @@ class _DraggableModalDialogState extends State<DraggableModalDialog> {
       children: [
         AnimatedPositioned(
           duration: Duration(milliseconds: 400),
-          top: -500,
-          left: 0,
-          right: 0,
           height: _overlayHeight * MediaQuery.of(context).size.height,
           child: Container(
             color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
           ),
         ),
         DraggableScrollableSheet(
-            controller: widget.draggableController,
-            initialChildSize: 0.49,
-            minChildSize: 0.3,
-            maxChildSize: 0.9,
-            builder: (BuildContext context, ScrollController scrollController) {
-              return NotificationListener<DraggableScrollableNotification>(
+          controller: widget.draggableController,
+          initialChildSize: 0.5,
+          minChildSize: 0.5,
+          maxChildSize: 0.85,
+          builder: (BuildContext context, ScrollController scrollController) {
+            return Listener(
+              onPointerUp: (_) {
+                if (_overlayHeight >= 0.80) {
+                  widget.draggableController.animateTo(
+                    0.85,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                } else {
+                  widget.draggableController.animateTo(
+                    0.5,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                }
+              },
+              child: NotificationListener<DraggableScrollableNotification>(
                 onNotification: (notification) {
                   double newHeight = notification.extent;
                   setState(() {
                     _overlayHeight = newHeight;
                   });
                   widget.onScroll(_overlayHeight);
-                  print("Scroll Height Factor: $_overlayHeight");
                   return true;
                 },
                 child: Container(
-                  height: 140,
-                  padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom,
-                  ),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.surface,
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(60),
-                    ),
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(60)),
                   ),
-                  child: SingleChildScrollView(
+                  child: CustomScrollView(
                     controller: scrollController,
-                    child: Column(
-                      children: [
-                        Container(
-                            height: 5,
-                            width: 75,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.primaryContainer,
-                              borderRadius: BorderRadius.circular(5.0),
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 5,
+                              width: 75,
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.primaryContainer,
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              margin: const EdgeInsets.only(top: 10),
                             ),
-                            margin: EdgeInsets.only(top: 10)),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              actionButton(
-                                context,
-                                Asset.buyModal,
-                                context.translate('buyGold'),
-                                () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => BuyScreen()),
-                                  );
-                                },
-                              ),
-                              actionButton(
-                                context,
-                                Asset.sellModal,
-                                context.translate('sellGold'),
-                                () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => SellScreen()),
-                                  );
-                                },
-                              ),
-                              actionButton(
-                                context,
-                                Asset.transferModal,
-                                context.translate('transfer'),
-                                () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  actionButton(context, Asset.buyModal, context.translate('buyGold'), () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => BuyScreen()));
+                                  }),
+                                  actionButton(context, Asset.sellModal, context.translate('sellGold'), () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => SellScreen()));
+                                  }),
+                                  actionButton(context, Asset.transferModal, context.translate('transfer'), () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
                                         builder: (context) => BlocProvider(
-                                              create: (context) => sl<TransferCubit>()..getGoldBalance()..getCurrencyBalance(),
-                                              child: TransferScreen(),
-                                            )),
-                                  );
-                                },
+                                          create: (context) => sl<TransferCubit>()..getGoldBalance()..getCurrencyBalance(),
+                                          child: TransferScreen(),
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
-                        SingleChildScrollView(
-                          controller: scrollController,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 7.0),
-                            child: Center(
-                              child: Container(
-                                width: 379,
-                                height: 317,
-                                decoration: BoxDecoration(
-                                  color: colorLightGrey,
-                                  borderRadius: BorderRadius.circular(25),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.fromLTRB(16.0, 8, 16, 16),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              context.translate('goldPriceChart'),
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w700,
-                                                color: Theme.of(context).colorScheme.onSurface,
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color: Theme.of(context).colorScheme.tertiaryContainer,
-                                              borderRadius: BorderRadius.circular(30),
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: List.generate(4, (index) {
-                                                return _buildTimeframeButton(index);
-                                              }),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            '67.51',
-                                            style: TextStyle(
-                                              fontSize: 27,
-                                              fontWeight: FontWeight.w400,
-                                              color: Theme.of(context).colorScheme.onSurface,
-                                            ),
-                                          ),
-                                          SizedBox(width: 8),
-                                          Text(
-                                            '+2.1%',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w700,
-                                              color: Colors.green,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 16),
-                                      Expanded(
-                                        child: LineChart(
-                                          LineChartData(
-                                            gridData: FlGridData(show: false),
-                                            titlesData: FlTitlesData(show: false),
-                                            borderData: FlBorderData(show: false),
-                                            lineBarsData: [
-                                              LineChartBarData(
-                                                spots: [
-                                                  FlSpot(0, 3),
-                                                  FlSpot(1, 2),
-                                                  FlSpot(2, 5),
-                                                  FlSpot(3, 3.1),
-                                                  FlSpot(4, 4),
-                                                  FlSpot(5, 3.5),
-                                                  FlSpot(6, 4.1),
-                                                ],
-                                                isCurved: true,
-                                                color: Theme.of(context).colorScheme.onSurface,
-                                                barWidth: 1,
-                                                isStrokeCapRound: true,
-                                                belowBarData: BarAreaData(
-                                                  show: true,
-                                                  gradient: LinearGradient(
-                                                    colors: [
-                                                      Theme.of(context).primaryColor,
-                                                      colorLightGrey,
-                                                    ],
-                                                    stops: [
-                                                      0.01,
-                                                      1.0,
-                                                    ],
-                                                    begin: Alignment.topCenter,
-                                                    end: Alignment.bottomCenter,
-                                                  ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 7.0),
+                              child: Center(
+                                child: Container(
+                                  width: 379,
+                                  height: 317,
+                                  decoration: BoxDecoration(
+                                    color: colorLightGrey,
+                                    borderRadius: BorderRadius.circular(25),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(16.0, 8, 16, 16),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                context.translate('goldPriceChart'),
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: Theme.of(context).colorScheme.onSurface,
                                                 ),
                                               ),
-                                            ],
+                                            ),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: Theme.of(context).colorScheme.tertiaryContainer,
+                                                borderRadius: BorderRadius.circular(30),
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: List.generate(4, (index) {
+                                                  return _buildTimeframeButton(index);
+                                                }),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              '67.51',
+                                              style: TextStyle(
+                                                fontSize: 27,
+                                                fontWeight: FontWeight.w400,
+                                                color: Theme.of(context).colorScheme.onSurface,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 8),
+                                            Text(
+                                              '+2.1%',
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.green,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 16),
+                                        Expanded(
+                                          child: LineChart(
+                                            LineChartData(
+                                              gridData: FlGridData(show: false),
+                                              titlesData: FlTitlesData(show: false),
+                                              borderData: FlBorderData(show: false),
+                                              lineBarsData: [
+                                                LineChartBarData(
+                                                  spots: [
+                                                    FlSpot(0, 3),
+                                                    FlSpot(1, 2),
+                                                    FlSpot(2, 5),
+                                                    FlSpot(3, 3.1),
+                                                    FlSpot(4, 4),
+                                                    FlSpot(5, 3.5),
+                                                    FlSpot(6, 4.1),
+                                                  ],
+                                                  isCurved: true,
+                                                  color: Theme.of(context).colorScheme.onSurface,
+                                                  barWidth: 1,
+                                                  isStrokeCapRound: true,
+                                                  belowBarData: BarAreaData(
+                                                    show: true,
+                                                    gradient: LinearGradient(
+                                                      colors: [
+                                                        Theme.of(context).primaryColor,
+                                                        colorLightGrey,
+                                                      ],
+                                                      stops: [
+                                                        0.01,
+                                                        1.0,
+                                                      ],
+                                                      begin: Alignment.topCenter,
+                                                      end: Alignment.bottomCenter,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(5, 28, 5, 0),
-                          child: Column(
-                            children: [
-                              CarouselSlider(
-                                items: [
-                                  Container(
-                                    margin: const EdgeInsets.all(8.0),
-                                    decoration: BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.circular(15),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(5, 10, 5, 0),
+                              child: RepaintBoundary(
+                                child: Column(
+                                  children: [
+                                    CarouselSlider(
+                                      items: [
+                                        Container(
+                                          margin: const EdgeInsets.all(8.0),
+                                          decoration: BoxDecoration(
+                                            color: Colors.green,
+                                            borderRadius: BorderRadius.circular(15),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              context.translate('slider'),
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w900,
+                                                color: Theme.of(context).colorScheme.surface,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                      options: CarouselOptions(
+                                        height: 84,
+                                        viewportFraction: 1,
+                                        autoPlay: true,
+                                        enlargeCenterPage: true,
+                                        onPageChanged: (index, reason) {
+                                          setState(() {
+                                            _currentSlide = index;
+                                          });
+                                        },
+                                      ),
                                     ),
-                                    child: Center(
-                                      child: Text(
-                                        context.translate('slider'),
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w900,
-                                          color: Theme.of(context).colorScheme.surface,
+                                    const SizedBox(height: 8),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: List.generate(
+                                        3, (index) => Container(
+                                          width: 8,
+                                          height: 8,
+                                          margin: const EdgeInsets.symmetric(horizontal: 4),
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: _currentSlide == index
+                                                ? Theme.of(context).colorScheme.onSurface
+                                                : Colors.grey,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                                options: CarouselOptions(
-                                  height: 84,
-                                  viewportFraction: 1,
-                                  autoPlay: true,
-                                  enlargeCenterPage: true,
-                                  onPageChanged: (index, reason) {
-                                    setState(() {
-                                      _currentSlide = index;
-                                    });
-                                  },
+                                  ],
                                 ),
                               ),
-                              SizedBox(height: 8),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: List.generate(
-                                  3, // Number of slides
-                                  (index) => Container(
-                                    width: 8,
-                                    height: 8,
-                                    margin: const EdgeInsets.symmetric(horizontal: 4),
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: _currentSlide == index ? Theme.of(context).colorScheme.onSurface : Colors.grey,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              );
-            }),
+              ),
+            );
+          },
+        ),
       ],
     );
   }

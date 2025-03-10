@@ -8,6 +8,9 @@ import '../../widget/modal_dialog.dart';
 import '../../core/assets.dart';
 import 'cubit/transaction_cubit.dart';
 
+double width = 0;
+double height = 0;
+
 class TransactionScreen extends StatefulWidget {
   const TransactionScreen({super.key});
 
@@ -18,10 +21,12 @@ class TransactionScreen extends StatefulWidget {
 class _TransactionScreenState extends State<TransactionScreen> {
   final DraggableScrollableController _draggableController = DraggableScrollableController();
 
-  double _floatingTextOffset = 0.3; // Initial offset for floating text
+  double _floatingTextOffset = 0.3;
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     return BlocProvider(
       create: (context) => sl<TransactionCubit>()..loadUserData(),
       child: BlocConsumer<TransactionCubit, TransactionState>(
@@ -90,7 +95,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                             ],
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(right: 10.0),
+                            padding: const EdgeInsets.only(right: 20.0),
                             child: SvgPicture.asset(
                               Asset.notification,
                             ),
@@ -100,11 +105,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 20,
-                ),
                 Positioned(
-                  top: (MediaQuery.of(context).size.height + 100) * (_floatingTextOffset),
+                  top: height * (_floatingTextOffset) - 120,
                   left: 20,
                   right: 20,
                   child: Center(
@@ -137,9 +139,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                 DraggableModalDialog(
                   draggableController: _draggableController,
                   onScroll: (heightFactor) {
-                    print("Height Factor: $heightFactor"); // بررسی مقدار heightFactor در کنسول
                     setState(() {
-                      _floatingTextOffset = 0.5 - (heightFactor * 0.5); // حرکت روان‌تر متن
+                      _floatingTextOffset = 1 - (heightFactor);
                     });
                   },
                 ),
