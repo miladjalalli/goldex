@@ -4,4 +4,5 @@ class Constants{
   static final USER_PASSWORD = 'USER_PASSWORD';
   static final USER_NAME = 'USER_NAME';
   static final USER_FAMILY = 'USER_FAMILY';
+  static final FIRST_LOGIN = 'FIRST_LOGIN';
 }

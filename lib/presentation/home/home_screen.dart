@@ -15,10 +15,11 @@ class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
+late DateTime currentBackPressTime;
+final ValueNotifier<bool> _backPressAllowed = ValueNotifier(false);
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 3;
-
   final List<Widget> _pages = [
     ProfileScreen(),
     BlocProvider(
@@ -31,23 +32,44 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme
-          .of(context)
-          .colorScheme
-          .onSurface,
-      body: _pages[_currentIndex],
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 25),
-        child: CustomBottomBar(
-          onItemSelected: (int index) {
-            setState(() {
-              _currentIndex = index;
-            });
+    return ValueListenableBuilder<bool>(
+      valueListenable: _backPressAllowed,
+      builder: (BuildContext context, bool backPressAllowed, Widget? child) {
+        return PopScope(
+          canPop: backPressAllowed,
+          onPopInvoked: (didPop) {
+            if (!didPop) {
+              _allowBackPress();
+            }
           },
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          child: Scaffold(
+              backgroundColor: Theme
+                  .of(context)
+                  .colorScheme
+                  .onSurface,
+              body: _pages[_currentIndex],
+              floatingActionButton: Padding(
+                padding: const EdgeInsets.only(bottom: 25),
+                child: CustomBottomBar(
+                  onItemSelected: (int index) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                ),
+              ),
+              floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+            ),
+          );
+      },
     );
   }
+  Future<void> _allowBackPress() async {
+    _backPressAllowed.value = true;
+
+    await Future.delayed(const Duration(milliseconds: 2000));
+
+    _backPressAllowed.value = false;
+  }
 }
+

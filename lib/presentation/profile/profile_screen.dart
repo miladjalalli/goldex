@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:goldex/core/app_localizations.dart';
 import 'package:goldex/core/theme/theme.dart';
 import 'package:goldex/widget/custom_button.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../core/assets.dart';
 import '../../core/dependency_injection.dart';
@@ -249,30 +250,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               padding: const EdgeInsets.only(left: 24, right: 24),
                               child: Divider(height: 1, color: Theme.of(context).colorScheme.primaryContainer),
                             ),
-                            ClipRRect(
-                              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
-                              child: Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  onTap: () {
-                                    // Navigator.push(
-                                    //   context,
-                                    // MaterialPageRoute(builder: (context) => BlocProvider(
-                                    //   create: (context) => GiftCardCubit(),
-                                    //   child: GiftCardScreen(),
-                                    // )),
-                                    // );
-                                  },
-                                  child: ListTile(
-                                    leading: SvgPicture.asset(
-                                      Asset.info,
-                                      width: 20,
-                                      height: 20,
-                                    ),
-                                    title: Text(context.translate('aboutGoldex'), style: TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: Theme.of(context).colorScheme.onSurface)),
+                            FutureBuilder<String>(
+                              future: _getAppVersion(),
+                              builder: (context, snapshot) {
+                                String version = snapshot.data ?? '';
+                                return ListTile(
+                                  leading: SvgPicture.asset(
+                                    Asset.info,
+                                    width: 20,
+                                    height: 20,
                                   ),
-                                ),
-                              ),
+                                  title: Text(
+                                    context.translate('aboutGoldex'),
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 14,
+                                      color: Theme.of(context).colorScheme.onSurface,
+                                    ),
+                                  ),
+                                  trailing: Text(
+                                    version,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         ),
@@ -308,4 +312,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+}
+
+Future<String> _getAppVersion() async {
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  return "v${packageInfo.version}";
 }

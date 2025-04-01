@@ -35,7 +35,6 @@ class SecureStorageServiceImpl implements SecureStorageService {
     await _storage.delete(key: Constants.USER_MOBILE);
   }
 
-
   @override
   Future<void> writePassword(String value) async {
     await _storage.write(key: Constants.USER_PASSWORD, value: value);
@@ -51,10 +50,24 @@ class SecureStorageServiceImpl implements SecureStorageService {
     await _storage.delete(key: Constants.USER_PASSWORD);
   }
 
-
   @override
   Future<void> writeName(String value) async {
     await _storage.write(key: Constants.USER_NAME, value: value);
+  }
+
+  @override
+  Future<String?> readName() async {
+    return await _storage.read(key: Constants.USER_NAME);
+  }
+
+  @override
+  Future<void> deleteName() async {
+    await _storage.delete(key: Constants.USER_NAME);
+  }
+
+  @override
+  Future<void> writeFamily(String value) async {
+    await _storage.write(key: Constants.USER_FAMILY, value: value);
   }
 
   @override
@@ -68,18 +81,17 @@ class SecureStorageServiceImpl implements SecureStorageService {
   }
 
   @override
-  Future<void> writeFamily(String value) async {
-    await _storage.write(key: Constants.USER_FAMILY, value: value);
+  Future<void> writeFirstLogin(String value) async {
+    await _storage.write(key: Constants.FIRST_LOGIN, value: value);
   }
 
   @override
-  Future<String?> readName() async {
-    return await _storage.read(key: Constants.USER_NAME);
+  Future<String?> readFirstLogin() async {
+    return await _storage.read(key: Constants.FIRST_LOGIN);
   }
 
   @override
-  Future<void> deleteName() async {
-    await _storage.delete(key: Constants.USER_NAME);
+  Future<void> deleteFirstLogin() async {
+    await _storage.delete(key: Constants.FIRST_LOGIN);
   }
-
 }

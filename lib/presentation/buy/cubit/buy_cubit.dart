@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:goldex/core/app_localizations.dart';
 import 'package:local_auth/local_auth.dart';
 
@@ -30,7 +31,7 @@ class BuyCubit extends Cubit<BuyState> {
   final formKey = GlobalKey<FormState>();
 
   String suffix1 = 'USD';
-  String suffix2 = 'MilliGram';
+  String suffix2 = 'milliGram';
   double? previousUsdValue;
   double? previousWeightValue;
   bool isWeightControllerSelected = false;

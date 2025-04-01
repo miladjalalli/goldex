@@ -23,4 +23,9 @@ abstract class SecureStorageService {
   Future<void> writeFamily(String value);
   Future<String?> readFamily();
   Future<void> deleteFamily();
+
+  Future<void> writeFirstLogin(String value);
+  Future<String?> readFirstLogin();
+  Future<void> deleteFirstLogin();
+
 }

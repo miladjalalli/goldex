@@ -63,6 +63,11 @@ class GoldexTextFormField extends StatelessWidget {
           onChanged: onChanged,
           decoration: InputDecoration(
             hintText: hintText,
+            hintStyle: TextStyle(
+            fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: Theme.of(context).colorScheme.tertiary
+            ),
             labelText: labelText,
             suffix: isLoading ? Padding(
               padding: EdgeInsets.only(top: 15.0),

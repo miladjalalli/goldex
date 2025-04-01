@@ -13,6 +13,7 @@ import 'package:goldex/presentation/sign_up/sign-up_screen.dart';
 import 'package:goldex/widget/custom_button.dart';
 import 'package:goldex/widget/goldex_text_form_field.dart';
 
+import '../../data/repository/secure_storage_service_impl.dart';
 import '../../widget/size_config.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -20,6 +21,7 @@ class LoginScreen extends StatelessWidget {
 
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final SecureStorageService secureStorageService = SecureStorageServiceImpl();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class LoginScreen extends StatelessWidget {
               );
             }
             if (state is LoginSuccess) {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => HomeScreen()),
               );
@@ -122,9 +124,10 @@ class LoginScreen extends StatelessWidget {
                               children: [
                                 GoldexTextFormField(
                                   controller: cubit.numberOrEmailController,
-                                  title: context.translate("phoneNumberEmail"),
+                                  title: context.translate("phoneNumber"),
                                   textInputAction: TextInputAction.next,
                                   keyboardType: TextInputType.text,
+                                  hintText: '989123456789',
                                   onChanged: (value) {
                                     if (value == null || value.isEmpty) {
                                       cubit.setTNumberOrEmailControllerHasError(true);
@@ -188,42 +191,42 @@ class LoginScreen extends StatelessWidget {
                                   },
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(top: 8.0),
+                                  padding: const EdgeInsets.only(top: 10.0),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          Transform.scale(
-                                            scale: 1,
-                                            child: Checkbox(
-                                              value: cubit.rememberMe,
-                                              onChanged: (val) {
-                                                cubit.setRememberMe(val!);
-                                              },
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(5), // Set border radius
-                                              ),
-                                              side: BorderSide(
-                                                  width: 2, color: Theme.of(context).colorScheme.primaryContainer),
-                                              // Border weight & color
-                                              visualDensity: VisualDensity(horizontal: -1, vertical: -4),
-                                              // Remove padding
-                                              materialTapTargetSize:
-                                                  MaterialTapTargetSize.shrinkWrap, // Reduce touch target size
-                                            ),
-                                          ),
-                                          Text(
-                                            context.translate('rememberMe'),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: SizeConfig.scaleWidth(14),
-                                                color: Theme.of(context).colorScheme.onPrimaryContainer),
-                                          ),
-                                        ],
-                                      ),
+                                      // Row(
+                                      //   mainAxisSize: MainAxisSize.max,
+                                      //   mainAxisAlignment: MainAxisAlignment.start,
+                                      //   children: [
+                                      //     Transform.scale(
+                                      //       scale: 1,
+                                      //       child: Checkbox(
+                                      //         value: cubit.rememberMe,
+                                      //         onChanged: (val) {
+                                      //           cubit.setRememberMe(val!);
+                                      //         },
+                                      //         shape: RoundedRectangleBorder(
+                                      //           borderRadius: BorderRadius.circular(5), // Set border radius
+                                      //         ),
+                                      //         side: BorderSide(
+                                      //             width: 2, color: Theme.of(context).colorScheme.primaryContainer),
+                                      //         // Border weight & color
+                                      //         visualDensity: VisualDensity(horizontal: -1, vertical: -4),
+                                      //         // Remove padding
+                                      //         materialTapTargetSize:
+                                      //             MaterialTapTargetSize.shrinkWrap, // Reduce touch target size
+                                      //       ),
+                                      //     ),
+                                      //     Text(
+                                      //       context.translate('rememberMe'),
+                                      //       style: TextStyle(
+                                      //           fontWeight: FontWeight.w600,
+                                      //           fontSize: SizeConfig.scaleWidth(14),
+                                      //           color: Theme.of(context).colorScheme.onPrimaryContainer),
+                                      //     ),
+                                      //   ],
+                                      // ),
                                       GestureDetector(
                                         onTap: () {
                                           // Handle forgot password
@@ -257,29 +260,43 @@ class LoginScreen extends StatelessWidget {
                                     },
                                   ),
                                 ),
-                                InkWell(
-                                  onTap: (){
-                                    cubit.loginWithFingerPrint(context);
-                                  },
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
-                                        child: Text(
-                                          context.translate("useYourFingerprint"),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 16,
-                                              color: Theme.of(context).colorScheme.onSurface),
+                                FutureBuilder<String?>(
+                                  future: secureStorageService.readFirstLogin(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState == ConnectionState.waiting) {
+                                      return CircularProgressIndicator();
+                                    }
+
+                                    bool isVisible = snapshot.data != null;
+
+                                    return Visibility(
+                                      visible: isVisible,
+                                      child: InkWell(
+                                        onTap: (){
+                                          cubit.loginWithFingerPrint(context);
+                                        },
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
+                                              child: Text(
+                                                context.translate("useYourFingerprint"),
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 16,
+                                                    color: Theme.of(context).colorScheme.onSurface),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                              child: SvgPicture.asset(Asset.fingerPrint),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                        child: SvgPicture.asset(Asset.fingerPrint),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                    );
+                                  },
+                                )
                               ],
                             ),
                           ),

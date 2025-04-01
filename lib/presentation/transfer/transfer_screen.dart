@@ -247,6 +247,7 @@ class _TransferScreenState extends State<TransferScreen> {
                                             return 'Enter Mobile Num';
                                           }
                                         },
+                                        hintText: 'Phone Number',
                                         controller: cubit.mobileNumberController,
                                         title: context.translate("to"),
                                         textInputAction: TextInputAction.next,

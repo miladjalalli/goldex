@@ -21,8 +21,15 @@ class LoginCubit extends Cubit<LoginState> {
   bool numberOrEmailControllerHasError = true;
   bool passwordControllerHasError = true;
   bool showPassword = false;
-
   bool rememberMe = false;
+  bool isFirstLogin = true; // اضافه شده
+
+  @override
+  Future<void> close() {
+    numberOrEmailController.dispose();
+    passwordController.dispose();
+    return super.close();
+  }
 
   void showHidePassword() {
     showPassword = !showPassword;
@@ -44,7 +51,20 @@ class LoginCubit extends Cubit<LoginState> {
     emit(LoginInitial());
   }
 
+  Future<void> checkFirstLogin() async {
+    String? firstLoginFlag = await secureStorageService.readFirstLogin();
+    isFirstLogin = firstLoginFlag == null;
+    emit(LoginInitial());
+  }
+
   loginWithFingerPrint(BuildContext context) async {
+    await checkFirstLogin();
+
+    if (isFirstLogin) {
+      emit(LoginError(context.translate('fingerprintLoginIsDisabledForFirstLogin')));
+      return;
+    }
+
     bool canAuthenticate = await _auth.canCheckBiometrics;
     bool isDeviceSupported = await _auth.isDeviceSupported();
 
@@ -53,7 +73,9 @@ class LoginCubit extends Cubit<LoginState> {
       return;
     }
     try {
-      bool authenticated = await _auth.authenticate(localizedReason: 'Touch your finger on the sensor to login');
+      bool authenticated = await _auth.authenticate(
+        localizedReason: 'Touch your finger on the sensor to login',
+      );
 
       if (authenticated) {
         String? mobile = await secureStorageService.readMobile();
@@ -61,7 +83,7 @@ class LoginCubit extends Cubit<LoginState> {
 
         if (mobile != null && password != null) {
           login(context, mobile: mobile, password: password);
-        }else{
+        } else {
           emit(LoginError(context.translate('enterYourEmailAndPasswordToLogIn')));
         }
       }
@@ -89,6 +111,9 @@ class LoginCubit extends Cubit<LoginState> {
           await secureStorageService.writeFamily(response.data!.user!.lastname);
           await secureStorageService.writeMobile(numberOrEmailController.text.trim());
           await secureStorageService.writePassword(passwordController.text.trim());
+
+          await secureStorageService.writeFirstLogin("done");
+
           emit(LoginSuccess());
         } else {
           emit(LoginError(response.message!));
