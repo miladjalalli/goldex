@@ -6,6 +6,7 @@ import 'package:goldex/core/app_localizations.dart';
 import '../../core/dependency_injection.dart';
 import '../../core/theme/theme.dart';
 import '../../core/assets.dart';
+import '../../widget/connectivity_wrapper.dart';
 import 'cubit/wallet_cubit.dart';
 
 double width = 0;
@@ -19,51 +20,53 @@ class AllTransactionsScreen extends StatelessWidget {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
 
-    return BlocProvider(
-      create: (context) => sl<WalletCubit>(),
-      child: BlocConsumer<WalletCubit, WalletState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          return Scaffold(
-            backgroundColor: Theme.of(context).colorScheme.surface,
-            appBar: AppBar(
-              leading: TextButton(
-                style: ButtonStyle(
-                  padding: WidgetStateProperty.all(EdgeInsets.only(left: 20)),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: SvgPicture.asset(
-                  Asset.back,
-                ),
-              ),
+    return ConnectivityWrapper(
+      child: BlocProvider(
+        create: (context) => sl<WalletCubit>(),
+        child: BlocConsumer<WalletCubit, WalletState>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            return Scaffold(
               backgroundColor: Theme.of(context).colorScheme.surface,
-              elevation: 0,
-              forceMaterialTransparency: true,
-              centerTitle: true,
-              title: Text(
-                context.translate('transaction'),
+              appBar: AppBar(
+                leading: TextButton(
+                  style: ButtonStyle(
+                    padding: WidgetStateProperty.all(EdgeInsets.only(left: 20)),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: SvgPicture.asset(
+                    Asset.back,
+                  ),
+                ),
+                backgroundColor: Theme.of(context).colorScheme.surface,
+                elevation: 0,
+                forceMaterialTransparency: true,
+                centerTitle: true,
+                title: Text(
+                  context.translate('transaction'),
+                ),
+                titleTextStyle: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                ),
               ),
-              titleTextStyle: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-                color: Theme.of(context).colorScheme.onPrimaryContainer,
+              body: Padding(
+                padding: const EdgeInsets.only(top: 15, bottom: 15),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: context.read<WalletCubit>().transactions.length,
+                  itemBuilder: (context, index) {
+                    final transaction = context.read<WalletCubit>().transactions[index];
+                    return cardView(context, transaction);
+                  },
+                ),
               ),
-            ),
-            body: Padding(
-              padding: const EdgeInsets.only(top: 15, bottom: 15),
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: context.read<WalletCubit>().transactions.length,
-                itemBuilder: (context, index) {
-                  final transaction = context.read<WalletCubit>().transactions[index];
-                  return cardView(context, transaction);
-                },
-              ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

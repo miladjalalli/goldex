@@ -40,6 +40,9 @@ dependencies:
   shimmer:
   dropdown_button2:
   package_info_plus:
+  connectivity_plus:
+  lottie:
+  fluttertoast:
 
 dev_dependencies:
   flutter_test:
@@ -65,7 +68,7 @@ flutter:
     - assets/icons/service/
     - l10n/
     - assets/fonts/opensanc.ttf
-
+    - assets/lottie/
 
   fonts:
     - family: opensans

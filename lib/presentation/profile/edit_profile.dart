@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:goldex/core/app_localizations.dart';
 import '../../core/dependency_injection.dart';
 import '../../core/theme/theme.dart';
+import '../../widget/connectivity_wrapper.dart';
 import '../../widget/custom_button.dart';
 import '../../widget/profile_complete_widget.dart';
 import '../../core/assets.dart';
@@ -15,78 +16,80 @@ class EditProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<ProfileCubit>()..loadUserData(),
-      child: BlocConsumer<ProfileCubit, ProfileState>(
-        listener: (context, state) {
-          // TODO: implement listener
-        },
-        builder: (context, state) {
-          ProfileCubit cubit = context.read<ProfileCubit>();
-          var completeDocuments = cubit.documents.where((document) => document['completed'] == true).toList();
-          return Scaffold(
-            backgroundColor: Theme.of(context).colorScheme.surface,
-            appBar: AppBar(
+    return ConnectivityWrapper(
+      child: BlocProvider(
+        create: (context) => sl<ProfileCubit>()..loadUserData(),
+        child: BlocConsumer<ProfileCubit, ProfileState>(
+          listener: (context, state) {
+            // TODO: implement listener
+          },
+          builder: (context, state) {
+            ProfileCubit cubit = context.read<ProfileCubit>();
+            var completeDocuments = cubit.documents.where((document) => document['completed'] == true).toList();
+            return Scaffold(
               backgroundColor: Theme.of(context).colorScheme.surface,
-              leading: TextButton(
-                style: ButtonStyle(
-                  padding: WidgetStateProperty.all(EdgeInsets.only(left: 20)),
+              appBar: AppBar(
+                backgroundColor: Theme.of(context).colorScheme.surface,
+                leading: TextButton(
+                  style: ButtonStyle(
+                    padding: WidgetStateProperty.all(EdgeInsets.only(left: 20)),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: SvgPicture.asset(
+                    Asset.back,
+                  ),
                 ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: SvgPicture.asset(
-                  Asset.back,
-                ),
+                automaticallyImplyLeading: false,
+                elevation: 0,
+                forceMaterialTransparency: true,
               ),
-              automaticallyImplyLeading: false,
-              elevation: 0,
-              forceMaterialTransparency: true,
-            ),
-            body: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 51),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.asset(
-                      Asset.person,
-                      fit: BoxFit.cover,
-                      height: 78,
-                      width: 78,
+              body: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 51),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset(
+                        Asset.person,
+                        fit: BoxFit.cover,
+                        height: 78,
+                        width: 78,
+                      ),
                     ),
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('${cubit.name} ${cubit.family}', style: TextStyle(fontWeight: FontWeight.w900, fontSize: 24, color: Theme.of(context).colorScheme.onPrimary)),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10, right: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SvgPicture.asset(Asset.complete),
-                            ProfileCompletionWidget(completedFields: completeDocuments.length, totalFields: cubit.documents.length),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: cubit.documents.length,
-                    itemBuilder: (context, index) {
-                      var document = cubit.documents[index];
-                      return _buildDocumentItem(document, context);
-                    },
-                  )
-                ],
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('${cubit.name} ${cubit.family}', style: TextStyle(fontWeight: FontWeight.w900, fontSize: 24, color: Theme.of(context).colorScheme.onPrimary)),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10, right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SvgPicture.asset(Asset.complete),
+                              ProfileCompletionWidget(completedFields: completeDocuments.length, totalFields: cubit.documents.length),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: cubit.documents.length,
+                      itemBuilder: (context, index) {
+                        var document = cubit.documents[index];
+                        return _buildDocumentItem(document, context);
+                      },
+                    )
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

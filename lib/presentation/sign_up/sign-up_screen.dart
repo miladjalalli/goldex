@@ -7,6 +7,7 @@ import 'package:goldex/core/app_localizations.dart';
 import 'package:goldex/widget/goldex_text_form_field.dart';
 
 import '../../core/assets.dart';
+import '../../widget/connectivity_wrapper.dart';
 import '../../widget/custom_button.dart';
 import '../../widget/size_config.dart';
 import '../home/home_screen.dart';
@@ -22,100 +23,102 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SingUpCubit, SingUpState>(
-      listener: (context, state) {
-        SingUpCubit cubit = context.read<SingUpCubit>();
-        if (state is RegisterError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: Colors.red,
-            ),
-          );
-        }
-        if (state is ConfirmRegisterError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: Colors.red,
-            ),
-          );
-        }
-        if (state is SignUpError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: Colors.red,
-            ),
-          );
-        }
-        if (state is SetPasswordError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: Colors.red,
-            ),
-          );
-        }
+    return ConnectivityWrapper(
+      child: BlocConsumer<SingUpCubit, SingUpState>(
+        listener: (context, state) {
+          SingUpCubit cubit = context.read<SingUpCubit>();
+          if (state is RegisterError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+          if (state is ConfirmRegisterError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+          if (state is SignUpError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+          if (state is SetPasswordError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
 
-        if (state is RegisterSuccess) {
-          cubit.showOtpWidget();
-        }
+          if (state is RegisterSuccess) {
+            cubit.showOtpWidget();
+          }
 
-        if (state is ConfirmRegisterSuccess) {
-          cubit.goToNextPage();
-        }
+          if (state is ConfirmRegisterSuccess) {
+            cubit.goToNextPage();
+          }
 
-        if (state is SignUpSuccess) {
-          cubit.goToNextPage();
-        }
+          if (state is SignUpSuccess) {
+            cubit.goToNextPage();
+          }
 
-        if (state is SetPasswordSuccess) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
-          );
-        }
-      },
-      builder: (context, state) {
-        SingUpCubit cubit = context.read<SingUpCubit>();
-        return Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.onSurface,
-          body: Stack(
-            children: [
-              Positioned.fill(
-                child: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(Asset.background),
-                      fit: BoxFit.cover,
+          if (state is SetPasswordSuccess) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => HomeScreen()),
+            );
+          }
+        },
+        builder: (context, state) {
+          SingUpCubit cubit = context.read<SingUpCubit>();
+          return Scaffold(
+            backgroundColor: Theme.of(context).colorScheme.onSurface,
+            body: Stack(
+              children: [
+                Positioned.fill(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(Asset.background),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              // Login content
-              Align(
-                child: Column(
-                  children: [
-                    _buildHeader(),
-                    Expanded(
-                      child: PageView(
-                        controller: cubit.pageController,
-                        physics: NeverScrollableScrollPhysics(),
-                        children: [
-                          _buildPhoneNumberStep(state),
-                          _buildSignUpStep(state),
-                          _buildSetPasswordStep(state),
-                        ],
+                // Login content
+                Align(
+                  child: Column(
+                    children: [
+                      _buildHeader(),
+                      Expanded(
+                        child: PageView(
+                          controller: cubit.pageController,
+                          physics: NeverScrollableScrollPhysics(),
+                          children: [
+                            _buildPhoneNumberStep(state),
+                            _buildSignUpStep(state),
+                            _buildSetPasswordStep(state),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        );
-      },
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -263,7 +266,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                 cubit.setTNumberOrEmailControllerHasError(true);
                                                 return;
                                               }
-
                                               // Regex for email validation
                                               final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
 
@@ -277,7 +279,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               cubit.setTNumberOrEmailControllerHasError(false);
                                             },
                                             validator: (String? value) {
-                                              return null; // ✅ Valid input
+                                              return null;
                                             },
                                             suffixIcon: cubit.numberOrEmailControllerHasError ? Transform.scale(
                                             scale: 0.5,
@@ -285,7 +287,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   Asset.danger,
                                                   color: Theme.of(context).colorScheme.error,
                                                   ),
-                                            )  : SizedBox()),
+                                            )  : SizedBox(),
+                                          inputTypeMode: InputTypeMode.none),
                                       ),
                                     ],
                                   ),
@@ -530,6 +533,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         },
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.name,
+                        inputTypeMode: InputTypeMode.englishLetters,
                       ),
                       SizedBox(
                         height: 8,
@@ -545,6 +549,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         },
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.name,
+                        inputTypeMode: InputTypeMode.englishLetters,
                       ),
                       SizedBox(
                         height: 8,
@@ -554,6 +559,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         title: context.translate("invitationCode"),
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.text,
+                        inputTypeMode: InputTypeMode.englishLettersAndNumbers,
                       ),
                     ],
                   ),
@@ -632,7 +638,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       } else {
                         cubit.setPasswordControllerHasError(false);
                       }
-                    },
+                    }, inputTypeMode: InputTypeMode.englishLettersAndNumbers,
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
@@ -709,7 +715,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       } else {
                         cubit.setPasswordConfirmControllerHasError(false);
                       }
-                    },
+                    }, inputTypeMode: InputTypeMode.englishLettersAndNumbers,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 11),

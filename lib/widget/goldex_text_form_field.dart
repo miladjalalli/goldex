@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class GoldexTextFormField extends StatelessWidget {
@@ -16,6 +17,7 @@ class GoldexTextFormField extends StatelessWidget {
   final FormFieldValidator<String>? validator;
   final ValueChanged<String>? onChanged;
   final bool isLoading;
+  final InputTypeMode inputTypeMode;
 
   const GoldexTextFormField({
     Key? key,
@@ -33,7 +35,23 @@ class GoldexTextFormField extends StatelessWidget {
     this.validator,
     this.onChanged,
     this.isLoading = false,
+    required this.inputTypeMode,
+
   }) : super(key: key);
+
+  List<TextInputFormatter> _getInputFormatters() {
+    switch (inputTypeMode) {
+      case InputTypeMode.englishLetters:
+        return [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))];
+      case InputTypeMode.englishNumbers:
+        return [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))];
+      case InputTypeMode.englishLettersAndNumbers:
+        return [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]'))];
+      case InputTypeMode.none:
+      default:
+        return [];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +70,7 @@ class GoldexTextFormField extends StatelessWidget {
             ),
           ),
         TextFormField(
+          inputFormatters: _getInputFormatters(),
           controller: controller,
           keyboardType: keyboardType,
           textInputAction: textInputAction,
@@ -99,4 +118,11 @@ class GoldexTextFormField extends StatelessWidget {
       ],
     );
   }
+}
+
+enum InputTypeMode {
+  englishLetters,
+  englishNumbers,
+  englishLettersAndNumbers,
+  none,
 }

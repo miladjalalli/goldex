@@ -7,6 +7,7 @@ import 'package:goldex/core/theme/theme.dart';
 import 'package:goldex/widget/custom_button.dart';
 import '../../core/assets.dart';
 import '../../core/dependency_injection.dart';
+import '../../widget/connectivity_wrapper.dart';
 import '../order_summary/cubit/order_summary_cubit.dart';
 import 'gift-card_order_summary_screen.dart';
 import 'cubit/gift_card_cubit.dart';
@@ -21,66 +22,68 @@ class GiveGiftReceivingMethodScreen extends StatefulWidget {
 class _GiveGiftReceivingMethodScreenState extends State<GiveGiftReceivingMethodScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<GiftCardCubit>(),
-      child: BlocConsumer<GiftCardCubit, GiftCardState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          GiftCardCubit cubit = context.read<GiftCardCubit>();
-          return Scaffold(
-            backgroundColor: Theme.of(context).colorScheme.surface,
-            appBar: AppBar(
-              leading: TextButton(
-                style: ButtonStyle(
-                  padding: WidgetStateProperty.all(EdgeInsets.only(left: 20)),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: SvgPicture.asset(
-                  Asset.back,
-                ),
-              ),
+    return ConnectivityWrapper(
+      child: BlocProvider(
+        create: (context) => sl<GiftCardCubit>(),
+        child: BlocConsumer<GiftCardCubit, GiftCardState>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            GiftCardCubit cubit = context.read<GiftCardCubit>();
+            return Scaffold(
               backgroundColor: Theme.of(context).colorScheme.surface,
-              elevation: 0,
-              forceMaterialTransparency: true,
-              centerTitle: true,
-              title: Text(
-                context.translate('receivingMethod'),
-              ),
-              titleTextStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Theme.of(context).colorScheme.onPrimary),
-            ),
-            body: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 34, 20, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [expandableList(cubit)],
-              ),
-            ),
-            bottomNavigationBar: Padding(
-                padding: EdgeInsets.fromLTRB(64, 0, 64, 32),
-                child: CustomButton(
-                  text: context.translate('continue'),
-                  backgroundColorStart: Theme.of(context).primaryColor,
-                  backgroundColorEnd: Theme.of(context).colorScheme.secondary,
-                  textColor: Theme.of(context).colorScheme.surface,
-                  height: 50,
-                  width: 300,
-                  borderColor: Theme.of(context).primaryColor,
+              appBar: AppBar(
+                leading: TextButton(
+                  style: ButtonStyle(
+                    padding: WidgetStateProperty.all(EdgeInsets.only(left: 20)),
+                  ),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => GiftCardOrderSummaryScreen(
-                                title: '',
-                                totalAmount: '210.5',
-                                totalAmountType: 'mg',
-                              )),
-                    );
+                    Navigator.pop(context);
                   },
-                )),
-          );
-        },
+                  child: SvgPicture.asset(
+                    Asset.back,
+                  ),
+                ),
+                backgroundColor: Theme.of(context).colorScheme.surface,
+                elevation: 0,
+                forceMaterialTransparency: true,
+                centerTitle: true,
+                title: Text(
+                  context.translate('receivingMethod'),
+                ),
+                titleTextStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Theme.of(context).colorScheme.onPrimary),
+              ),
+              body: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 34, 20, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [expandableList(cubit)],
+                ),
+              ),
+              bottomNavigationBar: Padding(
+                  padding: EdgeInsets.fromLTRB(64, 0, 64, 32),
+                  child: CustomButton(
+                    text: context.translate('continue'),
+                    backgroundColorStart: Theme.of(context).primaryColor,
+                    backgroundColorEnd: Theme.of(context).colorScheme.secondary,
+                    textColor: Theme.of(context).colorScheme.surface,
+                    height: 50,
+                    width: 300,
+                    borderColor: Theme.of(context).primaryColor,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => GiftCardOrderSummaryScreen(
+                                  title: '',
+                                  totalAmount: '210.5',
+                                  totalAmountType: 'mg',
+                                )),
+                      );
+                    },
+                  )),
+            );
+          },
+        ),
       ),
     );
   }

@@ -7,6 +7,7 @@ import 'package:goldex/presentation/splash/cubit/splash_cubit.dart';
 import 'dart:async';
 import '../../core/assets.dart';
 import '../../core/dependency_injection.dart';
+import '../../widget/connectivity_wrapper.dart';
 import '../login/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -25,45 +26,46 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return ConnectivityWrapper(
+      child: BlocConsumer<SplashCubit, SplashState>(
+            listener: (context, state)  {
+              SplashCubit cubit = context.read<SplashCubit>();
 
-    return  BlocConsumer<SplashCubit, SplashState>(
-          listener: (context, state)  {
-            SplashCubit cubit = context.read<SplashCubit>();
-
-            if(state is SplashLoggedIn){
-              Timer(const Duration(seconds: 3), () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
-                );
-              });
-            }
-            if(state is SplashDontLoggedIn){
-              Timer(const Duration(seconds: 3), () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
-              });
-            }
-          },
-          builder: (context, state) {
-            SplashCubit cubit = context.read<SplashCubit>();
-            return Scaffold(
-              backgroundColor: Theme.of(context).colorScheme.surface,
-              body: Stack(
-                children: [
-                  Positioned.fill(
-                    child: SvgPicture.asset(
-                      Asset.splash, // مسیر فایل SVG شما
-                      fit: BoxFit.cover, // یا BoxFit.fill بسته به نیاز شما
+              if(state is SplashLoggedIn){
+                Timer(const Duration(seconds: 3), () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                  );
+                });
+              }
+              if(state is SplashDontLoggedIn){
+                Timer(const Duration(seconds: 3), () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                  );
+                });
+              }
+            },
+            builder: (context, state) {
+              SplashCubit cubit = context.read<SplashCubit>();
+              return Scaffold(
+                backgroundColor: Theme.of(context).colorScheme.surface,
+                body: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: SvgPicture.asset(
+                        Asset.splash, // مسیر فایل SVG شما
+                        fit: BoxFit.cover, // یا BoxFit.fill بسته به نیاز شما
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
+                  ],
+                ),
+              );
+            },
+          ),
+    );
 
   }
 }

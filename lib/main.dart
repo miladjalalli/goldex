@@ -3,11 +3,11 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:goldex/core/dependency_injection.dart';
-import 'package:goldex/presentation/home/home_screen.dart';
 import 'package:goldex/presentation/splash/cubit/splash_cubit.dart';
 import 'package:goldex/presentation/splash/splash_screen.dart';
 import 'package:goldex/core/theme/theme.dart';
 import 'package:goldex/core/theme/theme_cubit.dart';
+import 'package:goldex/widget/connectivity_wrapper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'core/app_localizations.dart';
 
@@ -22,12 +22,13 @@ void main() async {
   sharedPref = await SharedPreferences.getInstance();
   Animate.restartOnHotReload = true;
   init();
-
   runApp(MyApp());
 }
 
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -51,9 +52,12 @@ class MyApp extends StatelessWidget {
             themeMode: themeMode == AppThemeMode.light
                 ? ThemeMode.light
                 : ThemeMode.dark,
-            home: BlocProvider(
-          create: (context) => sl<SplashCubit>()..checkIsLoggedIn(),
-          child:SplashScreen()),
+            home: ConnectivityWrapper(
+              child: BlocProvider(
+              create: (context) => sl<SplashCubit>()..checkIsLoggedIn(),
+              child: SplashScreen(),
+              ),
+            ),
           );
         },
       ),

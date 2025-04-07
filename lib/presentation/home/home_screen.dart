@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:goldex/presentation/transaction/transaction_screen.dart';
 import 'package:goldex/presentation/wallet/wallet_screen.dart';
+import '../../widget/connectivity_wrapper.dart';
 import '../../widget/custom_bottom_bar.dart';
 import '../profile/profile_screen.dart';
 import '../services/cubit/services_cubit.dart';
@@ -32,36 +33,38 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<bool>(
-      valueListenable: _backPressAllowed,
-      builder: (BuildContext context, bool backPressAllowed, Widget? child) {
-        return PopScope(
-          canPop: backPressAllowed,
-          onPopInvoked: (didPop) {
-            if (!didPop) {
-              _allowBackPress();
-            }
-          },
-          child: Scaffold(
-              backgroundColor: Theme
-                  .of(context)
-                  .colorScheme
-                  .onSurface,
-              body: _pages[_currentIndex],
-              floatingActionButton: Padding(
-                padding: const EdgeInsets.only(bottom: 25),
-                child: CustomBottomBar(
-                  onItemSelected: (int index) {
-                    setState(() {
-                      _currentIndex = index;
-                    });
-                  },
+    return ConnectivityWrapper(
+      child: ValueListenableBuilder<bool>(
+        valueListenable: _backPressAllowed,
+        builder: (BuildContext context, bool backPressAllowed, Widget? child) {
+          return PopScope(
+            canPop: backPressAllowed,
+            onPopInvoked: (didPop) {
+              if (!didPop) {
+                _allowBackPress();
+              }
+            },
+            child: Scaffold(
+                backgroundColor: Theme
+                    .of(context)
+                    .colorScheme
+                    .onSurface,
+                body: _pages[_currentIndex],
+                floatingActionButton: Padding(
+                  padding: const EdgeInsets.only(bottom: 25),
+                  child: CustomBottomBar(
+                    onItemSelected: (int index) {
+                      setState(() {
+                        _currentIndex = index;
+                      });
+                    },
+                  ),
                 ),
+                floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
               ),
-              floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-            ),
-          );
-      },
+            );
+        },
+      ),
     );
   }
   Future<void> _allowBackPress() async {

@@ -4,6 +4,7 @@ import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:goldex/core/app_localizations.dart';
 
 import '../../core/theme/theme.dart';
+import '../../widget/connectivity_wrapper.dart';
 import '../../widget/custom_button.dart';
 import '../../core/assets.dart';
 
@@ -36,34 +37,36 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      appBar: AppBar(
-        leading: TextButton(
-          style: ButtonStyle(
-            padding: MaterialStateProperty.all(EdgeInsets.only(left: 20)),
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: SvgPicture.asset(
-            Asset.back,
-          ),
-        ),
+    return ConnectivityWrapper(
+      child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.surface,
-        elevation: 0,
-        forceMaterialTransparency: true,
-        centerTitle: true,
-        title: Text(
-          _isCodeConfirmed ? context.translate('transactionReceipt') : context.translate('confirmTransaction'),
+        appBar: AppBar(
+          leading: TextButton(
+            style: ButtonStyle(
+              padding: MaterialStateProperty.all(EdgeInsets.only(left: 20)),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: SvgPicture.asset(
+              Asset.back,
+            ),
+          ),
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          elevation: 0,
+          forceMaterialTransparency: true,
+          centerTitle: true,
+          title: Text(
+            _isCodeConfirmed ? context.translate('transactionReceipt') : context.translate('confirmTransaction'),
+          ),
+          titleTextStyle: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+            color: Theme.of(context).colorScheme.onPrimary,
+          ),
         ),
-        titleTextStyle: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w700,
-          color: Theme.of(context).colorScheme.onPrimary,
-        ),
+        body: _isCodeConfirmed ? _buildTransactionDetails() : _buildConfirmationCode(),
       ),
-      body: _isCodeConfirmed ? _buildTransactionDetails() : _buildConfirmationCode(),
     );
   }
 

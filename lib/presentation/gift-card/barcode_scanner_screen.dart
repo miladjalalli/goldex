@@ -8,6 +8,7 @@ import '../../core/dependency_injection.dart';
 import '../../core/theme/theme.dart';
 import '../../widget/card_buy_or_sell_details.dart';
 import '../../widget/card_gift-card_order_details.dart';
+import '../../widget/connectivity_wrapper.dart';
 import '../../widget/custom_button.dart';
 import '../../core/assets.dart';
 import '../../widget/goldex_text_form_field.dart';
@@ -25,122 +26,125 @@ class BarcodeScannerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<GiftCardCubit>(),
-      child: BlocConsumer<GiftCardCubit, GiftCardState>(
-        listener: (context, state) {
-          // TODO: implement listener
-        },
-        builder: (context, state) {
-          GiftCardCubit cubit = context.read<GiftCardCubit>();
-          return Scaffold(
-            backgroundColor: Theme.of(context).colorScheme.surface,
-            appBar: AppBar(
-              leading: TextButton(
-                style: ButtonStyle(
-                  padding: WidgetStateProperty.all(EdgeInsets.only(left: 20)),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: SvgPicture.asset(
-                  Asset.back,
-                ),
-              ),
-              centerTitle: true,
-              titleTextStyle: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-                color: Theme.of(context).colorScheme.onPrimaryContainer,
-              ),
+    return ConnectivityWrapper(
+      child: BlocProvider(
+        create: (context) => sl<GiftCardCubit>(),
+        child: BlocConsumer<GiftCardCubit, GiftCardState>(
+          listener: (context, state) {
+            // TODO: implement listener
+          },
+          builder: (context, state) {
+            GiftCardCubit cubit = context.read<GiftCardCubit>();
+            return Scaffold(
               backgroundColor: Theme.of(context).colorScheme.surface,
-              elevation: 0,
-              forceMaterialTransparency: true,
-            ),
-            body: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 31.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      cardView(context, cubit),
-                    ],
+              appBar: AppBar(
+                leading: TextButton(
+                  style: ButtonStyle(
+                    padding: WidgetStateProperty.all(EdgeInsets.only(left: 20)),
                   ),
-                ),
-                Padding(
-                    padding: EdgeInsets.fromLTRB(64, 18, 64, 32),
-                    child: CustomButton(
-                      text: context.translate('scanYourCard'),
-                      backgroundColorStart: Theme.of(context).primaryColor,
-                      textColor: Theme.of(context).colorScheme.surface,
-                      height: 50,
-                      width: 300,
-                      borderColor: Theme.of(context).primaryColor,
-                      isIconEnabled: true,
-                      icon: Asset.scan,
-                      onPressed: () {
-                        // Navigator.push(context,
-                        //   MaterialPageRoute(builder: (context) => BlocProvider(
-                        //     create: (context) => GiftCardCubit(),
-                        //     child: GiftCardOrderSummaryScreen(
-                        //       title: '',
-                        //       totalAmount: '210.5',
-                        //       totalAmountType: 'mg',
-                        //     ),
-                        //   )),
-                        // );
-                      },
-                    )),
-                Text(
-                  context.translate('or'),
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Theme.of(context).colorScheme.onSurface),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(64, 10 , 64, 10),
-                  child: GoldexTextFormField(
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                    ),
-                    controller: cubit.serialCode,
-                    title: context.translate("enterSerialCode"),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Enter serial code';
-                      }
-                    },
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.number,
-                  ),
-                ),
-              ],
-            ),
-            bottomNavigationBar: Padding(
-                padding: EdgeInsets.fromLTRB(64, 10, 64, 32),
-                child: CustomButton(
-                  text: context.translate('continue'),
-                  backgroundColorStart: Theme.of(context).primaryColor,
-                  backgroundColorEnd: Theme.of(context).colorScheme.secondary,
-                  textColor: Theme.of(context).colorScheme.surface,
-                  height: 50,
-                  width: 300,
-                  borderColor: Theme.of(context).primaryColor,
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ConfirmationScreen(
-                                showGotItBottom: true,
-                                showSaveToGalleryBottom: false,
-                                showShareBottom: false,
-                                showTextMessage: true,
-                              )),
-                    );
+                    Navigator.pop(context);
                   },
-                )),
-          );
-        },
+                  child: SvgPicture.asset(
+                    Asset.back,
+                  ),
+                ),
+                centerTitle: true,
+                titleTextStyle: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                ),
+                backgroundColor: Theme.of(context).colorScheme.surface,
+                elevation: 0,
+                forceMaterialTransparency: true,
+              ),
+              body: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 31.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        cardView(context, cubit),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(64, 18, 64, 32),
+                      child: CustomButton(
+                        text: context.translate('scanYourCard'),
+                        backgroundColorStart: Theme.of(context).primaryColor,
+                        textColor: Theme.of(context).colorScheme.surface,
+                        height: 50,
+                        width: 300,
+                        borderColor: Theme.of(context).primaryColor,
+                        isIconEnabled: true,
+                        icon: Asset.scan,
+                        onPressed: () {
+                          // Navigator.push(context,
+                          //   MaterialPageRoute(builder: (context) => BlocProvider(
+                          //     create: (context) => GiftCardCubit(),
+                          //     child: GiftCardOrderSummaryScreen(
+                          //       title: '',
+                          //       totalAmount: '210.5',
+                          //       totalAmountType: 'mg',
+                          //     ),
+                          //   )),
+                          // );
+                        },
+                      )),
+                  Text(
+                    context.translate('or'),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Theme.of(context).colorScheme.onSurface),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(64, 10 , 64, 10),
+                    child: GoldexTextFormField(
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      controller: cubit.serialCode,
+                      title: context.translate("enterSerialCode"),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Enter serial code';
+                        }
+                      },
+                      textInputAction: TextInputAction.done,
+                      keyboardType: TextInputType.number,
+                      inputTypeMode: InputTypeMode.englishNumbers,
+                    ),
+                  ),
+                ],
+              ),
+              bottomNavigationBar: Padding(
+                  padding: EdgeInsets.fromLTRB(64, 10, 64, 32),
+                  child: CustomButton(
+                    text: context.translate('continue'),
+                    backgroundColorStart: Theme.of(context).primaryColor,
+                    backgroundColorEnd: Theme.of(context).colorScheme.secondary,
+                    textColor: Theme.of(context).colorScheme.surface,
+                    height: 50,
+                    width: 300,
+                    borderColor: Theme.of(context).primaryColor,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ConfirmationScreen(
+                                  showGotItBottom: true,
+                                  showSaveToGalleryBottom: false,
+                                  showShareBottom: false,
+                                  showTextMessage: true,
+                                )),
+                      );
+                    },
+                  )),
+            );
+          },
+        ),
       ),
     );
   }
