@@ -20,7 +20,7 @@
   "driverLicense": "Driver License",
   "email": "Email",
   "enterConfirmationCode": "Please Enter the Confirmation Code",
-  "enterYourEmailAndPasswordToLogIn": "Enter your email and password to log in",
+  "enterYourEmailAndPasswordToLogIn": "Enter your mobile and password to log in",
   "EnterAValidEmailOrMobileNumber": "Enter a valid email or 10-digit mobile number",
   "EnterYourFirstName": "Enter your firstname",
   "EnterYourLastName": "Enter your lastname",
@@ -116,7 +116,7 @@
   "notVerified": "Not Verified",
   "editProfile": "Edit Profile",
   "support": "Support",
-  "phoneNumberEmail": "Phone number or E-mail",
+  "phoneNumberEmail": "Phone number",
   "pleaseEnterPhoneNumber" : "Please Enter Your Phone Number",
   "useYourFingerprint": "or use your fingerprint",
   "singUp": "Sing Up",
@@ -146,5 +146,9 @@
   "sendAmount": "Send Amount",
   "mg": "mg",
   "chooseYourBar": "Choose your Bar",
-  "reject": "reject"
+  "reject": "reject",
+  "youSureYouWantToLogOut": "Are you sure you want to log out? You will need to log in again to access your account.",
+  "connectionFailed": "Connection failed",
+  "internetConnectionIsNotAvailable": "Internet connection is not available.\n Please check your network status and try again later.",
+  "tryAgain": "try again"
 }

@@ -47,6 +47,10 @@ class GoldexTextFormField extends StatelessWidget {
         return [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))];
       case InputTypeMode.englishLettersAndNumbers:
         return [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]'))];
+      case InputTypeMode.englishLettersAndNumbersAndDash:
+        return [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9-_rg]'))];
+      case InputTypeMode.englishLettersAndSpace:
+        return [FilteringTextInputFormatter.allow(RegExp(r'[ a-zA-Z]'))];
       case InputTypeMode.none:
       default:
         return [];
@@ -124,5 +128,7 @@ enum InputTypeMode {
   englishLetters,
   englishNumbers,
   englishLettersAndNumbers,
+  englishLettersAndNumbersAndDash,
+  englishLettersAndSpace,
   none,
 }

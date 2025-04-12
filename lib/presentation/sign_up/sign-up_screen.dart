@@ -266,13 +266,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                 cubit.setTNumberOrEmailControllerHasError(true);
                                                 return;
                                               }
-                                              // Regex for email validation
-                                              final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
-
                                               // Regex for a 10-digit mobile number (without country code)
                                               final mobileRegex = RegExp(r'^\d{10}$');
 
-                                              if (!emailRegex.hasMatch(value) && !mobileRegex.hasMatch(value)) {
+                                              if (!mobileRegex.hasMatch(value)) {
                                                 cubit.setTNumberOrEmailControllerHasError(true);
                                                 return;
                                               }
@@ -288,7 +285,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   color: Theme.of(context).colorScheme.error,
                                                   ),
                                             )  : SizedBox(),
-                                          inputTypeMode: InputTypeMode.none),
+                                            keyboardType: TextInputType.number,
+                                            inputTypeMode: InputTypeMode.englishNumbers),
                                       ),
                                     ],
                                   ),
@@ -315,7 +313,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 Center(
                                   child: VerificationCode(
                                     digitsOnly: true,
-                                    isSecure: true,
+                                    isSecure: false,
                                     textStyle: TextStyle(fontSize: 20, color: Theme.of(context).colorScheme.onSurface),
                                     keyboardType: TextInputType.number,
                                     underlineColor: Colors.transparent,
@@ -533,7 +531,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         },
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.name,
-                        inputTypeMode: InputTypeMode.englishLetters,
+                        inputTypeMode: InputTypeMode.englishLettersAndSpace,
                       ),
                       SizedBox(
                         height: 8,
@@ -549,7 +547,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         },
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.name,
-                        inputTypeMode: InputTypeMode.englishLetters,
+                        inputTypeMode: InputTypeMode.englishLettersAndSpace,
                       ),
                       SizedBox(
                         height: 8,
@@ -559,7 +557,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         title: context.translate("invitationCode"),
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.text,
-                        inputTypeMode: InputTypeMode.englishLettersAndNumbers,
+                        inputTypeMode: InputTypeMode.englishLettersAndNumbersAndDash,
                       ),
                     ],
                   ),
@@ -638,7 +636,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       } else {
                         cubit.setPasswordControllerHasError(false);
                       }
-                    }, inputTypeMode: InputTypeMode.englishLettersAndNumbers,
+                    }, inputTypeMode: InputTypeMode.none,
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
@@ -715,7 +713,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       } else {
                         cubit.setPasswordConfirmControllerHasError(false);
                       }
-                    }, inputTypeMode: InputTypeMode.englishLettersAndNumbers,
+                    }, inputTypeMode: InputTypeMode.none,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 11),

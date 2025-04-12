@@ -326,13 +326,11 @@ void showLogoutDialog(BuildContext context, ProfileCubit cubit) {
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
-      title: Text('Log Out'),
-      content: Text(
-        'Are you sure you want to log out? You will need to log in again to access your account.',
-      ),
+      title: Text(context.translate('logout')),
+      content: Text(context.translate('youSureYouWantToLogOut')),
       actions: [
         CustomButton(
-          text: 'Cancel',
+          text: context.translate('cancel'),
           isIconEnabled: true,
           backgroundColorStart: Colors.transparent,
           textColor: Colors.black,

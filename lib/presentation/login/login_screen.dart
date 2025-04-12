@@ -188,7 +188,7 @@ class LoginScreen extends StatelessWidget {
                                     },
                                     validator: (String? value) {
                                       return null;
-                                    }, inputTypeMode: InputTypeMode.englishLettersAndNumbers,
+                                    }, inputTypeMode: InputTypeMode.none,
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(top: 10.0),

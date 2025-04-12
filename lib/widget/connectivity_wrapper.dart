@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:goldex/core/app_localizations.dart';
 import 'package:lottie/lottie.dart';
 
 class ConnectivityWrapper extends StatefulWidget {
@@ -56,7 +58,7 @@ class InternetConnectionListener {
       if (connectivityResult == ConnectivityResult.none) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("iman iman"),
+            content: Text("Connection Failed"),
             backgroundColor: Colors.red,
           ),
         );
@@ -84,14 +86,13 @@ class NoInternetScreen extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(height: 20),
-                  Text(
-                    'Connection failed',
+                  Text(context.translate('connectionFailed'),
                     style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w900, fontFamily: 'IRsans'),
                     textAlign: TextAlign.justify,
                   ),
                   SizedBox(height: 20),
                   Text(
-                    "Internet connection is not available.\n Please check your network status and try again later.",
+                    context.translate("internetConnectionIsNotAvailable"),
                     style: TextStyle(
                       color: Colors.blue,
                       fontSize: 16,
@@ -131,7 +132,7 @@ class NoInternetScreen extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    "Try Again",
+                    context.translate("tryAgain"),
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
