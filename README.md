@@ -29,7 +29,7 @@ These instructions will help you set up the project locally.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/miladjalalli/goldex.git
+   git clone "YOUR-REPOSITORY"
    cd goldex
    ```
 
