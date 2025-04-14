@@ -72,18 +72,6 @@ Here are some main dependencies used:
 
 Check `pubspec.yaml` for the full list.
 
-## 🧪 Testing
-
-Run unit or widget tests with:
-
-```bash
-flutter test
-```
-
-## 📷 Screenshots
-
-*(Add screenshots of the app here)*
-
 ## 📄 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
@@ -91,4 +79,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## 🙋‍♂️ Author
 
 - **Milad Jalali**  
-  [GitHub](https://github.com/miladjalalli)
+  [WEBSITE](https://pwa.miladjalalI.ir)
